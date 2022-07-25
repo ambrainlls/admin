@@ -1,13 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import AppNavBar from './components/main/header/navbar/NavBar';
 import NotFound from './pages/notFound/NotFound';
 import ContactUs from './pages/contactUs/ContactUs';
 import Developers from './pages/developers/Developers';
 import Feedback from './pages/feedback/Feedback';
 import Projects from './pages/projects/Projects';
-import LeftDrawer from "./pages/leftDrawer/LeftDrawer";
-import DashboardContainer from "./pages/dashboardContainer/DashboardContainer";
+import DashboardContainer from './pages/dashboardContainer/DashboardContainer';
 
 function AppRoutes () {
     return (
