@@ -1,11 +1,10 @@
 import React from 'react';
 import styles from './dashboardContainer.module.css';
+import LeftDrawer from "../leftDrawer/LeftDrawer";
 
 function DashboardContainer () {
     return (
-        <div>
-
-        </div>
+        <LeftDrawer/>
     )
 }
 export default DashboardContainer;
