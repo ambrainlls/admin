@@ -10,8 +10,20 @@
 
 .dashboardBurgerContainer {
     cursor: pointer;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
 }
 
 .dashboardBurgerContainer img {
-    padding-left: 24px;
+    width: 32px;
+    height: 32px;
+}
+
+.activeTabNameContainer {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #222222;
+    text-align: center;
 }

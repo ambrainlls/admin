@@ -34,3 +34,7 @@
 .tabsItem > img {
     margin-right: 16px;
 }
+
+.activeTabContainer {
+    background: linear-gradient(300deg, #FFFFFF 0%, rgba(255, 255, 255, 0.515625) 64.58%, rgba(255, 255, 255, 0) 100%);
+}

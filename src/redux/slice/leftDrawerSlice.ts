@@ -3,7 +3,7 @@ import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 const leftDrawerSlice = createSlice({
     name: 'leftDrawerSlice',
     initialState: {
-        activeTab: '',
+        activeTab: 'Home Page',
     },
     reducers: {
         setActiveTab(state, action: PayloadAction<string>) {
