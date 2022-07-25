@@ -1,11 +1,13 @@
 import React from 'react';
-import './App.css';
 import AppRoutes from './AppRoutes';
+import DashboardContainer from './pages/dashboardContainer/DashboardContainer';
+import './App.css';
 
 function App() {
     return (
         <div className="App">
-           <AppRoutes />
+            <DashboardContainer />
+            <AppRoutes />
         </div>
     );
 }

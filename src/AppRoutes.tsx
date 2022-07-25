@@ -5,13 +5,11 @@ import ContactUs from './pages/contactUs/ContactUs';
 import Developers from './pages/developers/Developers';
 import Feedback from './pages/feedback/Feedback';
 import Projects from './pages/projects/Projects';
-import DashboardContainer from './pages/dashboardContainer/DashboardContainer';
 
 function AppRoutes () {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<DashboardContainer />} />
                 <Route path='contact-us' element={<ContactUs />} />
                 <Route path='developers' element={<Developers />} />
                 <Route path='feedback' element={<Feedback />} />
