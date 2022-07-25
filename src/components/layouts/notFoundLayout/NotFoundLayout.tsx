@@ -4,7 +4,7 @@ import notFound from '../../../assets/images/not-found.png';
 import styles from './notFoundLayout.module.css';
 
 function NotFoundLayout(){
-    return(
+    return (
         <div className={styles.notFoundContainer}>
             <div className={styles.notFoundImage}>
                 <img src={notFound} alt="" />

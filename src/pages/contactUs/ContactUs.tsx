@@ -3,7 +3,7 @@ import ContactUsLayout from '../../components/layouts/contactUsLayout/ContactUsL
 import styles from './contactUs.module.css';
 
 function ContactUs(){
-    return(
+    return (
         <div className={styles.contactUsContainer}>
            <ContactUsLayout />
         </div>

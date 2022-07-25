@@ -3,7 +3,7 @@ import ProjectsLayout from '../../components/layouts/projectsLayout/ProjectsLayo
 import styles from './projects.module.css';
 
 function Projects(){
-    return(
+    return (
         <div className={styles.projectsContainer}>
            <ProjectsLayout />
         </div>

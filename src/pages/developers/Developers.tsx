@@ -3,7 +3,7 @@ import DevelopersLayout from '../../components/layouts/developersLayout/Develope
 import styles from './developers.module.css';
 
 function Developers(){
-    return(
+    return (
         <div className={styles.developersContainer}>
             <DevelopersLayout />
         </div>

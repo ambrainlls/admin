@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './contactUsLayout.module.css';
 
 function ContactUsLayout(){
-    return(
+    return (
         <div className={styles.contactUsContainer}>
            ContactUs
         </div>

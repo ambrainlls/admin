@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './feedbackLayout.module.css';
 
 function FeedbackLayout(){
-    return(
+    return (
         <div className={styles.feedbackContainer}>
             Feedback
         </div>

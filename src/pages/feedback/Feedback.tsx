@@ -3,7 +3,7 @@ import FeedbackLayout from '../../components/layouts/feedbackLayout/FeedbackLayo
 import styles from './feedback.module.css';
 
 function Feedback(){
-    return(
+    return (
         <div className={styles.feedbackContainer}>
             <FeedbackLayout />
         </div>
