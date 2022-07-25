@@ -3,8 +3,8 @@ import styles from './dashboardFooter.module.css';
 
 function DashboardFooter(){
     return (
-        <div className={styles.dashboardHeaderContainer}>
-            DashboardHeader
+        <div className={styles.dashboardFooterContainer}>
+            Dashboard Footer
         </div>
     )
 }

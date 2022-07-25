@@ -1,10 +1,17 @@
 import React from 'react';
+import burgerIcon from '../../../assets/images/BurgerIcon.svg';
 import styles from './dashboardHeader.module.css';
 
-function DashboardHeader(){
+interface DashboardHeaderProps {
+    handleBurgerClick: () => void;
+}
+
+function DashboardHeader({ handleBurgerClick }: DashboardHeaderProps){
     return (
         <div className={styles.dashboardHeaderContainer}>
-            DashboardHeader
+            <div className={styles.dashboardBurgerContainer} onClick={handleBurgerClick}>
+                <img src={burgerIcon} alt={burgerIcon} />
+            </div>
         </div>
     )
 }

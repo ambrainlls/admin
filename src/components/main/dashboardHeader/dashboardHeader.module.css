@@ -1,0 +1,17 @@
+.dashboardHeaderContainer {
+    width: 100vw;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    background: #D0E0FF;
+    position: fixed;
+    top: 0;
+}
+
+.dashboardBurgerContainer {
+    cursor: pointer;
+}
+
+.dashboardBurgerContainer img {
+    padding-left: 24px;
+}

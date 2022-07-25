@@ -4,7 +4,9 @@ import styles from './notFound.module.css';
 
 function NotFound(){
     return (
-        <NotFoundLayout />
+        <div className={styles.notFoundContainer}>
+            <NotFoundLayout />
+        </div>
     )
 }
 

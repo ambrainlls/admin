@@ -1,8 +1,4 @@
 .notFoundContainer{
-    padding: 130px 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    background-color: #FFFFFF;
-    align-items: center;
-    min-height: 70vh;
+    display: flex;
+    justify-content: center;
 }

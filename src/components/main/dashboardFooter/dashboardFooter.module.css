@@ -1,0 +1,7 @@
+.dashboardFooterContainer {
+    width: 100vw;
+    height: 30px;
+    background: #D0E0FF;
+    position: fixed;
+    bottom: 0;
+}

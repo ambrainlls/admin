@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import AmBrainLogo from '../../assets/images/AmBrainLogo.svg';
 import DevelopersIcon from '../../assets/images/DevelopersTabIcon.svg';
 import ContactUsIcon from '../../assets/images/ContactUsTabIcon.svg';
@@ -6,37 +7,52 @@ import ResumeIcon from '../../assets/images/ResumeTabIcon.svg';
 import FeedbackIcon from '../../assets/images/FeedbackTabIcon.svg';
 import styles from './leftDrawer.module.css';
 
+interface NavigationTabsTypes {
+    icon: string;
+    title: string;
+    route: string;
+}
+
 function LeftDrawer () {
-    const navigationTabs = [
+    const navigationTabs: NavigationTabsTypes[] = [
         {
             icon: DevelopersIcon,
             title: 'Developers',
+            route: '/developers'
         },
         {
             icon: ContactUsIcon,
             title: 'Contact us',
+            route: '/contact-us'
         },
         {
             icon: ResumeIcon,
             title: 'Resume',
+            route: '/resume',
         },
         {
             icon: FeedbackIcon,
             title: 'Feedback',
+            route: '/feedback',
         },
     ];
 
     return (
         <div className={styles.leftDrawerContent}>
-            <img src={AmBrainLogo} alt={'AmBrainLogo'} />
+            <Link className={styles.dashboardLogo} to={'/'}>
+                <img src={AmBrainLogo} alt={'AmBrainLogo'} />
+            </Link>
             <div className={styles.tabsContent}>
                 {
                     navigationTabs.map((item, idx) => {
                         return (
-                            <div className={styles.tabsItem} key={idx}>
-                                <img src={item.icon} alt={item.title}/>
+                            <Link className={styles.tabsItem}
+                                  key={idx}
+                                  to={item.route}
+                            >
+                                <img src={item.icon} alt={item.title} />
                                 <p>{item.title}</p>
-                            </div>
+                            </Link>
                         )
                     })
                 }
