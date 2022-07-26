@@ -3,8 +3,8 @@ import styles from './resumeLayout.module.css';
 
 function ResumeLayout(){
     return (
-        <div className={styles.projectsContainer}>
-           Projects
+        <div className={styles.resumeContainer}>
+           Resume
         </div>
     )
 }

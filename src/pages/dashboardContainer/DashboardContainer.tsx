@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import LeftDrawer from '../leftDrawer/LeftDrawer';
-import styles from './dashboardContainer.module.css';
 import DashboardHeader from '../../components/main/dashboardHeader/DashboardHeader';
 import DashboardFooter from '../../components/main/dashboardFooter/DashboardFooter';
+import styles from './dashboardContainer.module.css';
 
 function DashboardContainer () {
     const [showLeftDrawer, setShowLeftDrawer] = useState(false);
@@ -17,7 +17,7 @@ function DashboardContainer () {
                     <LeftDrawer/>
                 )
             }
-            <div className={`${styles.dashboardBodyContainer} ${showLeftDrawer ? styles.dashboardWithLeftsideDrawerContainer : ''}`}>
+            <div className={`${showLeftDrawer ? styles.dashboardWithLeftsideDrawerContainer : ''}`}>
                 <DashboardHeader
                     handleBurgerClick={toggleLeftDrawer}
                 />
