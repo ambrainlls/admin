@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './developersLayout.module.css';
 
-function DevelopersLayout(){
+function DevelopersLayout() {
     return (
         <div className={styles.developersContainer}>
            Developers

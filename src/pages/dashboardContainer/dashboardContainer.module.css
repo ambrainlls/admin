@@ -1,3 +1,7 @@
-.dashboardWithLeftsideDrawerContainer {
-    padding-left: 262px;
+.dashboardContainer {
+    display: flex;
+}
+
+.dashboardBodyContainer {
+    width: 100%;
 }

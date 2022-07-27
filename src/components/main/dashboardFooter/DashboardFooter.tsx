@@ -1,11 +1,9 @@
 import React from 'react';
 import styles from './dashboardFooter.module.css';
 
-function DashboardFooter(){
+function DashboardFooter() {
     return (
-        <div className={styles.dashboardFooterContainer}>
-            Dashboard Footer
-        </div>
+        <div className={styles.dashboardFooterContainer} />
     )
 }
 
