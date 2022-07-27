@@ -1,0 +1,40 @@
+.leftDrawerContent {
+    width: 262px;
+    height: 100vh;
+    background: linear-gradient(179.78deg, #D0E0FF 0.18%, #D0E0FF 99.81%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    top: 0;
+}
+
+.dashboardLogo > img {
+    width: 62px;
+    height: 62px;
+    margin: 54px 0 76px 0;
+}
+
+.tabsContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabsItem {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 53px;
+    text-decoration: none;
+    color: black;
+}
+
+.tabsItem > img {
+    margin-right: 16px;
+}
+
+.activeTabContainer {
+    background: linear-gradient(300deg, #FFFFFF 0%, rgba(255, 255, 255, 0.515625) 64.58%, rgba(255, 255, 255, 0) 100%);
+}

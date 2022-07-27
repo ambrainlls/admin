@@ -1,0 +1,7 @@
+.dashboardContainer {
+    display: flex;
+}
+
+.dashboardBodyContainer {
+    width: 100%;
+}
