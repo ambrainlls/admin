@@ -19,3 +19,35 @@
 .filterWrapper {
     margin-bottom: 24px;
 }
+
+.saveIconContainer {
+    width: 14px;
+    height: 14px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #999999;
+    padding: 2px;
+}
+
+.tableCell {
+    padding: 5px;
+    font-size: 16px;
+}
+
+.disabledInput {
+    border: none;
+    color: black;
+}
+
+.disabledDeleteIcon {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.paginationContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}

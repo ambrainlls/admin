@@ -51,7 +51,7 @@ function LeftDrawer () {
     return (
         <div className={styles.leftDrawerContent}>
             <Link className={styles.dashboardLogo} to={'/'}
-                  onClick={() => handleActiveTab('Home page')}
+                  onClick={() => handleActiveTab('Developers')}
             >
                 <img src={AmBrainLogo} alt={'AmBrainLogo'} />
             </Link>
