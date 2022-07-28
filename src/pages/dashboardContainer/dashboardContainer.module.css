@@ -1,3 +1,27 @@
 .dashboardWithLeftsideDrawerContainer {
     padding-left: 262px;
 }
+
+.dashboardBodyContent {
+    position: relative;
+    display: flex;
+}
+
+.leftDrawerContent {
+    width: 262px;
+    height: 100vh;
+    position: absolute;
+}
+
+.activeTabContent {
+    height: calc(100vh - 84px);
+    margin: 54px 0 30px 0;
+}
+
+.activeTabContentWithoutLeftDrawer {
+    width: 100vw;
+}
+
+.activeTabContentWithLeftDrawer {
+    width: calc(100vw - 262px);
+}

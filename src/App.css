@@ -1,0 +1,40 @@
+.rdt_Table {
+    margin-bottom: 1rem;
+}
+
+.rdt_TableRow {
+    height: 50px;
+    background-color: grey;
+}
+
+.jVeafb {
+    background: #F0F5FF!important;
+}
+
+.jVeafb, .zruCi {
+    font-size: 16px!important;
+}
+
+.rdt_TableCol {
+    display: flex;
+    justify-content: center;
+    color: black;
+    font-weight: bolder;
+}
+
+.rdt_TableCell {
+    display: flex;
+    justify-content: center;
+}
+
+.rdt_TableHeader {
+    background-color: transparent;
+}
+
+.rdt_TableHead {
+    height: 80px;
+}
+
+.rdt_TableHeadRow {
+    font-size: 16px!important;
+}

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AmBrainLogo from '../../assets/images/AmBrainLogo.svg';
 import DevelopersIcon from '../../assets/images/DevelopersTabIcon.svg';
 import ContactUsIcon from '../../assets/images/ContactUsTabIcon.svg';
 import ResumeIcon from '../../assets/images/ResumeTabIcon.svg';
 import FeedbackIcon from '../../assets/images/FeedbackTabIcon.svg';
 import styles from './leftDrawer.module.css';
-import {setActiveTab} from "../../redux/slice/leftDrawerSlice";
-import {RootState} from "../../redux";
+import { setActiveTab } from '../../redux/slice/leftDrawerSlice';
+import { RootState } from '../../redux';
 
 interface NavigationTabsTypes {
     icon: string;

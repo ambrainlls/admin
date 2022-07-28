@@ -1,0 +1,23 @@
+.filterComponentWrapper {
+    width: 766px;
+    height: 32px;
+    background: #F5F5F5;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 18px 0 18px;
+}
+
+.filterComponentWrapper img {
+    cursor: pointer;
+}
+
+.filterComponentWrapper input {
+    width: 100%;
+    border: none;
+    background: #F5F5F5;
+}
+
+.filterComponentWrapper input:focus {
+    outline: none;
+}

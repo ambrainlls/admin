@@ -6,6 +6,7 @@
     background: #D0E0FF;
     position: fixed;
     top: 0;
+    z-index: 9;
 }
 
 .dashboardBurgerContainer {

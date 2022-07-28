@@ -1,0 +1,21 @@
+.developersContainer{
+    width: 100%;
+    height: 100%;
+}
+
+.btnsWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.btnsWrapper img {
+    cursor: pointer;
+}
+
+.deleteRowIcon {
+    margin-right: 24px;
+}
+
+.filterWrapper {
+    margin-bottom: 24px;
+}
