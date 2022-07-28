@@ -23,8 +23,8 @@ function DashboardContainer () {
                 <DashboardHeader
                     handleBurgerClick={toggleLeftDrawer}
                 />
-                <div className="content">
-                  <Outlet />
+                <div className={styles.content}>
+                   <Outlet />
                 </div>
                 <DashboardFooter />
             </div>

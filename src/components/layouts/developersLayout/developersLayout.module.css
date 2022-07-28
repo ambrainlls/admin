@@ -1,9 +1,21 @@
-.developersContainer {
-    height: calc(100vh - 84px);
+.developersContainer{
     width: 100%;
-    padding-top: 54px;
+    height: 100%;
+}
+
+.btnsWrapper {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+}
+
+.btnsWrapper img {
+    cursor: pointer;
+}
+
+.deleteRowIcon {
+    margin-right: 24px;
+}
+
+.filterWrapper {
+    margin-bottom: 24px;
 }
