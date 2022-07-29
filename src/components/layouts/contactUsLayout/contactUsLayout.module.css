@@ -1,9 +1,53 @@
-.contactUsContainer {
-    height: calc(100vh - 84px);
+.contactUsContainer{
     width: 100%;
-    padding-top: 54px;
+    height: 100%;
+}
+
+.btnsWrapper {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+}
+
+.btnsWrapper img {
+    cursor: pointer;
+}
+
+.deleteRowIcon {
+    margin-right: 24px;
+}
+
+.filterWrapper {
+    margin-bottom: 24px;
+}
+
+.saveIconContainer {
+    width: 14px;
+    height: 14px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #999999;
+    padding: 2px;
+}
+
+.tableCell {
+    padding: 5px;
+    font-size: 16px;
+}
+
+.disabledInput {
+    border: none;
+    color: black;
+}
+
+.disabledDeleteIcon {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.paginationContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
