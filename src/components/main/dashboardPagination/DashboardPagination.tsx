@@ -33,8 +33,6 @@ function DashboardPagination({ currentPage, pageCount, handlePageChange }: Dashb
                 shape="rounded"
                 classes={{root: classes.ul}}
                 onChange={handlePageChange}
-                hideNextButton={pageCount < 5}
-                hidePrevButton={pageCount < 5}
             />
         </div>
     )
