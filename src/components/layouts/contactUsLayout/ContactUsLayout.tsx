@@ -11,9 +11,12 @@ import { ContactUsTypes } from '../../../redux/types';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
+import CreateContactUsModalComponent from '../../modals/createContactUsModal/CreateContactUsModalComponent';
+import { ContactUsApi } from '../../../api/ContactUsApi';
 import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIcon.svg';
 import saveIcon from '../../../assets/images/dashboardDataTable/saveIcon.svg';
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
+import createRowIcon from '../../../assets/images/createRowIcon.svg';
 import styles from './contactUsLayout.module.css';
 
 const data: ContactUsTypes[] = [
@@ -163,9 +166,14 @@ function ContactUsLayout() {
 
     const [pageCount, setPageCount] = useState(3);
     const [currentPage, setCurrentPage] = useState(1);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-      dispatch(setContactsData(data));
+        dispatch(setContactsData(data));
+        ContactUsApi.getAllContacts()
+        .then(res => {
+            console.log(res)
+        })
     },[]);
 
     const handlePageChange = (evt: ChangeEvent<unknown>, page: number) => {
@@ -190,10 +198,18 @@ function ContactUsLayout() {
         console.log(contactUsData[foundIndex]);
     };
 
+    const handleSave = () => {
+        console.log('contactUs');
+    };
+
     return (
         <div className={styles.contactUsContainer}>
             <div className={styles.filterWrapper}>
                 <FilterComponent />
+                <img src={createRowIcon} alt={'createRowIcon'}
+                     className={styles.createRowIcon}
+                     onClick={() => setShowModal(!showModal)}
+                />
             </div>
             <DashboardDataTable
                 columns={columns}
@@ -206,6 +222,14 @@ function ContactUsLayout() {
                     handlePageChange={handlePageChange}
                 />
             </div>
+            {
+                showModal && (
+                    <CreateContactUsModalComponent
+                        handleClose={() => setShowModal(false)}
+                        handleSave={handleSave}
+                    />
+                )
+            }
         </div>
     )
 }

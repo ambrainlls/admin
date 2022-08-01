@@ -1,11 +1,21 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { ContactUsTypes } from '../types';
+import {ContactUsTypes, EmployeesDataTypes} from '../types';
 
 const contactUsSlice = createSlice({
     name: 'contactUsSlice',
     initialState: {
         contactUsData: [] as ContactUsTypes[],
         selectedContactId: '',
+        contactData: {
+            id: '',
+            name: '',
+            surname: '',
+            startDate: '',
+            role: '',
+            position: '',
+            email: '',
+            phone: '',
+        } as EmployeesDataTypes,
     },
     reducers: {
         setContactsData(state, action: PayloadAction<ContactUsTypes[]>) {
@@ -34,6 +44,21 @@ const contactUsSlice = createSlice({
             }
 
             state.contactUsData.splice(foundIndex, 1);
+        },
+        createContact(state, action: PayloadAction<any>) {
+            Object.assign(state.contactData, action.payload);
+        },
+        resetContactDataInModal(state) {
+            state.contactData = {
+                id: '',
+                name: '',
+                surname: '',
+                startDate: '',
+                role: '',
+                position: '',
+                email: '',
+                phone: '',
+            }
         }
     },
 });
@@ -45,4 +70,6 @@ export const {
     updateContactData,
     saveContactData,
     deleteContact,
+    createContact,
+    resetContactDataInModal,
 } = contactUsSlice.actions;

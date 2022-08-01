@@ -1,6 +1,6 @@
 import { Modal, Box } from '@mui/material';
-import EmployeeModalContent from './EmployeeModalContent';
-import styles from './createEmployeeModalComponent.module.css';
+import ContactUsModalContent from './ContactUsModalContent';
+import styles from './createContactUsModalComponent.module.css';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -19,7 +19,7 @@ interface CreateEmployeeModalComponentProps {
     handleSave: () => void;
 }
 
-function CreateEmployeeModalComponent({ handleClose, handleSave }: CreateEmployeeModalComponentProps) {
+function CreateContactUsModalComponent({ handleClose, handleSave }: CreateEmployeeModalComponentProps) {
     return (
         <Modal
             open={ true }
@@ -28,7 +28,7 @@ function CreateEmployeeModalComponent({ handleClose, handleSave }: CreateEmploye
             aria-describedby="modal-description"
         >
             <Box component="div" sx={style} className={styles.modalComponent}>
-                <EmployeeModalContent
+                <ContactUsModalContent
                     handleClose={handleClose}
                     handleSave={handleSave}
                 />
@@ -36,4 +36,4 @@ function CreateEmployeeModalComponent({ handleClose, handleSave }: CreateEmploye
         </Modal>
     );
 }
-export default CreateEmployeeModalComponent;
+export default CreateContactUsModalComponent;

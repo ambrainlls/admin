@@ -8,7 +8,6 @@ import {
     saveEmployeeData,
     updateEmployeeData,
 } from '../../../redux/slice/employeesSlice';
-import { setIsOpen } from '../../../redux/slice/createEmployeeModalSlice';
 import { EmployeesDataTypes } from '../../../redux/types';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
@@ -126,6 +125,7 @@ const data: EmployeesDataTypes[] = [
 function EmployeesLayout() {
     const dispatch = useDispatch();
     const employeesData = useSelector((state: RootState) => state.employeesReducer.employeesData);
+    const employeeData = useSelector((state: RootState) => state.employeesReducer.employeeData);
     const selectedEmployeeId = useSelector((state: RootState) => state.employeesReducer.selectedEmployeeId);
 
     const columns = [
@@ -344,16 +344,18 @@ function EmployeesLayout() {
         setCurrentPage(page);
     };
 
-    const toggleModal = () => {
-        setShowModal(true);
-        dispatch(setIsOpen());
+    const handleSave = () => {
+        console.log(employeeData);
     };
 
     return (
         <div className={styles.developersContainer}>
             <div className={styles.filterWrapper}>
                 <FilterComponent />
-                <img src={createRowIcon} alt={'createRowIcon'} className={styles.createRowIcon} onClick={toggleModal}/>
+                <img src={createRowIcon} alt={'createRowIcon'}
+                     className={styles.createRowIcon}
+                     onClick={() => setShowModal(!showModal)}
+                />
             </div>
             <DashboardDataTable
                 columns={columns}
@@ -370,6 +372,7 @@ function EmployeesLayout() {
                 showModal && (
                     <CreateEmployeeModalComponent
                         handleClose={() => setShowModal(false)}
+                        handleSave={handleSave}
                     />
                 )
             }
