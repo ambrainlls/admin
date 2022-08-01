@@ -17,7 +17,13 @@
 }
 
 .filterWrapper {
+    display: flex;
     margin-bottom: 24px;
+}
+
+.createRowIcon {
+    margin-left: 24px;
+    cursor: pointer;
 }
 
 .saveIconContainer {

@@ -8,12 +8,15 @@ import {
     saveDeveloperData,
     updateDeveloperData,
 } from '../../../redux/slice/developersSlice';
+import { setIsOpen } from '../../../redux/slice/createDeveloperModalSlice';
 import { DevelopersDataTypes } from '../../../redux/types';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
+import CreateDeveloperModalComponent from '../../Modals/createDeveloperModal/CreateDeveloperModalComponent';
 import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIcon.svg';
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
+import createRowIcon from '../../../assets/images/createRowIcon.svg';
 import saveIcon from '../../../assets/images/dashboardDataTable/saveIcon.svg';
 import styles from './developersLayout.module.css';
 
@@ -255,6 +258,7 @@ function DevelopersLayout() {
 
     const [pageCount, setPageCount] = useState(3);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isShow, setShow] = useState(false);
 
     const handleChangeDeveloperData = (evt: ChangeEvent<HTMLInputElement>, key: string, id: string) => {
         dispatch(updateDeveloperData(
@@ -278,10 +282,16 @@ function DevelopersLayout() {
         setCurrentPage(page);
     };
 
+    const toggleModal = () => {
+        setShow(true);
+        dispatch(setIsOpen(true));
+    };
+
     return (
         <div className={styles.developersContainer}>
             <div className={styles.filterWrapper}>
                 <FilterComponent />
+                <img src={createRowIcon} alt={'createRowIcon'} className={styles.createRowIcon} onClick={toggleModal}/>
             </div>
             <DashboardDataTable
                 columns={columns}
@@ -294,6 +304,11 @@ function DevelopersLayout() {
                     handlePageChange={handlePageChange}
                 />
             </div>
+            {
+                isShow && (
+                    <CreateDeveloperModalComponent/>
+                )
+            }
         </div>
     )
 }
