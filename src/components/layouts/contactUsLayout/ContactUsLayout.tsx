@@ -2,7 +2,8 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux';
 import {
-  deleteContact, saveContactData,
+  deleteContact,
+  saveContactData,
   setContactsData,
   setSelectedContactId,
   updateContactData
@@ -19,53 +20,15 @@ import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.s
 import createRowIcon from '../../../assets/images/createRowIcon.svg';
 import styles from './contactUsLayout.module.css';
 
-const data: ContactUsTypes[] = [
-    {
-        id: '1',
-        subject: 'Open vacancy',
-        email: 'Harutyunyan@mail.ru',
-        description: 'aaaaa'
-    },
-    {
-        id: '2',
-        subject: 'Open vacancy',
-        email: 'Harutyunyan@mail.ru',
-        description: 'aaaaa'
-    },
-    {
-        id: '3',
-        subject: 'Open vacancy',
-        email: 'Harutyunyan@mail.ru',
-        description: 'aaaaa'
-    },
-    {
-        id: '10',
-        subject: 'Open vacancy',
-        email: 'Harutyunyan@mail.ru',
-        description: 'aaaaa'
-    },
-    {
-        id: '4',
-        subject: 'Open vacancy',
-        email: 'Harutyunyan@mail.ru',
-        description: 'aaaaa'
-    },
-    {
-        id: '5',
-        subject: 'Open vacancy',
-        email: 'Harutyunyan@mail.ru',
-        description: 'aaaaa'
-    },
-];
-
 function ContactUsLayout() {
     const dispatch = useDispatch();
+    const contactData = useSelector((state: RootState) => state.contactUsReducer.contactData);
     const contactUsData = useSelector((state: RootState) => state.contactUsReducer.contactUsData);
     const selectedContactId = useSelector((state: RootState) => state.contactUsReducer.selectedContactId);
 
     const columns = [
         {
-            name: 'Subject',
+            name: 'Name',
             cell: (row: ContactUsTypes) => {
                 return (
                     <div>
@@ -75,11 +38,33 @@ function ContactUsLayout() {
                                     type="text"
                                     className={`${styles.tableCell} ${row.id !== selectedContactId ? styles.disabledInput : ''}`}
                                     disabled={row.id !== selectedContactId}
-                                    value={row.subject}
-                                    onChange={(evt) => {handleChangeContactData(evt, 'subject', row.id)}}
+                                    value={row.name}
+                                    onChange={(evt) => {handleChangeContactData(evt, 'name', row.id)}}
                                 />
                             ) : (
-                                <div>{row.subject}</div>
+                                <div>{row.name}</div>
+                            )
+                        }
+                    </div>
+                )
+            }
+        },
+        {
+            name: 'Lastname',
+            cell: (row: ContactUsTypes) => {
+                return (
+                    <div>
+                        {
+                            selectedContactId === row.id ? (
+                                <input
+                                    type="text"
+                                    className={`${styles.tableCell} ${row.id !== selectedContactId ? styles.disabledInput : ''}`}
+                                    disabled={row.id !== selectedContactId}
+                                    value={row.lastname}
+                                    onChange={(evt) => {handleChangeContactData(evt, 'lastname', row.id)}}
+                                />
+                            ) : (
+                                <div>{row.lastname}</div>
                             )
                         }
                     </div>
@@ -109,7 +94,7 @@ function ContactUsLayout() {
             }
         },
         {
-            name: 'Description',
+            name: 'Message',
             cell: (row: ContactUsTypes) => {
                 return (
                     <div>
@@ -119,11 +104,11 @@ function ContactUsLayout() {
                                     type="text"
                                     className={`${styles.tableCell} ${row.id !== selectedContactId ? styles.disabledInput : ''}`}
                                     disabled={row.id !== selectedContactId}
-                                    value={row.description}
-                                    onChange={(evt) => {handleChangeContactData(evt, 'description', row.id)}}
+                                    value={row.message}
+                                    onChange={(evt) => {handleChangeContactData(evt, 'message', row.id)}}
                                 />
                             ) : (
-                                <div>{row.description}</div>
+                                <div>{row.message}</div>
                             )
                         }
                     </div>
@@ -139,7 +124,7 @@ function ContactUsLayout() {
                             src={deleteRowIcon}
                             alt={'deleteRowIcon'}
                             className={`${styles.deleteRowIcon} ${row.id === selectedContactId ? styles.disabledDeleteIcon : ''}`}
-                            onClick={() => dispatch(deleteContact(row.id))}
+                            onClick={() => handleDeleteContact(row.id)}
                         />
                         {
                             row.id === selectedContactId ? (
@@ -169,10 +154,10 @@ function ContactUsLayout() {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        dispatch(setContactsData(data));
         ContactUsApi.getAllContacts()
         .then(res => {
-            console.log(res)
+            const data = res.data ? res.data : [];
+            dispatch(setContactsData(data));
         })
     },[]);
 
@@ -192,14 +177,30 @@ function ContactUsLayout() {
     };
 
     const handleSaveChanges = (rowId: string) => {
-        dispatch(saveContactData());
+        // dispatch(saveContactData());
 
         const foundIndex = contactUsData.findIndex((el)=> el.id === rowId);
+        ContactUsApi.updateContact(contactUsData[foundIndex])
+        .then(res => {
+            console.log(res) // fixme m
+        })
         console.log(contactUsData[foundIndex]);
     };
 
-    const handleSave = () => {
-        console.log('contactUs');
+    const handleCreate = () => {
+        ContactUsApi.createContact(contactData)
+        .then(res => {
+            console.log(res) // fixme m
+        })
+        console.log('contactUs', contactData);
+    };
+
+    const handleDeleteContact = (rowId: string) => {
+        ContactUsApi.deleteContact(rowId)
+        .then(res => {
+            console.log(res) // fixme m
+        })
+        // dispatch(deleteContact(rowId));
     };
 
     return (
@@ -226,7 +227,7 @@ function ContactUsLayout() {
                 showModal && (
                     <CreateContactUsModalComponent
                         handleClose={() => setShowModal(false)}
-                        handleSave={handleSave}
+                        handleSave={handleCreate}
                     />
                 )
             }

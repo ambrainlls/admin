@@ -11,9 +11,10 @@ export interface EmployeesDataTypes {
 
 export interface ContactUsTypes {
     id: string;
-    subject: string;
+    name: string;
+    lastname: string;
     email: string;
-    description: string;
+    message: string;
 }
 
 export interface ResumeTypes {
