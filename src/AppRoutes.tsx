@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import NotFound from './pages/notFound/NotFound';
 import ContactUs from './pages/contactUs/ContactUs';
-import Developers from './pages/developers/Developers';
+import Employees from './pages/employees/Employees';
 import Feedback from './pages/feedback/Feedback';
 import Resume from './pages/resume/Resume';
 import Layout from './pages/Layout';
@@ -12,9 +12,9 @@ function AppRoutes () {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Layout />}>
-                    <Route path='/' element={<Developers />} />
+                    <Route path='/' element={<Employees />} />
                     <Route path='contact-us' element={<ContactUs />} />
-                    <Route path='developers' element={<Developers />} />
+                    <Route path='employees' element={<Employees />} />
                     <Route path='feedback' element={<Feedback />} />
                     <Route path='resume' element={<Resume />} />
                     <Route path='not-found' element={<NotFound />} />

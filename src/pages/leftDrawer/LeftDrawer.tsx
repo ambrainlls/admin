@@ -22,8 +22,8 @@ function LeftDrawer () {
     const navigationTabs: NavigationTabsTypes[] = [
         {
             icon: DevelopersIcon,
-            title: 'Developers',
-            route: '/developers'
+            title: 'Employees',
+            route: '/employees'
         },
         {
             icon: ContactUsIcon,
@@ -51,7 +51,7 @@ function LeftDrawer () {
     return (
         <div className={styles.leftDrawerContent}>
             <Link className={styles.dashboardLogo} to={'/'}
-                  onClick={() => handleActiveTab('Developers')}
+                  onClick={() => handleActiveTab('Employees')}
             >
                 <img src={AmBrainLogo} alt={'AmBrainLogo'} />
             </Link>
