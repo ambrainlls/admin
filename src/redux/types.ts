@@ -1,10 +1,12 @@
-export interface DevelopersDataTypes {
+export interface EmployeesDataTypes {
     id: string;
     name: string;
     surname: string;
-    developer: string;
-    beginning: string;
-    jobTitle: string;
+    startDate: string;
+    role: string;
+    position: string;
+    email: string;
+    phone: string;
 }
 
 export interface ContactUsTypes {

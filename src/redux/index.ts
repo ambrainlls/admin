@@ -2,21 +2,21 @@ import { configureStore, combineReducers, MiddlewareArray } from '@reduxjs/toolk
 import { enableMapSet } from 'immer';
 import thunk from 'redux-thunk';
 import leftDrawerSlice from './slice/leftDrawerSlice';
-import developersSlice from './slice/developersSlice';
+import employeesSlice from './slice/employeesSlice';
 import contactUsSlice from './slice/contactUsSlice';
 import resumeSlice from './slice/resumeSlice';
 import feedbackSlice from './slice/feedbackSlice';
-import createDeveloperModalSlice from './slice/createDeveloperModalSlice';
+import createEmployeeModalSlice from './slice/createEmployeeModalSlice';
 
 enableMapSet();
 
 const rootReducer = combineReducers({
     leftDrawerReducer: leftDrawerSlice,
-    developersReducer: developersSlice,
+    employeesReducer: employeesSlice,
     contactUsReducer: contactUsSlice,
     resumeReducer: resumeSlice,
     feedbackReducer: feedbackSlice,
-    createDeveloperModalReducer: createDeveloperModalSlice,
+    createEmployeeModalReducer: createEmployeeModalSlice,
 });
 
 export const store = configureStore({
