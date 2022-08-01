@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIcon.svg';
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
+import createRowIcon from '../../../assets/images/createRowIcon.svg';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import styles from './developersLayout.module.css';
+import { useDispatch } from 'react-redux';
+import { setIsOpen } from '../../../redux/slice/createDeveloperModalSlice';
+import CreateDeveloperModalComponent from '../../Modals/createDeveloperModal/CreateDeveloperModalComponent';
 
 function DevelopersLayout(){
+    const dispatch = useDispatch();
+    const [isShow, setShow] = useState(false);
+
+    const toggleModal = () => {
+        setShow(true);
+        dispatch(setIsOpen(true));
+    }
     const columns = [
         {
             name: 'Name',
@@ -458,7 +469,13 @@ function DevelopersLayout(){
         <div className={styles.developersContainer}>
             <div className={styles.filterWrapper}>
                 <FilterComponent/>
+                <img src={createRowIcon} alt={'createRowIcon'} className={styles.createRowIcon} onClick={toggleModal}/>
             </div>
+            {
+                isShow && (
+                    <CreateDeveloperModalComponent/>
+                )
+            }
            <DashboardDataTable
                columns={columns}
                data={data}

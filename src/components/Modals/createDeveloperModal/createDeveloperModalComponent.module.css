@@ -1,0 +1,101 @@
+.modalComponent {
+    background: #FFFFFF;
+    border-radius: 4px;
+}
+
+.modalComponent:focus {
+    outline: none;
+}
+
+.modalComponentTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.modalComponentTitle p {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+}
+
+.modalField {
+    margin-bottom: 48px;
+    display: flex;
+    border-bottom: 1px solid #999999;
+}
+
+.viewIcon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.arrow-down {
+    transform: rotate(90deg);
+}
+
+.rememberPasswordContent {
+    display: flex;
+    align-items: center;
+    margin-bottom: 63px;
+}
+
+.rememberPasswordContent input {
+    margin-right: 8px;
+}
+
+.rememberPasswordContent p {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #999999;
+}
+
+.fieldsToFill input {
+    width: 416px;
+    outline: none;
+    border: none;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+}
+
+.closeBtn {
+    background: gray;
+    margin-right: 24px;
+    color: #000000;
+}
+
+.saveBtn {
+    background: #047CBC;
+    color: #FFFFFF;
+}
+
+.buttonsContent {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.buttonsContent button {
+    width: 98px;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.beginning {
+    width: 100%!important;
+}

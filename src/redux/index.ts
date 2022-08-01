@@ -2,11 +2,13 @@ import { configureStore, combineReducers, MiddlewareArray } from '@reduxjs/toolk
 import { enableMapSet } from 'immer';
 import thunk from 'redux-thunk';
 import leftDrawerSlice from './slice/leftDrawerSlice';
+import createDeveloperModalSlice from "./slice/createDeveloperModalSlice";
 
 enableMapSet();
 
 const rootReducer = combineReducers({
     leftDrawerReducer: leftDrawerSlice,
+    createDeveloperModalReducer: createDeveloperModalSlice,
 });
 
 export const store = configureStore({
