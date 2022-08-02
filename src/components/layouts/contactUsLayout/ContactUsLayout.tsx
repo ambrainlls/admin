@@ -2,11 +2,9 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux';
 import {
-  deleteContact,
-  saveContactData,
-  setContactsData,
-  setSelectedContactId,
-  updateContactData
+    addNewContact,
+    setContactsData,
+    updateContactData
 } from '../../../redux/slice/contactUsSlice';
 import { ContactUsTypes } from '../../../redux/types';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
@@ -14,9 +12,6 @@ import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
 import CreateContactUsModalComponent from '../../modals/createContactUsModal/CreateContactUsModalComponent';
 import { ContactUsApi } from '../../../api/ContactUsApi';
-import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIcon.svg';
-import saveIcon from '../../../assets/images/dashboardDataTable/saveIcon.svg';
-import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
 import createRowIcon from '../../../assets/images/createRowIcon.svg';
 import styles from './contactUsLayout.module.css';
 
@@ -115,38 +110,38 @@ function ContactUsLayout() {
                 )
             }
         },
-        {
-            name: '',
-            cell: (row: ContactUsTypes) => {
-                return (
-                    <div className={styles.btnsWrapper}>
-                        <img
-                            src={deleteRowIcon}
-                            alt={'deleteRowIcon'}
-                            className={`${styles.deleteRowIcon} ${row.id === selectedContactId ? styles.disabledDeleteIcon : ''}`}
-                            onClick={() => handleDeleteContact(row.id)}
-                        />
-                        {
-                            row.id === selectedContactId ? (
-                                <div className={styles.saveIconContainer}>
-                                    <img
-                                        src={saveIcon}
-                                        alt={'saveIcon'}
-                                        onClick={() => handleSaveChanges(row.id)}
-                                    />
-                                </div>
-                            ) : (
-                                <img
-                                    src={editRowIcon}
-                                    alt={'editRowIcon'}
-                                    onClick={() => dispatch(setSelectedContactId(row.id))}
-                                />
-                            )
-                        }
-                    </div>
-                )
-            }
-        }
+        // {
+        //     name: '',
+        //     cell: (row: ContactUsTypes) => {
+        //         return (
+        //             <div className={styles.btnsWrapper}>
+        //                 <img
+        //                     src={deleteRowIcon}
+        //                     alt={'deleteRowIcon'}
+        //                     className={`${styles.deleteRowIcon} ${row.id === selectedContactId ? styles.disabledDeleteIcon : ''}`}
+        //                     onClick={() => handleDeleteContact(row.id)}
+        //                 />
+        //                 {
+        //                     row.id === selectedContactId ? (
+        //                         <div className={styles.saveIconContainer}>
+        //                             <img
+        //                                 src={saveIcon}
+        //                                 alt={'saveIcon'}
+        //                                 onClick={() => handleSaveChanges(row.id)}
+        //                             />
+        //                         </div>
+        //                     ) : (
+        //                         <img
+        //                             src={editRowIcon}
+        //                             alt={'editRowIcon'}
+        //                             onClick={() => dispatch(setSelectedContactId(row.id))}
+        //                         />
+        //                     )
+        //                 }
+        //             </div>
+        //         )
+        //     }
+        // }
     ];
 
     const [pageCount, setPageCount] = useState(3);
@@ -176,32 +171,40 @@ function ContactUsLayout() {
         ));
     };
 
-    const handleSaveChanges = (rowId: string) => {
-        // dispatch(saveContactData());
-
-        const foundIndex = contactUsData.findIndex((el)=> el.id === rowId);
-        ContactUsApi.updateContact(contactUsData[foundIndex])
-        .then(res => {
-            console.log(res) // fixme m
-        })
-        console.log(contactUsData[foundIndex]);
-    };
-
     const handleCreate = () => {
         ContactUsApi.createContact(contactData)
         .then(res => {
             console.log(res) // fixme m
         })
-        console.log('contactUs', contactData);
+        const createdData = {
+            id: '5',
+            name: 'string',
+            lastname: 'aaaaaaaaaaaa',
+            email: 'string@mail.ru',
+            message: 'string',
+        }
+        dispatch(addNewContact(createdData));
     };
 
-    const handleDeleteContact = (rowId: string) => {
-        ContactUsApi.deleteContact(rowId)
-        .then(res => {
-            console.log(res) // fixme m
-        })
-        // dispatch(deleteContact(rowId));
-    };
+    // const handleSaveChanges = (rowId: string) => {
+    //     // dispatch(saveContactData());
+    //
+    //     const foundIndex = contactUsData.findIndex((el)=> el.id === rowId);
+    //     ContactUsApi.updateContact(contactUsData[foundIndex])
+    //     .then(res => {
+    //         console.log(res) // fixme m
+    //     })
+    //     console.log(contactUsData[foundIndex]);
+    // };
+
+
+    // const handleDeleteContact = (rowId: string) => {
+    //     ContactUsApi.deleteContact(rowId)
+    //     .then(res => {
+    //         console.log(res) // fixme m
+    //     })
+    //     // dispatch(deleteContact(rowId));
+    // };
 
     return (
         <div className={styles.contactUsContainer}>

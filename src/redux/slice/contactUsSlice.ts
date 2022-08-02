@@ -53,6 +53,9 @@ const contactUsSlice = createSlice({
                 email: '',
                 message: '',
             }
+        },
+        addNewContact(state, action: PayloadAction<ContactUsTypes>) {
+            state.contactUsData.unshift(action.payload);
         }
     },
 });
@@ -66,4 +69,5 @@ export const {
     deleteContact,
     createContact,
     resetContactDataInModal,
+    addNewContact,
 } = contactUsSlice.actions;
