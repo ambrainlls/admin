@@ -27,34 +27,16 @@
     border-bottom: 1px solid #999999;
 }
 
-.viewIcon {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.modalField select {
+    width: 100%;
+    border: none;
+    background: #FFF;
     cursor: pointer;
+    font-size: 16px;
 }
 
-.arrow-down {
-    transform: rotate(90deg);
-}
-
-.rememberPasswordContent {
-    display: flex;
-    align-items: center;
-    margin-bottom: 63px;
-}
-
-.rememberPasswordContent input {
-    margin-right: 8px;
-}
-
-.rememberPasswordContent p {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    color: #999999;
+.modalField select:focus {
+    outline: none;
 }
 
 .fieldsToFill input {
@@ -62,20 +44,9 @@
     outline: none;
     border: none;
     font-weight: 400;
-    font-size: 14px;
     line-height: 17px;
     color: #000000;
-}
-
-.closeBtn {
-    background: gray;
-    margin-right: 24px;
-    color: #000000;
-}
-
-.saveBtn {
-    background: #047CBC;
-    color: #FFFFFF;
+    font-size: 16px;
 }
 
 .buttonsContent {
@@ -96,6 +67,32 @@
     cursor: pointer;
 }
 
-.startDate {
-    width: 100%!important;
+.closeBtn {
+    background: gray;
+    margin-right: 24px;
+    color: #000000;
 }
+
+.saveBtn {
+    background: #047CBC;
+    color: #FFFFFF;
+}
+
+.dateContainer, .selectContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 48px;
+    border-bottom: 1px solid #999999;
+}
+
+.dateContainer label, .selectContainer label {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #818181;
+}
+
+.startDate {
+    width: 100% !important;
+}
+

@@ -16,9 +16,10 @@ const style = {
 
 interface CreateEmployeeModalComponentProps {
     handleClose: () => void;
+    handleSave: () => void;
 }
 
-function CreateEmployeeModalComponent({ handleClose }: CreateEmployeeModalComponentProps) {
+function CreateEmployeeModalComponent({ handleClose, handleSave }: CreateEmployeeModalComponentProps) {
     return (
         <Modal
             open={ true }
@@ -29,6 +30,7 @@ function CreateEmployeeModalComponent({ handleClose }: CreateEmployeeModalCompon
             <Box component="div" sx={style} className={styles.modalComponent}>
                 <EmployeeModalContent
                     handleClose={handleClose}
+                    handleSave={handleSave}
                 />
             </Box>
         </Modal>

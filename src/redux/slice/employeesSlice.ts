@@ -6,6 +6,16 @@ const employeesSlice = createSlice({
     initialState: {
         employeesData: [] as EmployeesDataTypes[],
         selectedEmployeeId: '',
+        employeeData: {
+            id: '',
+            name: '',
+            surname: '',
+            startDate: '',
+            role: '',
+            position: '',
+            email: '',
+            phone: '',
+        } as EmployeesDataTypes,
     },
     reducers: {
         setEmployeesData(state, action: PayloadAction<EmployeesDataTypes[]>) {
@@ -34,6 +44,21 @@ const employeesSlice = createSlice({
             }
 
             state.employeesData.splice(foundIndex, 1);
+        },
+        createEmployee(state, action: PayloadAction<any>) {
+            Object.assign(state.employeeData, action.payload);
+        },
+        resetEmployeDataInModal(state) {
+            state.employeeData = {
+                id: '',
+                name: '',
+                surname: '',
+                startDate: '',
+                role: '',
+                position: '',
+                email: '',
+                phone: '',
+            }
         }
     },
 });
@@ -45,4 +70,6 @@ export const {
     saveEmployeeData,
     updateEmployeeData,
     deleteEmployee,
+    createEmployee,
+    resetEmployeDataInModal,
 } = employeesSlice.actions;
