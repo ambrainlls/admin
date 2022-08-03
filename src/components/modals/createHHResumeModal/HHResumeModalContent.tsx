@@ -1,12 +1,13 @@
 import React, { ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
-import EducationContainer from './educationContainer/EducationContainer';
-import ContactContainer from './contactContainer/ContactContainer';
-import BasicInformationContainer from './basicInformationContainer/BasicInformationContainer';
-import SpecialityContainer from './specialityContainer/SpecialityContainer';
-import WorkExperienceContainer from './workExperienceContainer/WorkExperienceContainer';
-import LanguageSkillsContainer from './languageSkillsContainer/LanguageSkillsContainer';
+import {useDispatch, useSelector} from 'react-redux';
+import EducationContainer from './resumeFields/educationContainer/EducationContainer';
+import ContactContainer from './resumeFields/contactContainer/ContactContainer';
+import BasicInformationContainer from './resumeFields/basicInformationContainer/BasicInformationContainer';
+import SpecialityContainer from './resumeFields/specialityContainer/SpecialityContainer';
+import WorkExperienceContainer from './resumeFields/workExperienceContainer/WorkExperienceContainer';
+import LanguageSkillsContainer from './resumeFields/languageSkillsContainer/LanguageSkillsContainer';
 import styles from './createHHResumeModalComponent.module.css';
+import {RootState} from "../../../redux";
 
 interface EmployeeModalContentProps {
     handleClose: () => void;
@@ -14,13 +15,11 @@ interface EmployeeModalContentProps {
 }
 
 const HHResumeModalContent = ({ handleClose, handleSave }: EmployeeModalContentProps) => {
-    const dispatch = useDispatch();
+    const hasWorkExperience = useSelector((state: RootState) => state.hhResumeReducer.hasWorkExperience);
 
     const handleReset = () => {
         handleClose();
     };
-
-    const handleChangeHHResumeData = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => {}
 
     return (
         <>
@@ -40,10 +39,14 @@ const HHResumeModalContent = ({ handleClose, handleSave }: EmployeeModalContentP
                     <p>Speciality</p>
                     <SpecialityContainer />
                 </div>
-                <div className={styles.fieldsSectionContainer}>
-                    <p>Work experience</p>
-                    <WorkExperienceContainer />
-                </div>
+                {
+                    hasWorkExperience && (
+                        <div className={styles.fieldsSectionContainer}>
+                            <p>Work experience</p>
+                            <WorkExperienceContainer />
+                        </div>
+                    )
+                }
                 <div className={styles.fieldsSectionContainer}>
                     <p>Education</p>
                     <EducationContainer />

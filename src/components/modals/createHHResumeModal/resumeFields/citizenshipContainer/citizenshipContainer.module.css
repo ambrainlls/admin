@@ -1,7 +1,15 @@
+.selectedCountriesContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
 .citizenshipDetailsItem {
     margin-bottom: 48px;
     display: flex;
     justify-content: space-between;
+    height: 40px;
+    align-items: center;
     border-bottom: 1px solid #999999;
 }
 
@@ -18,5 +26,18 @@
     width: 24px;
     height: 24px;
     cursor: pointer;
+}
+
+.countriesItem {
+    display: flex;
+    align-items: center;
+    background: #D0E0FF;
+    padding: 5px;
+}
+
+.countriesItem img {
+    width: 12px;
+    height: 12px;
+    margin-left: 10px;
 }
 
