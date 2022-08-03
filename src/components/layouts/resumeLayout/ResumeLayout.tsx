@@ -12,9 +12,11 @@ import { ResumeTypes} from '../../../redux/types';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
+import CreateHHResumeModalComponent from '../../modals/createHHResumeModal/CreateHHResumeModalComponent';
 import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIcon.svg';
 import saveIcon from '../../../assets/images/dashboardDataTable/saveIcon.svg';
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
+import hhLogo from '../../../assets/images/logos/HeadHunter_logo.png';
 import styles from './resumeLayout.module.css';
 
 const data: ResumeTypes[] = [
@@ -194,6 +196,7 @@ function ResumeLayout() {
 
     const [pageCount, setPageCount] = useState(3);
     const [currentPage, setCurrentPage] = useState(1);
+    const [showHHModal, setShowHHModal] = useState(false);
 
     useEffect(() => {
         dispatch(setResumeData(data));
@@ -221,10 +224,23 @@ function ResumeLayout() {
         setCurrentPage(page);
     };
 
+    const handleCloseHHModal = () => {
+        setShowHHModal(false);
+    };
+
     return (
         <div className={styles.resumeContainer}>
             <div className={styles.filterWrapper}>
                 <FilterComponent />
+            </div>
+            <div className={styles.websiteIconsForResume}
+                 onClick={() => setShowHHModal(!showHHModal)}
+            >
+                <div className={styles.hhIcon}>
+                    <span>Create Resume in HH</span>
+                    <img src={hhLogo}
+                    />
+                </div>
             </div>
             <DashboardDataTable
                 columns={columns}
@@ -237,6 +253,14 @@ function ResumeLayout() {
                     handlePageChange={handlePageChange}
                 />
             </div>
+            {
+                showHHModal && (
+                    <CreateHHResumeModalComponent
+                        handleClose={handleCloseHHModal}
+                        handleSave={() => {}}
+                    />
+                )
+            }
         </div>
     )
 }

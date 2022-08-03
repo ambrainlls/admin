@@ -1,0 +1,29 @@
+.birthDaySection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid #818181;
+    border-radius: 5px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.birthDaySection input, .birthDaySection select {
+    width: 100%;
+    border: none;
+}
+
+.birthDaySection input:focus, .birthDaySection select:focus {
+    background: #FFF;
+    outline: none;
+}
+
+.birthDayField {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.birthDayField:not(:last-child) {
+    border-right: 1px solid #818181;
+}

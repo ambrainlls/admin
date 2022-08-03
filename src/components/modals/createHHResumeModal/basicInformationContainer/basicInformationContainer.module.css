@@ -1,0 +1,42 @@
+.modalField {
+    margin-bottom: 48px;
+    display: flex;
+    border-bottom: 1px solid #999999;
+}
+
+.birthDayContainer {
+    margin-bottom: 48px;
+}
+
+.birthDayContainer label {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #818181;
+}
+
+.workExperienceContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.workExperienceContainer label, .modalField label, .citizenshipContainer label {
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #818181;
+}
+
+.workExperienceItem input {
+    cursor: pointer;
+}
+
+.workExperienceItem label {
+    color: black;
+    cursor: pointer;
+}
+
+.citizenshipContainer {
+    display: flex;
+    flex-direction: column;
+}
