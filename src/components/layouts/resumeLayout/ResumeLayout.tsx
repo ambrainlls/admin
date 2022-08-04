@@ -8,7 +8,7 @@ import {
   setSelectedResumeId,
   updateResumeData
 } from '../../../redux/slice/resumeSlice';
-import { ResumeTypes} from '../../../redux/types';
+import {hhResumeNativeLanguage, ResumeTypes} from '../../../redux/types';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
@@ -68,6 +68,12 @@ function ResumeLayout() {
     const dispatch = useDispatch();
     const resumeData = useSelector((state: RootState) => state.resumeReducer.resumeData);
     const selectedResumeId = useSelector((state: RootState) => state.resumeReducer.selectedResumeId);
+    const hhResumeCV = useSelector((state: RootState) => state.hhResumeReducer.cv);
+    const hhResumeEducation = useSelector((state: RootState) => state.hhResumeReducer.education);
+    const hhResumeExperience = useSelector((state: RootState) => state.hhResumeReducer.experience);
+    const hhResumeSpeciality = useSelector((state: RootState) => state.hhResumeReducer.speciality);
+    const hhResumeNativeLanguage: hhResumeNativeLanguage = useSelector((state: RootState) => state.hhResumeReducer.nativeLanguage);
+    const hhResumeForeignLanguages = useSelector((state: RootState) => state.hhResumeReducer.foreignLanguages);
 
     const columns = [
         {
@@ -224,8 +230,30 @@ function ResumeLayout() {
         setCurrentPage(page);
     };
 
-    const handleCloseHHModal = () => {
-        setShowHHModal(false);
+    const handleCreateHHResume = () => {
+        const languages: any = {};
+
+        for(let key in hhResumeNativeLanguage){
+            // @ts-ignore
+            const value = hhResumeNativeLanguage[key];
+            languages[value] = key;
+        }
+
+        hhResumeForeignLanguages.forEach((item: any) => {
+                Object.assign(languages, {
+                    [item.language_type]: item.level
+                })
+        });
+
+        const params = {
+            cv: hhResumeCV,
+            education: hhResumeEducation,
+            experience: hhResumeExperience,
+            language: languages,
+            speciality: hhResumeSpeciality,
+        };
+
+        console.log(params) // fixme m
     };
 
     return (
@@ -256,8 +284,8 @@ function ResumeLayout() {
             {
                 showHHModal && (
                     <CreateHHResumeModalComponent
-                        handleClose={handleCloseHHModal}
-                        handleSave={() => {}}
+                        handleClose={() => setShowHHModal(false)}
+                        handleSave={handleCreateHHResume}
                     />
                 )
             }

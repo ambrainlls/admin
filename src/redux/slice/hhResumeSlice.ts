@@ -42,7 +42,7 @@ const hhResumeSlice = createSlice({
             state.education.push(
                 {
                     id: uniqueId(),
-                    education_level: '',
+                    education_level: 'average',
                     institution: '',
                     faculty: '',
                     specialization: '',
@@ -94,7 +94,7 @@ const hhResumeSlice = createSlice({
             state.foreignLanguages.push({
                 id: uniqueId(),
                 language_type: '',
-                level: ''
+                level: 'a1'
             });
         } ,
         deleteForeignLanguage(state, action: PayloadAction<string>) {
@@ -110,7 +110,6 @@ const hhResumeSlice = createSlice({
             state.experience.push(
                 {
                     id: uniqueId(),
-                    experience: '',
                     beginning_work: '',
                     until_now: false,
                     ending: '',

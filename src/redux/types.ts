@@ -52,7 +52,6 @@ export interface hhResumeEducation {
 
 export interface hhResumeExperience {
     id: string;
-    experience: string;
     beginning_work: string;
     until_now: boolean;
     ending: string;
