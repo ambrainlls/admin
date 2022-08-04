@@ -9,6 +9,10 @@
     border-bottom: 1px solid #999999;
 }
 
+.foreignLanguagesContainer {
+    margin-bottom: 15px;
+}
+
 .languageSkillsDetailsItem input {
     width: 100%;
     outline: none;
@@ -26,9 +30,9 @@
 }
 
 .foreignLanguages {
-    margin: 15px 0 10px 0;
+    margin: 15px 0 20px 0;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
 }
 
@@ -44,9 +48,20 @@
     color: #0d69ba;
     text-decoration: underline;
     cursor: pointer;
+    padding-top: 15px;
 }
 
 .disabledAddLanguage {
     color: #818181;
     pointer-events: none;
+}
+
+.deleteIconContainer {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.deleteIconContainer img {
+    width: 13px;
 }

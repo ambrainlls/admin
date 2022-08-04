@@ -7,9 +7,18 @@ import styles from './contactContainer.module.css';
 function ContactContainer() {
     const dispatch = useDispatch();
 
-    const firstName = useSelector((state: RootState) => state.hhResumeReducer.cv ? state.hhResumeReducer.cv.firstName : '');
-    const lastName = useSelector((state: RootState) => state.hhResumeReducer.cv ? state.hhResumeReducer.cv.lastName : '');
-    const phone = useSelector((state: RootState) => state.hhResumeReducer.cv ? state.hhResumeReducer.cv.phone : '');
+    const firstName = useSelector((state: RootState) => (state.hhResumeReducer.cv && state.hhResumeReducer.cv.firstName)
+        ? state.hhResumeReducer.cv.firstName
+        : ''
+    );
+    const lastName = useSelector((state: RootState) => (state.hhResumeReducer.cv && state.hhResumeReducer.cv.lastName)
+        ? state.hhResumeReducer.cv.lastName
+        : ''
+    );
+    const phone = useSelector((state: RootState) => (state.hhResumeReducer.cv && state.hhResumeReducer.cv.phone)
+        ? state.hhResumeReducer.cv.phone
+        : ''
+    );
 
     return (
         <div>

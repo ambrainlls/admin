@@ -42,6 +42,7 @@ export interface hhResumeCV {
 }
 
 export interface hhResumeEducation {
+    id: string;
     education_level: string;
     institution: string;
     faculty: string;
@@ -50,18 +51,18 @@ export interface hhResumeEducation {
 }
 
 export interface hhResumeExperience {
+    id: string;
     experience: string;
     beginning_work: string;
-    until_now: string;
+    until_now: boolean;
     ending: string;
     organization: string;
     job_title: string;
     responsibilities: string;
 }
 
-export interface hhResumeLanguage {
-    // language_type: string;
-    // level: string;
+export interface hhResumeNativeLanguage {
+    native_language: string;
 }
 
 export interface hhResumeSpeciality {

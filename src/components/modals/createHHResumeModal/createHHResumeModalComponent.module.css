@@ -56,3 +56,28 @@
     margin: 50px 0 30px 0;
 }
 
+.addEducation, .addWorkExperiance {
+    color: #0d69ba;
+    text-decoration: underline;
+    cursor: pointer;
+    padding-top: 15px;
+}
+
+.educationContainer, .workExperianceContainer {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #818181;
+    padding: 10px;
+    margin-bottom: 25px;
+}
+
+.deleteIconContainer {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.deleteIconContainer img {
+    width: 15px;
+    cursor: pointer;
+}

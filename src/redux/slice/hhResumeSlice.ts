@@ -1,17 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { hhResumeCV, hhResumeEducation, hhResumeExperience, hhResumeLanguage, hhResumeSpeciality } from '../types';
+import { uniqueId } from 'lodash';
+import { hhResumeCV, hhResumeEducation, hhResumeExperience, hhResumeNativeLanguage, hhResumeSpeciality } from '../types';
 
 const hhResumeSlice = createSlice({
     name: 'hhResumeSlice',
     initialState: {
         cv: null as unknown as hhResumeCV,
-        education: null as unknown as hhResumeEducation,
+        education: [] as hhResumeEducation[],
         experience: [] as hhResumeExperience[],
-        // language: null as unknown as hhResumeLanguage,
-        language: null as unknown as any,
+        nativeLanguage: null as unknown as hhResumeNativeLanguage,
         speciality: null as unknown as hhResumeSpeciality,
         selectedCountries: [],
         hasWorkExperience: false,
+        foreignLanguages: [] as any [],
     },
     reducers: {
         setCV(state, action: PayloadAction<any>) {
@@ -37,11 +38,105 @@ const hhResumeSlice = createSlice({
         setSpeciality(state, action: PayloadAction<any>) {
             state.speciality = {...state.speciality, ...action.payload};
         },
-        setEducation(state, action: PayloadAction<any>) {
-            state.education = {...state.education, ...action.payload};
+        addEducation(state) {
+            state.education.push(
+                {
+                    id: uniqueId(),
+                    education_level: '',
+                    institution: '',
+                    faculty: '',
+                    specialization: '',
+                    year_of_ending: '',
+                }
+            );
         },
-        setLanguage(state, action: PayloadAction<any>) {
-            state.language = {...state.language, ...action.payload};
+        updateEducation(state, action: PayloadAction<{id: string, updatedParams: any}>) {
+            const foundIndex = state.education.findIndex(el => el.id === action.payload.id);
+
+            if (foundIndex === -1) {
+                return;
+            }
+
+            state.education[foundIndex] = {...state.education[foundIndex], ...action.payload.updatedParams};
+        },
+        deleteEducation(state, action: PayloadAction<string>) {
+            const foundIndex = state.education.findIndex(el => el.id === action.payload);
+
+            if (foundIndex === -1) {
+                return;
+            }
+
+            state.education.splice(foundIndex, 1);
+        },
+        setNativeLanguage(state, action: PayloadAction<any>) {
+            state.nativeLanguage = {...state.nativeLanguage, ...action.payload};
+        },
+        updateForeignLanguage(state, action: PayloadAction<{value: string, languageId: string, key: string}>) {
+            const { value, languageId, key } = action.payload;
+            const newForeignLanguages: any[] = [...state.foreignLanguages];
+
+            const foundIndex = newForeignLanguages.findIndex(el => el.id === languageId);
+
+            if (foundIndex === -1) {
+                return;
+            }
+
+            const updatedLanguage = {...newForeignLanguages[foundIndex]};
+
+            updatedLanguage[key]= value;
+
+            newForeignLanguages[foundIndex] = updatedLanguage;
+
+
+            state.foreignLanguages = newForeignLanguages;
+        },
+        addForeignLanguage(state) {
+            state.foreignLanguages.push({
+                id: uniqueId(),
+                language_type: '',
+                level: ''
+            });
+        } ,
+        deleteForeignLanguage(state, action: PayloadAction<string>) {
+            const foundIndex = state.foreignLanguages.findIndex(el => el.id === action.payload);
+
+            if (foundIndex === -1) {
+                return;
+            }
+
+            state.foreignLanguages.splice(foundIndex, 1);
+        },
+        addWorkExperiance(state) {
+            state.experience.push(
+                {
+                    id: uniqueId(),
+                    experience: '',
+                    beginning_work: '',
+                    until_now: false,
+                    ending: '',
+                    organization: '',
+                    job_title: '',
+                    responsibilities: '',
+                }
+            );
+        },
+        deleteWorkExperiance(state, action: PayloadAction<string>) {
+            const foundIndex = state.experience.findIndex(el => el.id === action.payload);
+
+            if (foundIndex === -1) {
+                return;
+            }
+
+            state.experience.splice(foundIndex, 1);
+        },
+        updateWorkExperiance(state, action: PayloadAction<{id: string, updatedParams: any}>) {
+            const foundIndex = state.experience.findIndex(el => el.id === action.payload.id);
+
+            if (foundIndex === -1) {
+                return;
+            }
+
+            state.experience[foundIndex] = {...state.experience[foundIndex], ...action.payload.updatedParams};
         },
     },
 });
@@ -53,6 +148,14 @@ export const {
     updateCountyIds,
     setHasWorkExperience,
     setSpeciality,
-    setEducation,
-    setLanguage,
+    addEducation,
+    updateEducation,
+    deleteEducation,
+    setNativeLanguage,
+    updateForeignLanguage,
+    deleteForeignLanguage,
+    addForeignLanguage,
+    addWorkExperiance,
+    deleteWorkExperiance,
+    updateWorkExperiance,
 } = hhResumeSlice.actions;

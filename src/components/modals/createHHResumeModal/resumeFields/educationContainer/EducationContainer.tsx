@@ -1,37 +1,21 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { updateEducation } from '../../../../../redux/slice/hhResumeSlice';
+import { hhResumeEducation } from '../../../../../redux/types';
 import styles from './educationContainer.module.css';
-import {setEducation} from "../../../../../redux/slice/hhResumeSlice";
-import {RootState} from "../../../../../redux";
 
-function EducationContainer() {
+interface EducationContainerProps {
+    education: hhResumeEducation;
+}
+
+function EducationContainer({ education }: EducationContainerProps) {
     const dispatch = useDispatch();
 
-    const educationLevel = useSelector(
-        (state: RootState) => (state.hhResumeReducer.education && state.hhResumeReducer.education.education_level)
-            ? state.hhResumeReducer.education.education_level
-            : 'average'
-    );
-    const institution = useSelector(
-        (state: RootState) => (state.hhResumeReducer.education && state.hhResumeReducer.education.institution)
-            ? state.hhResumeReducer.education.institution
-            : ''
-    );
-    const faculty = useSelector(
-        (state: RootState) => (state.hhResumeReducer.education && state.hhResumeReducer.education.faculty)
-            ? state.hhResumeReducer.education.faculty
-            : ''
-    );
-    const specialization = useSelector(
-        (state: RootState) => (state.hhResumeReducer.education && state.hhResumeReducer.education.specialization)
-            ? state.hhResumeReducer.education.specialization
-            : ''
-    );
-    const yearOfEnding = useSelector(
-        (state: RootState) => (state.hhResumeReducer.education && state.hhResumeReducer.education.year_of_ending)
-            ? state.hhResumeReducer.education.year_of_ending
-            : ''
-    );
+    const educationLevel = education.education_level ? education.education_level : 'average';
+    const institution = education.institution;
+    const faculty = education.faculty;
+    const specialization = education.specialization;
+    const yearOfEnding = education.year_of_ending;
 
     return (
         <div>
@@ -40,7 +24,16 @@ function EducationContainer() {
                     <label htmlFor="">Level</label>
                     <select
                         value={educationLevel}
-                        onChange={(evt) => dispatch(setEducation({education_level: evt.target.value}))}
+                        onChange={(evt) => dispatch(
+                            updateEducation(
+                                {
+                                    id: education.id,
+                                    updatedParams: {
+                                        education_level: evt.target.value
+                                    }
+                                }
+                            ))
+                        }
                     >
                         <option value="average">Average</option>
                         <option value="special_secondary">Specialized secondary</option>
@@ -60,7 +53,16 @@ function EducationContainer() {
                                     id="institution"
                                     type="text"
                                     value={institution}
-                                    onChange={(evt) => dispatch(setEducation({institution: evt.target.value}))}
+                                    onChange={(evt) => dispatch(
+                                        updateEducation(
+                                            {
+                                                id: education.id,
+                                                updatedParams: {
+                                                    institution: evt.target.value
+                                                }
+                                            }
+                                        ))
+                                    }
                                     placeholder={'Educational institution'}
                                 />
                             </div>
@@ -69,7 +71,16 @@ function EducationContainer() {
                                     id="faculty"
                                     type="text"
                                     value={faculty}
-                                    onChange={(evt) => dispatch(setEducation({faculty: evt.target.value}))}
+                                    onChange={(evt) => dispatch(
+                                        updateEducation(
+                                            {
+                                                id: education.id,
+                                                updatedParams: {
+                                                    faculty: evt.target.value
+                                                }
+                                            }
+                                        ))
+                                    }
                                     placeholder={'Faculty'}
                                 />
                             </div>
@@ -78,9 +89,17 @@ function EducationContainer() {
                                     id="specialization"
                                     type="text"
                                     value={specialization}
-                                    onChange={(evt) => dispatch(setEducation({specialization: evt.target.value}))}
+                                    onChange={(evt) => dispatch(
+                                        updateEducation(
+                                            {
+                                                id: education.id,
+                                                updatedParams: {
+                                                    specialization: evt.target.value
+                                                }
+                                            }
+                                        ))
+                                    }
                                     placeholder={'Specialization'}
-
                                 />
                             </div>
                             <div className={styles.educationDetailsItem}>
@@ -90,7 +109,16 @@ function EducationContainer() {
                                     value={yearOfEnding}
                                     min={1800}
                                     max={3000}
-                                    onChange={(evt) => dispatch(setEducation({year_of_ending: evt.target.value}))}
+                                    onChange={(evt) => dispatch(
+                                        updateEducation(
+                                            {
+                                                id: education.id,
+                                                updatedParams: {
+                                                    year_of_ending: evt.target.value
+                                                }
+                                            }
+                                        ))
+                                    }
                                     placeholder={'Year of ending'}
                                 />
                             </div>

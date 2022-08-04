@@ -1,13 +1,20 @@
-import React, { ChangeEvent } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../redux';
+import {
+    addEducation,
+    addWorkExperiance,
+    deleteEducation,
+    deleteWorkExperiance
+} from '../../../redux/slice/hhResumeSlice';
 import EducationContainer from './resumeFields/educationContainer/EducationContainer';
 import ContactContainer from './resumeFields/contactContainer/ContactContainer';
 import BasicInformationContainer from './resumeFields/basicInformationContainer/BasicInformationContainer';
 import SpecialityContainer from './resumeFields/specialityContainer/SpecialityContainer';
 import WorkExperienceContainer from './resumeFields/workExperienceContainer/WorkExperienceContainer';
 import LanguageSkillsContainer from './resumeFields/languageSkillsContainer/LanguageSkillsContainer';
+import deleteIcon from '../../../assets/images/actionIcons/delete.svg';
 import styles from './createHHResumeModalComponent.module.css';
-import {RootState} from "../../../redux";
 
 interface EmployeeModalContentProps {
     handleClose: () => void;
@@ -15,11 +22,10 @@ interface EmployeeModalContentProps {
 }
 
 const HHResumeModalContent = ({ handleClose, handleSave }: EmployeeModalContentProps) => {
+    const dispatch = useDispatch();
     const hasWorkExperience = useSelector((state: RootState) => state.hhResumeReducer.hasWorkExperience);
-
-    const handleReset = () => {
-        handleClose();
-    };
+    const education = useSelector((state: RootState) => state.hhResumeReducer.education);
+    const workExperiance = useSelector((state: RootState) => state.hhResumeReducer.experience);
 
     return (
         <>
@@ -43,13 +49,52 @@ const HHResumeModalContent = ({ handleClose, handleSave }: EmployeeModalContentP
                     hasWorkExperience && (
                         <div className={styles.fieldsSectionContainer}>
                             <p>Work experience</p>
-                            <WorkExperienceContainer />
+                            {
+                                workExperiance.length ? workExperiance.map(item => (
+                                    <div key={item.id} className={styles.workExperianceContainer}>
+                                        <div className={styles.deleteIconContainer}>
+                                            <img src={deleteIcon} alt={deleteIcon}
+                                                 onClick={() => {dispatch(deleteWorkExperiance(item.id))}}
+                                            />
+                                        </div>
+                                        <WorkExperienceContainer
+                                            workExperience={item}
+                                        />
+                                    </div>
+                                )) : null
+                            }
+                            <span
+                                className={`${styles.addWorkExperiance}`}
+                                onClick={() => dispatch(addWorkExperiance())}
+                            >
+                                Add work experiance
+                            </span>
                         </div>
                     )
                 }
                 <div className={styles.fieldsSectionContainer}>
                     <p>Education</p>
-                    <EducationContainer />
+                    {
+                        education.length ? education.map((item) => (
+                            <div key={item.id} className={styles.educationContainer}>
+                                <div className={styles.deleteIconContainer}>
+                                    <img src={deleteIcon} alt={deleteIcon}
+                                         onClick={() => dispatch(deleteEducation(item.id))}
+                                    />
+                                </div>
+                                <EducationContainer
+                                    education={item}
+                                />
+                            </div>
+                        )) : null
+
+                    }
+                    <span
+                        className={`${styles.addEducation}`}
+                        onClick={() => dispatch(addEducation())}
+                    >
+                        Add education
+                    </span>
                 </div>
                 <div className={styles.fieldsSectionContainer}>
                     <p>Language skills</p>
@@ -57,7 +102,7 @@ const HHResumeModalContent = ({ handleClose, handleSave }: EmployeeModalContentP
                 </div>
             </div>
             <div className={styles.buttonsContent}>
-                <button className={styles.closeBtn} onClick={handleReset}>
+                <button className={styles.closeBtn} onClick={handleClose}>
                     Close
                 </button>
                 <button className={styles.saveBtn} onClick={handleSave}>
