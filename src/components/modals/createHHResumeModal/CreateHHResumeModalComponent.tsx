@@ -7,11 +7,11 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 464,
+    width: 700,
     boxShadow: 24,
     pt: 2,
     pb: 3,
-    px: 3,
+    px: 4,
     maxHeight: '700px',
     overflowY: 'auto'
 };
