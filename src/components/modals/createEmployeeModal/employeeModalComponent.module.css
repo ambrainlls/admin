@@ -27,6 +27,10 @@
     border-bottom: 1px solid #999999;
 }
 
+.modalFieldMultiSelect {
+    margin-bottom: 80px;
+}
+
 .modalField select {
     width: 100%;
     border: none;
@@ -39,7 +43,7 @@
     outline: none;
 }
 
-.fieldsToFill input {
+.modalField input, .dateContainer input {
     width: 416px;
     outline: none;
     border: none;
