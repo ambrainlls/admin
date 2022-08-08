@@ -57,3 +57,12 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.projectsContainer {
+    width: 100%;
+    display: flex;
+}
+
+.multiSelectProjectsContainer {
+    width: 100%;
+}

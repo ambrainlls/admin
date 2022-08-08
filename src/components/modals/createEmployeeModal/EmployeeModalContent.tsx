@@ -1,28 +1,25 @@
 import React, { ChangeEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../redux';
-import { createEmployee, resetEmployeDataInModal } from '../../../redux/slice/employeesSlice';
-import styles from './createEmployeeModalComponent.module.css';
+import { CreateEmployeesDataTypes, EmployeesDataTypes } from '../../../redux/types';
+import MultiSelectForProjects from '../../ui/multiSelectForProjects/MultiSelectForProjects';
+import styles from './employeeModalComponent.module.css';
 
 interface EmployeeModalContentProps {
     handleClose: () => void;
     handleSave: () => void;
+    projectOptions: any[];
+    employeeData?: EmployeesDataTypes | CreateEmployeesDataTypes;
+    handleChangeEmployeData: (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => void
+    handleSelectedOptions: (selectedOptionsIds: string[]) => void;
 }
 
-const EmployeeModalContent = ({ handleClose, handleSave }: EmployeeModalContentProps) => {
-    const dispatch = useDispatch();
-
-    const employeeData = useSelector((state: RootState) => state.employeesReducer.employeeData);
-
-    const handleChangeEmployeData = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => {
-        dispatch(createEmployee({[key]: evt.target.value}));
-    };
-
-    const handleReset = () => {
-        handleClose();
-        dispatch(resetEmployeDataInModal());
-    };
-
+const EmployeeModalContent = ({
+    handleClose,
+    handleSave,
+    projectOptions,
+    employeeData,
+    handleChangeEmployeData,
+    handleSelectedOptions,
+}: EmployeeModalContentProps) => {
     return (
         <>
             <div className={styles.modalComponentTitle}>
@@ -34,7 +31,7 @@ const EmployeeModalContent = ({ handleClose, handleSave }: EmployeeModalContentP
                         id="name"
                         type="text"
                         name="name"
-                        value={employeeData.name ? employeeData.name : ''}
+                        value={(employeeData && employeeData.name) ? employeeData.name : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'name')}}
                         placeholder="Name"
                     />
@@ -44,29 +41,41 @@ const EmployeeModalContent = ({ handleClose, handleSave }: EmployeeModalContentP
                         id="surname"
                         type="text"
                         name="surname"
-                        value={employeeData.surname ? employeeData.surname : ''}
+                        value={(employeeData && employeeData.surname) ? employeeData.surname : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'surname')}}
                         placeholder="Surname"
                     />
                 </div>
                 <div className={`${styles.dateContainer}`}>
-                    <label htmlFor="startDate">Start Date</label>
+                    <label>Birthday</label>
                     <input
                         className={styles.startDate}
-                        id="startDate"
+                        id="birthday"
                         type="date"
-                        name="startDate"
-                        value={employeeData.startDate ? employeeData.startDate : ''}
-                        onChange={(evt) => {handleChangeEmployeData(evt, 'startDate')}}
+                        name="birthday"
+                        value={(employeeData && employeeData.birthday) ? employeeData.birthday : ''}
+                        onChange={(evt) => {handleChangeEmployeData(evt, 'birthday')}}
+                        placeholder="Birthday"
+                    />
+                </div>
+                <div className={`${styles.dateContainer}`}>
+                    <label>Start Date</label>
+                    <input
+                        className={styles.startDate}
+                        id="start_date"
+                        type="date"
+                        name="start_date"
+                        value={(employeeData && employeeData.start_date) ? employeeData.start_date : ''}
+                        onChange={(evt) => {handleChangeEmployeData(evt, 'start_date')}}
                         placeholder="Start Date"
                     />
                 </div>
                 <div className={`${styles.modalField} ${styles.selectContainer}`}>
-                    <label htmlFor="role">Role</label>
+                    <label>Role</label>
                     <select
                         id="role"
                         name="role"
-                        value={employeeData.role ? employeeData.role : ''}
+                        value={(employeeData && employeeData.role) ? employeeData.role : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'role')}}
                     >
                         <option value="founder">Founder</option>
@@ -78,11 +87,11 @@ const EmployeeModalContent = ({ handleClose, handleSave }: EmployeeModalContentP
                     </select>
                 </div>
                 <div className={`${styles.modalField} ${styles.selectContainer}`}>
-                    <label htmlFor="position">Position</label>
+                    <label>Position</label>
                     <select
                         id="position"
                         name="position"
-                        value={employeeData.position ? employeeData.position : ''}
+                        value={(employeeData && employeeData.position) ? employeeData.position : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'position')}}
                     >
                         <option value="fullstack">Fullstack</option>
@@ -95,7 +104,7 @@ const EmployeeModalContent = ({ handleClose, handleSave }: EmployeeModalContentP
                         id="email"
                         type="text"
                         name="email"
-                        value={employeeData.email ? employeeData.email : ''}
+                        value={(employeeData && employeeData.email) ? employeeData.email : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'email')}}
                         placeholder="Email"
                     />
@@ -105,15 +114,42 @@ const EmployeeModalContent = ({ handleClose, handleSave }: EmployeeModalContentP
                         id="phone"
                         type="text"
                         name="phone"
-                        value={employeeData.phone ? employeeData.phone : ''}
+                        value={(employeeData && employeeData.phone) ? employeeData.phone : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'phone')}}
                         placeholder="Phone"
+                    />
+                </div>
+                <div className={styles.modalField}>
+                    <input
+                        id="telegram_chat_id"
+                        type="text"
+                        name="telegram_chat_id"
+                        value={(employeeData && employeeData.telegram_chat_id) ? employeeData.telegram_chat_id : ''}
+                        onChange={(evt) => {handleChangeEmployeData(evt, 'telegram_chat_id')}}
+                        placeholder="Telegram chat id"
+                    />
+                </div>
+                <div className={styles.modalField}>
+                    <input
+                        id="description"
+                        type="text"
+                        name="description"
+                        value={(employeeData && employeeData.description) ? employeeData.description : ''}
+                        onChange={(evt) => {handleChangeEmployeData(evt, 'description')}}
+                        placeholder="Description"
+                    />
+                </div>
+                <div className={styles.modalFieldMultiSelect}>
+                    <MultiSelectForProjects
+                        options={projectOptions}
+                        handleSelectedOptions={handleSelectedOptions}
+                        selectedOptions={(employeeData && employeeData.project) ? employeeData.project : []}
                     />
                 </div>
             </div>
             <div className={styles.buttonsContent}>
                 <button className={styles.closeBtn}
-                        onClick={handleReset}
+                        onClick={handleClose}
                 >
                     Close
                 </button>
