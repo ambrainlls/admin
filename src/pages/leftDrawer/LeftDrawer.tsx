@@ -40,6 +40,11 @@ function LeftDrawer () {
             title: 'Feedback',
             route: '/feedback',
         },
+        {
+            icon: DevelopersIcon,
+            title: 'Project',
+            route: '/project'
+        }
     ];
 
     const activeTab = useSelector((state: RootState) => state.leftDrawerReducer.activeTab);

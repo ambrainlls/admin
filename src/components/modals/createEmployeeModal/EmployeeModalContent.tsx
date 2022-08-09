@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import { CreateEmployeesDataTypes, EmployeesDataTypes } from '../../../redux/types';
-import MultiSelectForProjects from '../../ui/multiSelectForProjects/MultiSelectForProjects';
+import MultiSelect from '../../ui/multiSelect/MultiSelect';
 import styles from './employeeModalComponent.module.css';
 
 interface EmployeeModalContentProps {
@@ -140,10 +140,11 @@ const EmployeeModalContent = ({
                     />
                 </div>
                 <div className={styles.modalFieldMultiSelect}>
-                    <MultiSelectForProjects
+                    <MultiSelect
                         options={projectOptions}
                         handleSelectedOptions={handleSelectedOptions}
                         selectedOptions={(employeeData && employeeData.project) ? employeeData.project : []}
+                        optionKey={'company_name'}
                     />
                 </div>
             </div>

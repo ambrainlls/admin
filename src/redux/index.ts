@@ -6,6 +6,7 @@ import employeesSlice from './slice/employeesSlice';
 import contactUsSlice from './slice/contactUsSlice';
 import resumeSlice from './slice/resumeSlice';
 import feedbackSlice from './slice/feedbackSlice';
+import projectSlice from "./slice/projectSlice";
 
 enableMapSet();
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     contactUsReducer: contactUsSlice,
     resumeReducer: resumeSlice,
     feedbackReducer: feedbackSlice,
+    projectReducer: projectSlice
 });
 
 export const store = configureStore({

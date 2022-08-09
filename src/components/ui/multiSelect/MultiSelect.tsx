@@ -2,15 +2,16 @@ import React, { useRef, useState, useEffect } from 'react';
 import arrowUp from '../../../assets/images/arrowUpIcon.svg';
 import arrowDown from '../../../assets/images/arrowDownIcon.svg';
 import deleteIcon from '../../../assets/images/delete.svg';
-import styles from './multiSelectForProjects.module.css';
+import styles from './multiSelect.module.css';
 
 interface MultiSelectProps {
     options: any[];
     handleSelectedOptions: (selectedOptionIds: string[]) => void;
     selectedOptions: any[];
+    optionKey: string;
 }
 
-function MultiSelectForProjects({ options, handleSelectedOptions, selectedOptions }: MultiSelectProps) {
+function MultiSelect({ options, handleSelectedOptions, selectedOptions, optionKey }: MultiSelectProps) {
     const multiSelectRef = useRef() as React.RefObject<HTMLDivElement>;
 
     const [showOptions, setShowOptions] = useState(false);
@@ -64,8 +65,8 @@ function MultiSelectForProjects({ options, handleSelectedOptions, selectedOption
                         selectedParams.map(option => {
                             if (isChecked(option)) {
                                 return (
-                                     <div key={option.id + option.company_name} className={styles.selectedOption}>
-                                         <span className={styles.selectedOptionTitle}>{option.company_name}</span>
+                                     <div key={option.id + option[optionKey]} className={styles.selectedOption}>
+                                         <span className={styles.selectedOptionTitle}>{option[optionKey]}</span>
                                          <img src={deleteIcon} alt={deleteIcon}
                                               className={styles.removeSelectedOptionIcon}
                                               onClick={()=>handleOptionClick(option)}
@@ -97,13 +98,13 @@ function MultiSelectForProjects({ options, handleSelectedOptions, selectedOption
                     <div className={styles.optionsContainer} data-test={'optionsContainer'}>
                         {
                             options.map((option) => {
-                                const {id, company_name} = option;
+                                const { id } = option;
                                 return (
                                     <div key={id}
                                          onClick={()=>handleOptionClick(option)}
                                          className={`${styles.options} ${isChecked(option) ? styles.active : ""}` }
                                     >
-                                        <label htmlFor={id}>{company_name}</label>
+                                        <label htmlFor={id}>{option[optionKey]}</label>
                                         <input type="checkbox"
                                                onChange={() =>{}}
                                                id={id}
@@ -119,5 +120,5 @@ function MultiSelectForProjects({ options, handleSelectedOptions, selectedOption
         </div>
     )
 }
-export default MultiSelectForProjects;
+export default MultiSelect;
 

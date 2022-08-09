@@ -53,3 +53,17 @@ export interface FeedbackTypes {
     email: string;
     feedback: string;
 }
+
+export interface ProjectTypes {
+    id: string;
+    company_name: string;
+    employee: any[],
+    employees_ids?: any[]
+}
+
+export interface CreateProjectTypes {
+    id: string;
+    company_name: string;
+    employees_ids: any[];
+    employee?: any[]
+}
