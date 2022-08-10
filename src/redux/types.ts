@@ -9,7 +9,7 @@ export interface EmployeesDataTypes {
     position: string;
     email: string;
     phone: string;
-    project: any[];
+    projects: any[];
     project_ids?: any[];
     telegram_chat_id: string;
 }
@@ -26,7 +26,7 @@ export interface CreateEmployeesDataTypes {
     email: string;
     phone: string;
     project_ids: any[];
-    project?: any[];
+    projects?: any[];
     telegram_chat_id: string;
 }
 

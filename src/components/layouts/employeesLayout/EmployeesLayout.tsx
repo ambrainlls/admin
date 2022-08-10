@@ -8,6 +8,7 @@ import {
     saveUpdatedEmployeeData,
     createEmployee,
     resetEmployeDataInModal,
+    addNewEmployee,
 } from '../../../redux/slice/employeesSlice';
 import { EmployeesDataTypes } from '../../../redux/types';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
@@ -115,7 +116,7 @@ function EmployeesLayout() {
             name: 'Birthday',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    <div>{row.birthday}</div>
+                    <div>{new Date(row.birthday).toISOString().slice(0, 10)}</div>
                 )
             }
         },
@@ -123,7 +124,7 @@ function EmployeesLayout() {
             name: 'Start date',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    <div>{row.start_date}</div>
+                    <div>{new Date(row.start_date).toISOString().slice(0, 10)}</div>
                 )
             }
         },
@@ -133,7 +134,7 @@ function EmployeesLayout() {
                 return (
                     <div className={styles.projectsContainer}>
                         {
-                            row.project.map(item => (
+                            row.projects.map(item => (
                                 <div key={item.id}>{item.company_name},</div>
                             ))
                         }
@@ -229,7 +230,8 @@ function EmployeesLayout() {
     const handleCreateEmployee = () => {
         EmployeesApi.createEmployee(createEmployeeData)
         .then(res => {
-            console.log(res) // fixme m
+            const newEmployee = res.data;
+            dispatch(addNewEmployee(newEmployee));
             setShowModal(false);
         })
         .catch(err => {

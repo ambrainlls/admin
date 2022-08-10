@@ -24,6 +24,7 @@
 .modalField {
     margin-bottom: 48px;
     display: flex;
+    flex-direction: column;
     border-bottom: 1px solid #999999;
 }
 
@@ -89,7 +90,7 @@
     border-bottom: 1px solid #999999;
 }
 
-.dateContainer label, .selectContainer label {
+label {
     margin-bottom: 10px;
     font-size: 14px;
     line-height: 17px;
