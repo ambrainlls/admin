@@ -2,11 +2,32 @@ export interface EmployeesDataTypes {
     id: string;
     name: string;
     surname: string;
-    startDate: string;
+    birthday: string;
+    description: string;
+    start_date: string;
     role: string;
     position: string;
     email: string;
     phone: string;
+    projects: any[];
+    project_ids?: any[];
+    telegram_chat_id: string;
+}
+
+export interface CreateEmployeesDataTypes {
+    id: string;
+    name: string;
+    surname: string;
+    birthday: string;
+    description: string;
+    start_date: string;
+    role: string;
+    position: string;
+    email: string;
+    phone: string;
+    project_ids: any[];
+    projects?: any[];
+    telegram_chat_id: string;
 }
 
 export interface ContactUsTypes {

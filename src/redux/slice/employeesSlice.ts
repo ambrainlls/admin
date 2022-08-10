@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { EmployeesDataTypes } from '../types';
+import { CreateEmployeesDataTypes, EmployeesDataTypes } from '../types';
 
 const employeesSlice = createSlice({
     name: 'employeesSlice',
@@ -10,16 +10,37 @@ const employeesSlice = createSlice({
             id: '',
             name: '',
             surname: '',
-            startDate: '',
-            role: '',
-            position: '',
+            birthday: '',
+            description: '',
+            start_date: '',
+            role: 'founder',
+            position: 'fullStack',
             email: '',
             phone: '',
+            projects: [],
+            telegram_chat_id: '',
         } as EmployeesDataTypes,
+        createEmployeeData: {
+            id: '',
+            name: '',
+            surname: '',
+            birthday: '',
+            description: '',
+            start_date: '',
+            role: 'founder',
+            position: 'fullStack',
+            email: '',
+            phone: '',
+            project_ids: [],
+            telegram_chat_id: '',
+        } as CreateEmployeesDataTypes,
     },
     reducers: {
         setEmployeesData(state, action: PayloadAction<EmployeesDataTypes[]>) {
             state.employeesData = action.payload;
+        },
+        addNewEmployee(state, action: PayloadAction<EmployeesDataTypes>) {
+            state.employeesData.unshift(action.payload);
         },
         setSelectedEmployeeId(state, action: PayloadAction<string>) {
             state.selectedEmployeeId = action.payload;
@@ -33,8 +54,16 @@ const employeesSlice = createSlice({
 
             Object.assign(state.employeesData[foundIndex], action.payload.updatedParams);
         },
-        saveEmployeeData(state) {
+        saveUpdatedEmployeeData(state, action: PayloadAction<EmployeesDataTypes>) {
             state.selectedEmployeeId = '';
+
+            const foundIndex = state.employeesData.findIndex(elem => elem.id === action.payload.id);
+
+            if (foundIndex === -1) {
+                return;
+            }
+
+            state.employeesData[foundIndex] = action.payload;
         },
         deleteEmployee(state, action: PayloadAction<string>) {
             const foundIndex = state.employeesData.findIndex((el)=> el.id === action.payload);
@@ -46,20 +75,24 @@ const employeesSlice = createSlice({
             state.employeesData.splice(foundIndex, 1);
         },
         createEmployee(state, action: PayloadAction<any>) {
-            Object.assign(state.employeeData, action.payload);
+            Object.assign(state.createEmployeeData, action.payload);
         },
         resetEmployeDataInModal(state) {
-            state.employeeData = {
+            state.createEmployeeData = {
                 id: '',
                 name: '',
                 surname: '',
-                startDate: '',
-                role: '',
-                position: '',
+                birthday: '',
+                description: '',
+                start_date: '',
+                role: 'founder',
+                position: 'fullStack',
                 email: '',
                 phone: '',
+                project_ids: [],
+                telegram_chat_id: '',
             }
-        }
+        },
     },
 });
 
@@ -67,8 +100,8 @@ export default employeesSlice.reducer;
 export const {
     setEmployeesData,
     setSelectedEmployeeId,
-    saveEmployeeData,
-    updateEmployeeData,
+    saveUpdatedEmployeeData,
+    addNewEmployee,
     deleteEmployee,
     createEmployee,
     resetEmployeDataInModal,

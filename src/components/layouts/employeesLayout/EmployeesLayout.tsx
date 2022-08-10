@@ -5,149 +5,54 @@ import {
     deleteEmployee,
     setEmployeesData,
     setSelectedEmployeeId,
-    saveEmployeeData,
-    updateEmployeeData,
+    saveUpdatedEmployeeData,
+    createEmployee,
+    resetEmployeDataInModal,
+    addNewEmployee,
 } from '../../../redux/slice/employeesSlice';
 import { EmployeesDataTypes } from '../../../redux/types';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
-import CreateEmployeeModalComponent from '../../modals/createEmployeeModal/CreateEmployeeModalComponent';
+import EmployeeModalComponent from '../../modals/createEmployeeModal/EmployeeModalComponent';
+import { EmployeesApi } from '../../../api/EmployeesApi';
+import { ProjectsApi } from '../../../api/ProjectsApi';
 import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIcon.svg';
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
 import createRowIcon from '../../../assets/images/createRowIcon.svg';
-import saveIcon from '../../../assets/images/dashboardDataTable/saveIcon.svg';
 import styles from './employeesLayout.module.css';
-
-const data: EmployeesDataTypes[] = [
-    {
-        id: '1',
-        name: 'Artur',
-        surname: 'Harutyunyan',
-        startDate: '12/02/2022',
-        role: 'developer',
-        position: 'frontend',
-        email: 'frontend@mail.ru',
-        phone: '+374 95 95 95 95',
-    },
-    {
-        id: '2',
-        name: 'Mihran',
-        surname: 'Minasyan',
-        startDate: '12/02/2022',
-        role: 'developer',
-        position: 'frontend',
-        email: 'frontend@mail.ru',
-        phone: '+374 95 95 95 95',
-    },
-    {
-        id: '3',
-        name: 'Armen',
-        surname: 'Asatryan',
-        startDate: '12/02/2022',
-        role: 'developer',
-        position: 'frontend',
-        email: 'frontend@mail.ru',
-        phone: '+374 95 95 95 95',
-    },
-    {
-        id: '10',
-        name: 'Tatev',
-        surname: 'Grigoryan',
-        startDate: '12/02/2022',
-        role: 'developer',
-        position: 'frontend',
-        email: 'frontend@mail.ru',
-        phone: '+374 95 95 95 95',
-    },
-    {
-        id: '4',
-        name: 'Hovhannes',
-        surname: 'Aleksanyan',
-        startDate: '12/02/2022',
-        role: 'developer',
-        position: 'frontend',
-        email: 'frontend@mail.ru',
-        phone: '+374 95 95 95 95',
-    },
-    {
-        id: '5',
-        name: 'Karlen',
-        surname: 'Levonyan',
-        startDate: '12/02/2022',
-        role: 'developer',
-        position: 'frontend',
-        email: 'frontend@mail.ru',
-        phone: '+374 95 95 95 95',
-    },
-    {
-        id: '6',
-        name: 'Vahe',
-        surname: 'Amiraghyan',
-        startDate: '12/02/2022',
-        role: 'developer',
-        position: 'frontend',
-        email: 'frontend@mail.ru',
-        phone: '+374 95 95 95 95',
-    },
-    {
-        id: '7',
-        name: 'Narek',
-        surname: 'Sargsyan',
-        startDate: '12/02/2022',
-        role: 'developer',
-        position: 'frontend',
-        email: 'frontend@mail.ru',
-        phone: '+374 95 95 95 95',
-    },
-    {
-        id: '8',
-        name: 'Sona',
-        surname: 'Babaxanyan',
-        startDate: '12/02/2022',
-        role: 'developer',
-        position: 'frontend',
-        email: 'frontend@mail.ru',
-        phone: '+374 95 95 95 95',
-    },
-    {
-        id: '9',
-        name: 'Artur',
-        surname: 'Harutyunyan',
-        startDate: '12/02/2022',
-        role: 'developer',
-        position: 'frontend',
-        email: 'frontend@mail.ru',
-        phone: '+374 95 95 95 95',
-    },
-];
 
 function EmployeesLayout() {
     const dispatch = useDispatch();
     const employeesData = useSelector((state: RootState) => state.employeesReducer.employeesData);
-    const employeeData = useSelector((state: RootState) => state.employeesReducer.employeeData);
+    const createEmployeeData = useSelector((state: RootState) => state.employeesReducer.createEmployeeData);
     const selectedEmployeeId = useSelector((state: RootState) => state.employeesReducer.selectedEmployeeId);
+
+    const [allProjects, setAllProjects] = useState([]);
+    const [editableEmployee, setEditableEmployee] = useState<any>(
+        {
+            id: '',
+            name: '',
+            surname: '',
+            birthday: '',
+            description: '',
+            start_date: '',
+            role: '',
+            position: '',
+            email: '',
+            phone: '',
+            project:[],
+            project_ids: [],
+            telegram_chat_id: '',
+        }
+    );
 
     const columns = [
         {
             name: 'Name',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    <div>
-                        {
-                            selectedEmployeeId === row.id ? (
-                                <input
-                                    type="text"
-                                    className={`${styles.tableCell} ${row.id !== selectedEmployeeId ? styles.disabledInput : ''}`}
-                                    disabled={row.id !== selectedEmployeeId}
-                                    value={row.name}
-                                    onChange={(evt) => {handleChangeEmployeeData(evt, 'name', row.id)}}
-                                />
-                            ) : (
-                                <div>{row.name}</div>
-                            )
-                        }
-                    </div>
+                    <div>{row.name}</div>
                 )
             }
         },
@@ -155,43 +60,15 @@ function EmployeesLayout() {
             name: 'Surname',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    <div>
-                        {
-                            selectedEmployeeId === row.id ? (
-                                <input
-                                    type="text"
-                                    className={`${styles.tableCell} ${row.id !== selectedEmployeeId ? styles.disabledInput : ''}`}
-                                    disabled={row.id !== selectedEmployeeId}
-                                    value={row.surname}
-                                    onChange={(evt) => {handleChangeEmployeeData(evt, 'surname', row.id)}}
-                                />
-                            ) : (
-                                <div>{row.surname}</div>
-                            )
-                        }
-                    </div>
+                    <div>{row.surname}</div>
                 )
             }
         },
         {
-            name: 'Start date',
+            name: 'Description',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    <div>
-                        {
-                            selectedEmployeeId === row.id ? (
-                                <input
-                                    type="text"
-                                    className={`${styles.tableCell} ${row.id !== selectedEmployeeId ? styles.disabledInput : ''}`}
-                                    disabled={row.id !== selectedEmployeeId}
-                                    value={row.startDate}
-                                    onChange={(evt) => {handleChangeEmployeeData(evt, 'startDate', row.id)}}
-                                />
-                            ) : (
-                                <div>{row.startDate}</div>
-                            )
-                        }
-                    </div>
+                    <div>{row.description}</div>
                 )
             }
         },
@@ -199,21 +76,7 @@ function EmployeesLayout() {
             name: 'Role',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    <div>
-                        {
-                            selectedEmployeeId === row.id ? (
-                                <input
-                                    type="text"
-                                    className={`${styles.tableCell} ${row.id !== selectedEmployeeId ? styles.disabledInput : ''}`}
-                                    disabled={row.id !== selectedEmployeeId}
-                                    value={row.role}
-                                    onChange={(evt) => {handleChangeEmployeeData(evt, 'role', row.id)}}
-                                />
-                            ) : (
-                                <div>{row.role}</div>
-                            )
-                        }
-                    </div>
+                    <div>{row.role}</div>
                 )
             }
         },
@@ -221,20 +84,7 @@ function EmployeesLayout() {
             name: 'Position',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    <div>
-                        { selectedEmployeeId === row.id ? (
-                            <input
-                                    type="text"
-                                    className={`${styles.tableCell} ${row.id !== selectedEmployeeId ? styles.disabledInput : ''}`}
-                                    disabled={row.id !== selectedEmployeeId}
-                                    value={row.position}
-                                    onChange={(evt) => {handleChangeEmployeeData(evt, 'position', row.id)}}
-                            />
-                        ) : (
-                            <div>{row.position}</div>
-                        )
-                    }
-                    </div>
+                    <div>{row.position}</div>
                 )
             }
         },
@@ -242,20 +92,7 @@ function EmployeesLayout() {
             name: 'Email',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    <div>
-                        { selectedEmployeeId === row.id ? (
-                            <input
-                                    type="text"
-                                    className={`${styles.tableCell} ${row.id !== selectedEmployeeId ? styles.disabledInput : ''}`}
-                                    disabled={row.id !== selectedEmployeeId}
-                                    value={row.email}
-                                    onChange={(evt) => {handleChangeEmployeeData(evt, 'email', row.id)}}
-                            />
-                        ) : (
-                            <div>{row.email}</div>
-                        )
-                    }
-                    </div>
+                    <div>{row.email}</div>
                 )
             }
         },
@@ -263,19 +100,44 @@ function EmployeesLayout() {
             name: 'Phone',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    <div>
-                        { selectedEmployeeId === row.id ? (
-                            <input
-                                    type="text"
-                                    className={`${styles.tableCell} ${row.id !== selectedEmployeeId ? styles.disabledInput : ''}`}
-                                    disabled={row.id !== selectedEmployeeId}
-                                    value={row.phone}
-                                    onChange={(evt) => {handleChangeEmployeeData(evt, 'phone', row.id)}}
-                            />
-                        ) : (
-                            <div>{row.phone}</div>
-                        )
-                    }
+                    <div>{row.phone}</div>
+                )
+            }
+        },
+        {
+            name: 'Telegram chat Id',
+            cell: (row: EmployeesDataTypes) => {
+                return (
+                    <div>{row.telegram_chat_id}</div>
+                )
+            }
+        },
+        {
+            name: 'Birthday',
+            cell: (row: EmployeesDataTypes) => {
+                return (
+                    <div>{new Date(row.birthday).toISOString().slice(0, 10)}</div>
+                )
+            }
+        },
+        {
+            name: 'Start date',
+            cell: (row: EmployeesDataTypes) => {
+                return (
+                    <div>{new Date(row.start_date).toISOString().slice(0, 10)}</div>
+                )
+            }
+        },
+        {
+            name: 'Projects',
+            cell: (row: EmployeesDataTypes) => {
+                return (
+                    <div className={styles.projectsContainer}>
+                        {
+                            row.projects.map(item => (
+                                <div key={item.id}>{item.company_name},</div>
+                            ))
+                        }
                     </div>
                 )
             }
@@ -289,63 +151,132 @@ function EmployeesLayout() {
                             src={deleteRowIcon}
                             alt={'deleteRowIcon'}
                             className={`${styles.deleteRowIcon} ${row.id === selectedEmployeeId ? styles.disabledDeleteIcon : ''}`}
-                            onClick={() => dispatch(deleteEmployee(row.id))}
+                            onClick={() => handleDeleteEmployee(row.id)}
                         />
-                        {
-                            row.id === selectedEmployeeId ? (
-                                <div className={styles.saveIconContainer}>
-                                    <img
-                                        src={saveIcon}
-                                        alt={'saveIcon'}
-                                        onClick={() => handleSaveChanges(row.id)}
-                                    />
-                                </div>
-                            ) : (
-                                <img
-                                    src={editRowIcon}
-                                    alt={'editRowIcon'}
-                                    onClick={() => dispatch(setSelectedEmployeeId(row.id))}
-                                />
-                            )
-                        }
+                        <img
+                            src={editRowIcon}
+                            alt={'editRowIcon'}
+                            onClick={() => handleRowEdit(row.id)}
+                        />
                     </div>
                 )
             }
         }
     ];
 
-    useEffect(() => {
-        dispatch(setEmployeesData(data));
-    },[]);
-
     const [pageCount, setPageCount] = useState(3);
     const [currentPage, setCurrentPage] = useState(1);
     const [showModal, setShowModal] = useState(false);
 
-    const handleChangeEmployeeData = (evt: ChangeEvent<HTMLInputElement>, key: string, id: string) => {
-        dispatch(updateEmployeeData(
-            {
-                id,
-                updatedParams: {
-                    [key]: evt.target.value
-                }
+    useEffect(() => {
+        EmployeesApi.getAllEmployees()
+        .then(res => {
+            const data = res.data;
+            dispatch(setEmployeesData(data));
+            dispatch(setEmployeesData(data));
+        })
+        .catch(err => {
+            if (err){
+                throw err;
             }
-        ));
+        });
+
+        ProjectsApi.getAllProjects()
+        .then(res => {
+            const data = res.data;
+
+            setAllProjects(data);
+        })
+        .catch(err => {
+            if (err){
+                throw err;
+            }
+        });
+    },[]);
+
+    const handleRowEdit = (rowId: string) => {
+        dispatch(setSelectedEmployeeId(rowId));
+
+        const foundIndex = employeesData.findIndex((el) => el.id === rowId);
+
+        setEditableEmployee(employeesData[foundIndex])
     };
 
-    const handleSaveChanges = (rowId: string) => {
-        dispatch(saveEmployeeData());
+    const handleSaveChanges = () => {
+        EmployeesApi.updateEmployee(editableEmployee)
+        .then(res => {
+            const updatedParam = res.data;
+            dispatch(saveUpdatedEmployeeData(updatedParam));
+        })
+        .catch(err => {
+            if (err){
+                throw err;
+            }
+        });
+    };
 
-        const foundIndex = employeesData.findIndex((el)=> el.id === rowId);
-        console.log(employeesData[foundIndex]);
+    const handleDeleteEmployee = (employeeId: string) => {
+        EmployeesApi.deleteEmployee(employeeId)
+        .then(res => {
+            dispatch(deleteEmployee(employeeId));
+        })
+        .catch(err => {
+            if (err){
+                throw err;
+            }
+        });
+    };
+
+    const handleCreateEmployee = () => {
+        EmployeesApi.createEmployee(createEmployeeData)
+        .then(res => {
+            const newEmployee = res.data;
+            dispatch(addNewEmployee(newEmployee));
+            setShowModal(false);
+        })
+        .catch(err => {
+            if (err){
+                throw err;
+            }
+        });
     };
 
     const handlePageChange = (evt: ChangeEvent<unknown>, page: number) => {
         setCurrentPage(page);
     };
 
-    const handleSave = () => {
-        console.log(employeeData);
+    const handleChangeCreateEmployeData = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => {
+        dispatch(createEmployee({[key]: evt.target.value}));
+    };
+
+    const handleSelectedOptionsForCreateEmployee = (selectedOptionsIds: string[]) => {
+        dispatch(createEmployee({project_ids: selectedOptionsIds}));
+    };
+
+    const handleChangeUpdateEmployeData = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => {
+        const updatedEmployee = {
+            ...editableEmployee,
+            [key]: evt.target.value
+        };
+        setEditableEmployee(updatedEmployee);
+    };
+
+    const handleSelectedOptionsForUpdateEmployee = (selectedOptionsIds: string[]) => {
+        const updatedEmployee = {
+            ...editableEmployee,
+            project_ids: selectedOptionsIds
+        };
+
+        setEditableEmployee(updatedEmployee);
+    };
+
+    const handleCloseCreateEmployeModal = () => {
+        setShowModal(false);
+        dispatch(resetEmployeDataInModal());
+    };
+
+    const handleCloseUpdateEmployeModal = () => {
+        dispatch(setSelectedEmployeeId(''));
     };
 
     return (
@@ -370,9 +301,25 @@ function EmployeesLayout() {
             </div>
             {
                 showModal && (
-                    <CreateEmployeeModalComponent
-                        handleClose={() => setShowModal(false)}
-                        handleSave={handleSave}
+                    <EmployeeModalComponent
+                        handleClose={handleCloseCreateEmployeModal}
+                        handleSave={handleCreateEmployee}
+                        projectOptions={allProjects}
+                        employeeData={createEmployeeData}
+                        handleChangeEmployeData={handleChangeCreateEmployeData}
+                        handleSelectedOptions={handleSelectedOptionsForCreateEmployee}
+                    />
+                )
+            }
+            {
+                selectedEmployeeId && (
+                    <EmployeeModalComponent
+                        handleClose={handleCloseUpdateEmployeModal}
+                        handleSave={handleSaveChanges}
+                        projectOptions={allProjects}
+                        employeeData={editableEmployee}
+                        handleChangeEmployeData={handleChangeUpdateEmployeData}
+                        handleSelectedOptions={handleSelectedOptionsForUpdateEmployee}
                     />
                 )
             }
