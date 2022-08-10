@@ -8,6 +8,8 @@ import DevelopersIcon from '../../assets/images/DevelopersTabIcon.svg';
 import ContactUsIcon from '../../assets/images/ContactUsTabIcon.svg';
 import ResumeIcon from '../../assets/images/ResumeTabIcon.svg';
 import FeedbackIcon from '../../assets/images/FeedbackTabIcon.svg';
+import ProjectsTabIcon from '../../assets/images/ProjectsTabIcon.svg';
+import GitMetricsTabIcon from '../../assets/images/GitMetricsTabIcon.svg';
 import styles from './leftDrawer.module.css';
 
 interface NavigationTabsTypes {
@@ -40,6 +42,16 @@ function LeftDrawer () {
             title: 'Feedback',
             route: '/feedback',
         },
+        {
+            icon: ProjectsTabIcon,
+            title: 'Projects',
+            route: '/projects',
+        },
+        {
+            icon: GitMetricsTabIcon,
+            title: 'Git metric',
+            route: '/git-metric'
+        }
     ];
 
     const activeTab = useSelector((state: RootState) => state.leftDrawerReducer.activeTab);
