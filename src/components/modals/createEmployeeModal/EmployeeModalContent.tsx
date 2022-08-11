@@ -54,11 +54,7 @@ const EmployeeModalContent = ({
                         type="date"
                         name="birthday"
                         data-date-format="DD MMMM YYYY"
-                        value={
-                            (employeeData && employeeData.birthday) ?
-                            new Date(employeeData.birthday).toISOString().slice(0, 10)
-                            : ''
-                        }
+                        value={(employeeData && employeeData.birthday) ? employeeData.birthday : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'birthday')}}
                     />
                 </div>
@@ -69,11 +65,7 @@ const EmployeeModalContent = ({
                         id="start_date"
                         type="date"
                         name="start_date"
-                        value={
-                            (employeeData && employeeData.start_date) ?
-                            new Date(employeeData.start_date).toISOString().slice(0, 10)
-                            : ''
-                        }
+                        value={(employeeData && employeeData.start_date) ? employeeData.start_date : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'start_date')}}
                     />
                 </div>
