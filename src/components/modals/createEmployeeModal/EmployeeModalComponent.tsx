@@ -22,7 +22,7 @@ interface CreateEmployeeModalComponentProps {
     handleClose: () => void;
     handleSave: () => void;
     projectOptions: any[];
-    employeeData?: EmployeesDataTypes | CreateEmployeesDataTypes;
+    employeeData: EmployeesDataTypes | CreateEmployeesDataTypes;
     handleChangeEmployeData: (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => void
     handleSelectedOptions: (selectedOptionsIds: string[]) => void;
 }

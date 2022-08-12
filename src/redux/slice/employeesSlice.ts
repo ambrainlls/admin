@@ -39,6 +39,9 @@ const employeesSlice = createSlice({
         setEmployeesData(state, action: PayloadAction<EmployeesDataTypes[]>) {
             state.employeesData = action.payload;
         },
+        addNewEmployee(state, action: PayloadAction<EmployeesDataTypes>) {
+            state.employeesData.unshift(action.payload);
+        },
         setSelectedEmployeeId(state, action: PayloadAction<string>) {
             state.selectedEmployeeId = action.payload;
         },
@@ -98,7 +101,7 @@ export const {
     setEmployeesData,
     setSelectedEmployeeId,
     saveUpdatedEmployeeData,
-    updateEmployeeData,
+    addNewEmployee,
     deleteEmployee,
     createEmployee,
     resetEmployeDataInModal,
