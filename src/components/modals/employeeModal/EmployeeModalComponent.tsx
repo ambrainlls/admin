@@ -1,8 +1,8 @@
+import { ChangeEvent } from 'react';
 import { Modal, Box } from '@mui/material';
+import { CreateEmployeesDataTypes, EmployeesDataTypes } from '../../../redux/types';
 import EmployeeModalContent from './EmployeeModalContent';
 import styles from './employeeModalComponent.module.css';
-import {CreateEmployeesDataTypes, EmployeesDataTypes} from "../../../redux/types";
-import {ChangeEvent} from "react";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -18,13 +18,20 @@ const style = {
     px: 3,
 };
 
-interface CreateEmployeeModalComponentProps {
+export interface EmployeeModalComponentProps {
     handleClose: () => void;
     handleSave: () => void;
     projectOptions: any[];
     employeeData: EmployeesDataTypes | CreateEmployeesDataTypes;
     handleChangeEmployeData: (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => void
     handleSelectedOptions: (selectedOptionsIds: string[]) => void;
+    nameValidationMessage: string;
+    surnameValidationMessage: string;
+    birthdayValidationMessage: string;
+    startDateValidationMessage: string;
+    emailValidationMessage: string;
+    phoneValidationMessage: string;
+    telegramChatIdValidationMessage: string;
 }
 
 function EmployeeModalComponent({
@@ -34,7 +41,14 @@ function EmployeeModalComponent({
     employeeData,
     handleChangeEmployeData,
     handleSelectedOptions,
-}: CreateEmployeeModalComponentProps) {
+    nameValidationMessage,
+    surnameValidationMessage,
+    birthdayValidationMessage,
+    startDateValidationMessage,
+    emailValidationMessage,
+    phoneValidationMessage,
+    telegramChatIdValidationMessage,
+}: EmployeeModalComponentProps) {
     return (
         <Modal
             open={ true }
@@ -50,6 +64,13 @@ function EmployeeModalComponent({
                     employeeData={employeeData}
                     handleSelectedOptions={handleSelectedOptions}
                     handleChangeEmployeData={handleChangeEmployeData}
+                    nameValidationMessage={nameValidationMessage}
+                    surnameValidationMessage={surnameValidationMessage}
+                    birthdayValidationMessage={birthdayValidationMessage}
+                    startDateValidationMessage={startDateValidationMessage}
+                    emailValidationMessage={emailValidationMessage}
+                    phoneValidationMessage={phoneValidationMessage}
+                    telegramChatIdValidationMessage={telegramChatIdValidationMessage}
                 />
             </Box>
         </Modal>
