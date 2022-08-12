@@ -11,6 +11,7 @@ export interface EmployeesDataTypes {
     phone: string;
     projects: any[];
     project_ids?: any[];
+    pivot?:any;
     telegram_chat_id: string;
 }
 
@@ -27,6 +28,7 @@ export interface CreateEmployeesDataTypes {
     phone: string;
     project_ids: any[];
     projects?: any[];
+    pivot?:any;
     telegram_chat_id: string;
 }
 

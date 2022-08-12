@@ -40,7 +40,7 @@ function EmployeesLayout() {
             position: '',
             email: '',
             phone: '',
-            project:[],
+            projects:[],
             project_ids: [],
             telegram_chat_id: '',
         }
