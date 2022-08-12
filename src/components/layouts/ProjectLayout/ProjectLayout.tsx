@@ -92,18 +92,7 @@ function ProjectLayout() {
     ];
 
     useEffect(() => {
-        ProjectsApi.getAllProjects()
-            .then(res => {
-                const data = res.data;
-
-                dispatch(setProjectsData(data));
-            })
-            .catch(err => {
-                if (err){
-                    throw err;
-                }
-            });
-
+        getAllProjects();
         EmployeesApi.getAllEmployees()
             .then(res => {
                 const data = res.data;
@@ -115,6 +104,20 @@ function ProjectLayout() {
                 }
             });
     }, []);
+
+    const getAllProjects = () => {
+        ProjectsApi.getAllProjects()
+            .then(res => {
+                const data = res.data;
+
+                dispatch(setProjectsData(data));
+            })
+            .catch(err => {
+                if (err){
+                    throw err;
+                }
+            });
+    };
 
     const handleDeleteProject = (projectId: string) => {
       ProjectsApi.deleteProject(projectId)
@@ -159,6 +162,7 @@ function ProjectLayout() {
                     throw err;
                 }
             });
+        getAllProjects();
     };
 
     const handlePageChange = (evt: ChangeEvent<unknown>, page: number) => {
