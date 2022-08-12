@@ -57,9 +57,9 @@ function ProjectLayout() {
                 return (
                     <div className={styles.employeesContainer}>
                         {
-                            row.employee.length ? (
-                                row.employee.map((employee: string) => (
-                                    <div>{employee}</div>
+                            row.employees.length ? (
+                                row.employees.map((employee: any, idx: number) => (
+                                    <div key={idx}>{employee}</div>
                                 ))
                             ) :
                                 'There is no employees for this project'

@@ -17,7 +17,7 @@ const employeesSlice = createSlice({
             position: 'fullStack',
             email: '',
             phone: '',
-            project: [],
+            projects: [],
             telegram_chat_id: '',
         } as EmployeesDataTypes,
         createEmployeeData: {

@@ -133,7 +133,7 @@ function EmployeesLayout() {
                 return (
                     <div className={styles.projectsContainer}>
                         {
-                            row.project.map(item => (
+                            row.projects.map(item => (
                                 <div key={item.id}>{item.company_name},</div>
                             ))
                         }

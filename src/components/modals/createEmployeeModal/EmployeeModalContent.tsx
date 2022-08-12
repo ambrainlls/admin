@@ -143,7 +143,7 @@ const EmployeeModalContent = ({
                     <MultiSelect
                         options={projectOptions}
                         handleSelectedOptions={handleSelectedOptions}
-                        selectedOptions={(employeeData && employeeData.project) ? employeeData.project : []}
+                        selectedOptions={(employeeData && employeeData.projects) ? employeeData.projects : []}
                         optionKey={'company_name'}
                     />
                 </div>

@@ -9,7 +9,7 @@ const projectSlice = createSlice({
         projectData: {
             id: '',
             company_name: '',
-            employee: [],
+            employees: [],
         } as ProjectTypes,
         createProjectData: {
             id: '',
@@ -57,10 +57,10 @@ const projectSlice = createSlice({
             Object.assign(state.createProjectData, action.payload);
         },
         resetProjectDataInModal(state) {
-            state.projectData = {
+            state.createProjectData = {
                 id: '',
                 company_name: '',
-                employee: [],
+                employees_ids: [],
             }
         }
     }
