@@ -175,7 +175,6 @@ function EmployeesLayout() {
         .then(res => {
             const data = res.data;
             dispatch(setEmployeesData(data));
-            dispatch(setEmployeesData(data));
         })
         .catch(err => {
             if (err){
