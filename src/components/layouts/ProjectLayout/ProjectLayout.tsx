@@ -1,8 +1,9 @@
-import {EmployeesDataTypes, ProjectTypes} from "../../../redux/types";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux";
-import React, {ChangeEvent, useEffect, useState} from "react";
-import styles from './projectLayout.module.css'
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../redux';
+import { EmployeesDataTypes, ProjectTypes } from '../../../redux/types';
+import { ProjectsApi } from '../../../api/ProjectsApi';
+import { EmployeesApi } from '../../../api/EmployeesApi';
 import {
     createProject,
     deleteProject,
@@ -10,17 +11,15 @@ import {
     saveUpdatedProjectData,
     setProjectsData,
     setSelectedProjectId,
-} from "../../../redux/slice/projectSlice";
-import FilterComponent from "../../ui/filterComponent/FilterComponent";
-import { ProjectsApi } from '../../../api/ProjectsApi';
+} from '../../../redux/slice/projectSlice';
+import FilterComponent from '../../ui/filterComponent/FilterComponent';
+import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
+import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
+import ProjectModalComponent from '../../modals/createProjectModal/ProjectModalComponent';
 import createRowIcon from '../../../assets/images/createRowIcon.svg';
 import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIcon.svg';
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
-import DashboardDataTable from "../../main/dashboardDataTable/DashboardDataTable";
-import DashboardPagination from "../../main/dashboardPagination/DashboardPagination";
-import ProjectModalComponent from "../../modals/createProjectModal/ProjectModalComponent";
-
-import {EmployeesApi} from "../../../api/EmployeesApi";
+import styles from './projectLayout.module.css'
 
 
 function ProjectLayout() {

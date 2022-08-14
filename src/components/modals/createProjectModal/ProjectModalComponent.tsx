@@ -1,8 +1,12 @@
-import { Modal, Box } from "@mui/material";
+import { Modal, Box } from '@mui/material';
+import ProjectModalContent from './ProjectModalContent';
+import {
+    CreateEmployeesDataTypes,
+    CreateProjectTypes,
+    EmployeesDataTypes,
+    ProjectTypes} from '../../../redux/types';
+import { ChangeEvent } from 'react';
 import styles from './ProjectModalComponent.module.css';
-import ProjectModalContent from "./ProjectModalContent";
-import {CreateEmployeesDataTypes, CreateProjectTypes, EmployeesDataTypes, ProjectTypes} from "../../../redux/types";
-import {ChangeEvent} from "react";
 
 const style = {
     position: 'absolute' as 'absolute',
