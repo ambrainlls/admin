@@ -62,6 +62,9 @@ const projectSlice = createSlice({
                 company_name: '',
                 employees_ids: [],
             }
+        },
+        addProject(state, action: PayloadAction<ProjectTypes>) {
+            state.projectsData.push(action.payload);
         }
     }
 });
@@ -74,5 +77,6 @@ export const {
     saveUpdatedProjectData,
     deleteProject,
     createProject,
-    resetProjectDataInModal
+    resetProjectDataInModal,
+    addProject,
 } = projectSlice.actions;

@@ -5,6 +5,7 @@ import { EmployeesDataTypes, ProjectTypes } from '../../../redux/types';
 import { ProjectsApi } from '../../../api/ProjectsApi';
 import { EmployeesApi } from '../../../api/EmployeesApi';
 import {
+    addProject,
     createProject,
     deleteProject,
     resetProjectDataInModal,
@@ -45,6 +46,7 @@ function ProjectLayout() {
         {
             name: 'Name',
             cell: (row: ProjectTypes) => {
+                console.log(row, '************************************************************************************');
                 return (
                     <div>{row.company_name}</div>
                 )
@@ -56,7 +58,7 @@ function ProjectLayout() {
                 return (
                     <div className={styles.employeesContainer}>
                         {
-                            row.employees.length ? (
+                            (row.employees && row.employees.length) ? (
                                 row.employees.map(({name, surname, id} : number | any) => (
                                     <div key={id}>{`${name} ${surname}`}</div>
                                 ))
@@ -154,6 +156,8 @@ function ProjectLayout() {
     const handleCreateProject = () => {
         ProjectsApi.createProject(createProjectData)
             .then(res => {
+                const { data } = res;
+                dispatch(addProject(data));
                 setShowModal(false);
             })
             .catch(err => {
@@ -161,7 +165,6 @@ function ProjectLayout() {
                     throw err;
                 }
             });
-        getAllProjects();
     };
 
     const handlePageChange = (evt: ChangeEvent<unknown>, page: number) => {
