@@ -10,13 +10,14 @@ import {
     resetEmployeDataInModal,
     addNewEmployee,
 } from '../../../redux/slice/employeesSlice';
-import { EmployeesDataTypes } from '../../../redux/types';
+import {CreateEmployeesDataTypes, EmployeesDataTypes} from '../../../redux/types';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
-import EmployeeModalComponent from '../../modals/createEmployeeModal/EmployeeModalComponent';
+import EmployeeModalComponent from '../../modals/employeeModal/EmployeeModalComponent';
 import { EmployeesApi } from '../../../api/EmployeesApi';
 import { ProjectsApi } from '../../../api/ProjectsApi';
+import { validateEmail } from '../../../helpers/helpers';
 import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIcon.svg';
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
 import createRowIcon from '../../../assets/images/createRowIcon.svg';
@@ -28,24 +29,7 @@ function EmployeesLayout() {
     const createEmployeeData = useSelector((state: RootState) => state.employeesReducer.createEmployeeData);
     const selectedEmployeeId = useSelector((state: RootState) => state.employeesReducer.selectedEmployeeId);
 
-    const [allProjects, setAllProjects] = useState([]);
-    const [editableEmployee, setEditableEmployee] = useState<any>(
-        {
-            id: '',
-            name: '',
-            surname: '',
-            birthday: '',
-            description: '',
-            start_date: '',
-            role: '',
-            position: '',
-            email: '',
-            phone: '',
-            projects:[],
-            project_ids: [],
-            telegram_chat_id: '',
-        }
-    );
+    const requiredMessage = 'The field is required !';
 
     const columns = [
         {
@@ -116,7 +100,6 @@ function EmployeesLayout() {
             name: 'Birthday',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    // <div>{new Date(row.birthday).toISOString().slice(0, 10)}</div>
                     <div>{row.birthday}</div>
                 )
             }
@@ -125,7 +108,6 @@ function EmployeesLayout() {
             name: 'Start date',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    // <div>{new Date(row.start_date).toISOString().slice(0, 10)}</div>
                     <div>{row.start_date}</div>
                 )
             }
@@ -166,9 +148,34 @@ function EmployeesLayout() {
         }
     ];
 
+    const [nameValidationMessage, setNameValidationMessage] = useState('');
+    const [surnameValidationMessage, setSurnameValidationMessage] = useState('');
+    const [birthdayValidationMessage, setBirthdayValidationMessage] = useState('');
+    const [startDateValidationMessage, setStartDateValidationMessage] = useState('');
+    const [emailValidationMessage, setEmailValidationMessage] = useState('');
+    const [phoneValidationMessage, setPhoneValidationMessage] = useState('');
+    const [telegramChatIdValidationMessage, setTelegramChatIdValidationMessage] = useState('');
+    const [allProjects, setAllProjects] = useState([]);
     const [pageCount, setPageCount] = useState(3);
     const [currentPage, setCurrentPage] = useState(1);
     const [showModal, setShowModal] = useState(false);
+    const [editableEmployee, setEditableEmployee] = useState<any>(
+        {
+            id: '',
+            name: '',
+            surname: '',
+            birthday: '',
+            description: '',
+            start_date: '',
+            role: '',
+            position: '',
+            email: '',
+            phone: '',
+            project:[],
+            project_ids: [],
+            telegram_chat_id: '',
+        }
+    );
 
     useEffect(() => {
         EmployeesApi.getAllEmployees()
@@ -177,7 +184,7 @@ function EmployeesLayout() {
             dispatch(setEmployeesData(data));
         })
         .catch(err => {
-            if (err){
+            if (err) {
                 throw err;
             }
         });
@@ -189,11 +196,104 @@ function EmployeesLayout() {
             setAllProjects(data);
         })
         .catch(err => {
-            if (err){
+            if (err) {
                 throw err;
             }
         });
     },[]);
+
+    useEffect(() => {
+        setNameValidationMessage('');
+        setSurnameValidationMessage('');
+        setBirthdayValidationMessage('');
+        setEmailValidationMessage('');
+        setPhoneValidationMessage('');
+        setTelegramChatIdValidationMessage('');
+    }, [showModal, selectedEmployeeId]);
+
+    const handleValidationErrors = (employeeData: EmployeesDataTypes | CreateEmployeesDataTypes) => {
+        if (!employeeData.name) {
+            setNameValidationMessage(requiredMessage);
+
+            return;
+        } else {
+            setNameValidationMessage('');
+        }
+
+        if (!employeeData.surname) {
+            setSurnameValidationMessage(requiredMessage);
+
+            return;
+        } else {
+            setSurnameValidationMessage('');
+        }
+
+        if (!employeeData.birthday) {
+            setBirthdayValidationMessage(requiredMessage);
+
+            return;
+        } else {
+            setBirthdayValidationMessage('');
+        }
+
+        if (!employeeData.start_date) {
+            setStartDateValidationMessage(requiredMessage);
+
+            return;
+        } else {
+            setStartDateValidationMessage('');
+        }
+
+        if (!employeeData.email) {
+            setEmailValidationMessage(requiredMessage);
+            return;
+        } else {
+            setEmailValidationMessage('');
+        }
+
+        if (!validateEmail(employeeData.email)) {
+            setEmailValidationMessage('The mail is invalid !');
+
+            return;
+        } else {
+            setEmailValidationMessage('');
+        }
+
+        if (!employeeData.phone) {
+            setPhoneValidationMessage(requiredMessage);
+
+            return;
+        } else {
+            setPhoneValidationMessage('');
+        }
+
+        if (!employeeData.telegram_chat_id) {
+            setTelegramChatIdValidationMessage(requiredMessage);
+
+            return;
+        } else {
+            setTelegramChatIdValidationMessage('');
+        }
+
+        if (!(/^\d+$/.test(employeeData.telegram_chat_id))) {
+            setTelegramChatIdValidationMessage('Telegram chat id must be a number !');
+
+            return;
+        } else {
+            setTelegramChatIdValidationMessage('');
+        }
+
+        if (employeeData.telegram_chat_id.length !== 9) {
+            setTelegramChatIdValidationMessage('The length of telegram chat id must be 9 !');
+
+            return;
+        } else {
+            setTelegramChatIdValidationMessage('');
+        }
+
+
+        return true;
+    };
 
     const handleRowEdit = (rowId: string) => {
         dispatch(setSelectedEmployeeId(rowId));
@@ -204,13 +304,19 @@ function EmployeesLayout() {
     };
 
     const handleSaveChanges = () => {
+        const hasError = !handleValidationErrors(editableEmployee);
+
+        if (hasError) {
+            return
+        }
+
         EmployeesApi.updateEmployee(editableEmployee)
         .then(res => {
             const updatedParam = res.data;
             dispatch(saveUpdatedEmployeeData(updatedParam));
         })
         .catch(err => {
-            if (err){
+            if (err) {
                 throw err;
             }
         });
@@ -222,13 +328,20 @@ function EmployeesLayout() {
             dispatch(deleteEmployee(employeeId));
         })
         .catch(err => {
-            if (err){
+            if (err) {
                 throw err;
             }
         });
     };
 
     const handleCreateEmployee = () => {
+        const hasError = !handleValidationErrors(createEmployeeData);
+
+        if (hasError) {
+            return
+        }
+
+
         EmployeesApi.createEmployee(createEmployeeData)
         .then(res => {
             const newEmployee = res.data;
@@ -236,7 +349,7 @@ function EmployeesLayout() {
             setShowModal(false);
         })
         .catch(err => {
-            if (err){
+            if (err) {
                 throw err;
             }
         });
@@ -259,6 +372,7 @@ function EmployeesLayout() {
             ...editableEmployee,
             [key]: evt.target.value
         };
+
         setEditableEmployee(updatedEmployee);
     };
 
@@ -309,6 +423,13 @@ function EmployeesLayout() {
                         employeeData={createEmployeeData}
                         handleChangeEmployeData={handleChangeCreateEmployeData}
                         handleSelectedOptions={handleSelectedOptionsForCreateEmployee}
+                        nameValidationMessage={nameValidationMessage}
+                        surnameValidationMessage={surnameValidationMessage}
+                        birthdayValidationMessage={birthdayValidationMessage}
+                        startDateValidationMessage={startDateValidationMessage}
+                        emailValidationMessage={emailValidationMessage}
+                        phoneValidationMessage={phoneValidationMessage}
+                        telegramChatIdValidationMessage={telegramChatIdValidationMessage}
                     />
                 )
             }
@@ -321,6 +442,13 @@ function EmployeesLayout() {
                         employeeData={editableEmployee}
                         handleChangeEmployeData={handleChangeUpdateEmployeData}
                         handleSelectedOptions={handleSelectedOptionsForUpdateEmployee}
+                        nameValidationMessage={nameValidationMessage}
+                        surnameValidationMessage={surnameValidationMessage}
+                        birthdayValidationMessage={birthdayValidationMessage}
+                        startDateValidationMessage={startDateValidationMessage}
+                        emailValidationMessage={emailValidationMessage}
+                        phoneValidationMessage={phoneValidationMessage}
+                        telegramChatIdValidationMessage={telegramChatIdValidationMessage}
                     />
                 )
             }

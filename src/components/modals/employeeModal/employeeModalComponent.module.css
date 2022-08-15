@@ -101,3 +101,12 @@ label {
     width: 100% !important;
 }
 
+.errorMessage {
+    color: red;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
+.errorContainer {
+    color: red;
+}
