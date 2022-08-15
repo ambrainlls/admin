@@ -46,7 +46,6 @@ function ProjectLayout() {
         {
             name: 'Name',
             cell: (row: ProjectTypes) => {
-                console.log(row, '************************************************************************************');
                 return (
                     <div>{row.company_name}</div>
                 )
