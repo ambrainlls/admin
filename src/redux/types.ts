@@ -60,12 +60,12 @@ export interface ProjectTypes {
     id: string;
     company_name: string;
     employees: any[],
-    employees_id?: any[]
+    employee_ids?: any[]
 }
 
 export interface CreateProjectTypes {
     id: string;
     company_name: string;
-    employees_id: any[];
+    employee_ids: any[];
     employees?: any[]
 }
