@@ -180,8 +180,7 @@ function EmployeesLayout() {
     useEffect(() => {
         EmployeesApi.getAllEmployees()
         .then(res => {
-            const { data } = res.data;
-            dispatch(setEmployeesData(data));
+            const data = res.data;
             dispatch(setEmployeesData(data));
         })
         .catch(err => {

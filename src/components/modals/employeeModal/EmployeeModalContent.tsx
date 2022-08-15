@@ -1,5 +1,5 @@
 import React from 'react';
-import MultiSelectForProjects from '../../ui/multiSelectForProjects/MultiSelectForProjects';
+import MultiSelect from '../../ui/multiSelect/MultiSelect';
 import { EmployeeModalComponentProps } from './EmployeeModalComponent';
 import styles from './employeeModalComponent.module.css';
 
@@ -186,10 +186,11 @@ const EmployeeModalContent = ({
                     />
                 </div>
                 <div className={styles.modalFieldMultiSelect}>
-                    <MultiSelectForProjects
+                    <MultiSelect
                         options={projectOptions}
                         handleSelectedOptions={handleSelectedOptions}
                         selectedOptions={(employeeData && employeeData.projects) ? employeeData.projects : []}
+                        optionKey={'company_name'}
                     />
                 </div>
             </div>
