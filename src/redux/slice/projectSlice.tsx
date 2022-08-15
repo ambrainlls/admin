@@ -14,7 +14,7 @@ const projectSlice = createSlice({
         createProjectData: {
             id: '',
             company_name: '',
-            employees_ids: []
+            employees_id: []
         } as CreateProjectTypes
     },
     reducers: {
@@ -60,7 +60,7 @@ const projectSlice = createSlice({
             state.createProjectData = {
                 id: '',
                 company_name: '',
-                employees_ids: [],
+                employees_id: [],
             }
         },
         addProject(state, action: PayloadAction<ProjectTypes>) {

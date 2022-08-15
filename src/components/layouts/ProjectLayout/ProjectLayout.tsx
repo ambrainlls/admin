@@ -38,7 +38,7 @@ function ProjectLayout() {
             id: '',
             name: '',
             employees: [],
-            employees_ids: []
+            employees_id: []
         }
     );
 
@@ -175,7 +175,7 @@ function ProjectLayout() {
     };
 
     const handleSelectedOptionsForCreateProject = (selectedOptionsIds: string[]) => {
-        dispatch(createProject({employees_ids: selectedOptionsIds}));
+        dispatch(createProject({employees_id: selectedOptionsIds}));
     };
 
     const handleChangeUpdateProjectData = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => {
@@ -189,7 +189,7 @@ function ProjectLayout() {
     const handleSelectedOptionsForUpdateProject = (selectedOptionsIds: string[]) => {
         const updatedProject = {
             ...editableProject,
-            employees_ids: selectedOptionsIds
+            employees_id: selectedOptionsIds
         };
 
         setEditableProject(updatedProject);
