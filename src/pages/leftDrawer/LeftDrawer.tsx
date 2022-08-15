@@ -8,6 +8,8 @@ import DevelopersIcon from '../../assets/images/DevelopersTabIcon.svg';
 import ContactUsIcon from '../../assets/images/ContactUsTabIcon.svg';
 import ResumeIcon from '../../assets/images/ResumeTabIcon.svg';
 import FeedbackIcon from '../../assets/images/FeedbackTabIcon.svg';
+import ProjectsTabIcon from '../../assets/images/ProjectsTabIcon.svg';
+import GitMetricTabIcon from '../../assets/images/GitMetricTabIcon.svg';
 import styles from './leftDrawer.module.css';
 
 interface NavigationTabsTypes {
@@ -41,9 +43,14 @@ function LeftDrawer () {
             route: '/feedback',
         },
         {
-            icon: DevelopersIcon,
-            title: 'Project',
-            route: '/project'
+            icon: ProjectsTabIcon,
+            title: 'Projects',
+            route: '/projects',
+        },
+        {
+            icon: GitMetricTabIcon,
+            title: 'Git metric',
+            route: '/git-metric',
         }
     ];
 
