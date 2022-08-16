@@ -8,6 +8,7 @@ const activeTabParam: any = {
     '/contact-us': 'Contact us',
     '/resume': 'Resume',
     '/feedback': 'Feedback',
+    '/metric': 'Metric',
 }
 
 const leftDrawerSlice = createSlice({

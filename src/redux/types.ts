@@ -69,3 +69,19 @@ export interface CreateProjectTypes {
     employee_ids: any[];
     employees?: any[]
 }
+
+export interface JiraUserHistoriesType {
+    account_id: string;
+    code_review: string;
+    id: string;
+    rejected: string;
+    username: string;
+}
+
+export interface GitUserHistoriesType {
+    addition: string;
+    changed: string;
+    deletion: string;
+    project_name: string;
+    user_name: string;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './project.module.css';
-import ProjectLayout from "../../components/layouts/ProjectLayout/ProjectLayout";
+import ProjectLayout from "../../components/layouts/projectLayout/ProjectLayout";
 
 function Project() {
     return (

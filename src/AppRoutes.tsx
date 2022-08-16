@@ -6,7 +6,8 @@ import Employees from './pages/employees/Employees';
 import Feedback from './pages/feedback/Feedback';
 import Resume from './pages/resume/Resume';
 import Layout from './pages/Layout';
-import Project from "./pages/Project/Project";
+import Project from './pages/Project/Project';
+import Metric from './pages/metric/Metric';
 
 function AppRoutes () {
     return (
@@ -19,6 +20,7 @@ function AppRoutes () {
                     <Route path='feedback' element={<Feedback />} />
                     <Route path='resume' element={<Resume />} />
                     <Route path='project' element={<Project />}/>
+                    <Route path='metric' element={<Metric />}/>
                     <Route path='not-found' element={<NotFound />} />
                     <Route path="*" element={<Navigate to="/not-found" />} />
                 </Route>
