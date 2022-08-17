@@ -6,6 +6,7 @@ import { setJiraUserHistories } from '../../../redux/slice/jiraMetricSlice';
 import { JiraMetricApi } from '../../../api/JiraMetricApi';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
+import { formatNumber } from '../../../helpers/helpers';
 import styles from './jiraMetricLayout.module.css';
 
 function JiraMetricLayout () {
@@ -25,7 +26,7 @@ function JiraMetricLayout () {
             name: 'Code Review',
             cell: (row: JiraUserHistoriesType) => {
                 return (
-                    <div>{row.code_review}</div>
+                    <div>{formatNumber(row.code_review)}</div>
                 )
             }
         },
@@ -33,7 +34,7 @@ function JiraMetricLayout () {
             name: 'Rejected',
             cell: (row: JiraUserHistoriesType) => {
                 return (
-                    <div>{row.rejected}</div>
+                    <div>{formatNumber(row.rejected)}</div>
                 )
             }
         },

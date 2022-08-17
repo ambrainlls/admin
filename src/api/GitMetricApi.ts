@@ -8,4 +8,10 @@ export class GitMetricApi {
             `${url}/commits`,
         );
     };
+
+    static async getGitMetricById (userId: number) {
+        return axios.get(
+            `${url}/commits/${userId}`,
+        );
+    };
 }

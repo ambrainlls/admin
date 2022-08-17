@@ -6,6 +6,7 @@ import { setGitUserHistories } from '../../../redux/slice/gitMetricSlice';
 import { GitMetricApi } from '../../../api/GitMetricApi';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
+import { formatNumber } from '../../../helpers/helpers';
 import styles from './gitMetricLayout.module.css';
 
 function GitMetricLayout () {
@@ -33,7 +34,7 @@ function GitMetricLayout () {
             name: 'Addition',
             cell: (row: GitUserHistoriesType) => {
                 return (
-                    <div>{row.addition}</div>
+                    <div>{formatNumber(row.addition)}</div>
                 )
             }
         },
@@ -41,7 +42,7 @@ function GitMetricLayout () {
             name: 'Changed',
             cell: (row: GitUserHistoriesType) => {
                 return (
-                    <div>{row.changed}</div>
+                    <div>{formatNumber(row.changed)}</div>
                 )
             }
         },
@@ -49,7 +50,7 @@ function GitMetricLayout () {
             name: 'Deletion',
             cell: (row: GitUserHistoriesType) => {
                 return (
-                    <div>{row.deletion}</div>
+                    <div>{formatNumber(row.deletion)}</div>
                 )
             }
         },

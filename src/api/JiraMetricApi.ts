@@ -8,4 +8,10 @@ export class JiraMetricApi {
             `${url}/jira`,
         );
     };
+
+    static async getJiraMetricById (id: number) {
+        return axios.get(
+            `${url}/jira/${id}`,
+        );
+    };
 }
