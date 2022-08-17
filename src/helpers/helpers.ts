@@ -3,3 +3,45 @@ export const validateEmail = (email: string) => {
 
     return re.test(String(email).toLowerCase());
 };
+
+export const roles = [
+    {
+        value: 'founder',
+        label: 'Founder',
+    },
+    {
+        value: 'teamleader',
+        label: 'Teamleader',
+    },
+    {
+        value: 'developer',
+        label: 'Developer',
+    },
+    {
+        value: 'hr',
+        label: 'HR',
+    },
+    {
+        value: 'designer',
+        label: 'Designer',
+    },
+    {
+        value: `qa`,
+        label: 'QA',
+    }
+];
+
+export const positions = [
+    {
+        value: 'fullStack',
+        label: 'Fullstack',
+    },
+    {
+        value: 'frontend',
+        label: 'Frontend',
+    },
+    {
+        value: 'backend',
+        label: 'Backend',
+    },
+];

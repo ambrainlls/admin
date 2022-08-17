@@ -2,6 +2,9 @@ import React from 'react';
 import MultiSelect from '../../ui/multiSelect/MultiSelect';
 import { EmployeeModalComponentProps } from './EmployeeModalComponent';
 import styles from './employeeModalComponent.module.css';
+import { MenuItem, TextField } from "@mui/material";
+import { roles } from "../../../helpers/helpers";
+import { positions } from "../../../helpers/helpers";
 
 const EmployeeModalContent = ({
     handleClose,
@@ -25,11 +28,10 @@ const EmployeeModalContent = ({
             </div>
             <div className={styles.fieldsToFill}>
                 <div className={styles.modalField}>
-                    <label className={`${nameValidationMessage ? styles.errorContainer : ""}`}>Name</label>
-                    <input
+                    <TextField
                         id="name"
-                        type="text"
-                        name="name"
+                        label="Name"
+                        variant="standard"
                         value={(employeeData && employeeData.name) ? employeeData.name : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'name')}}
                     />
@@ -42,11 +44,10 @@ const EmployeeModalContent = ({
                     }
                 </div>
                 <div className={styles.modalField}>
-                    <label className={`${surnameValidationMessage ? styles.errorContainer : ""}`}>Surname</label>
-                    <input
+                    <TextField
                         id="surname"
-                        type="text"
-                        name="surname"
+                        label="Surname"
+                        variant="standard"
                         value={(employeeData && employeeData.surname) ? employeeData.surname : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'surname')}}
                     />
@@ -60,12 +61,10 @@ const EmployeeModalContent = ({
                 </div>
                 <div className={`${styles.dateContainer}`}>
                     <label className={`${birthdayValidationMessage ? styles.errorContainer : ""}`}>Birthday</label>
-                    <input
-                        className={styles.startDate}
+                    <TextField
                         id="birthday"
                         type="date"
-                        name="birthday"
-                        data-date-format="DD MMMM YYYY"
+                        variant="standard"
                         value={(employeeData && employeeData.birthday) ? employeeData.birthday : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'birthday')}}
                     />
@@ -79,14 +78,14 @@ const EmployeeModalContent = ({
                 </div>
                 <div className={`${styles.dateContainer}`}>
                     <label className={`${startDateValidationMessage ? styles.errorContainer : ""}`}>Start Date</label>
-                    <input
-                        className={styles.startDate}
+                    <TextField
                         id="start_date"
                         type="date"
-                        name="start_date"
+                        variant="standard"
                         value={(employeeData && employeeData.start_date) ? employeeData.start_date : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'start_date')}}
                     />
+
                     {
                         startDateValidationMessage && (
                             <span className={styles.errorMessage}>
@@ -96,40 +95,42 @@ const EmployeeModalContent = ({
                     }
                 </div>
                 <div className={`${styles.modalField} ${styles.selectContainer}`}>
-                    <label>Role</label>
-                    <select
-                        id="role"
-                        name="role"
+                    <TextField
+                        id="standard-select-currency"
+                        select
+                        label="Role"
                         value={(employeeData && employeeData.role) ? employeeData.role : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'role')}}
+                        variant="standard"
                     >
-                        <option value="founder">Founder</option>
-                        <option value="teamleader">Teamleader</option>
-                        <option value="developer">Developer</option>
-                        <option value="hr">HR</option>
-                        <option value="designer">Designer</option>
-                        <option value="qa">QA</option>
-                    </select>
+                        {roles.map(({value, label}) => (
+                            <MenuItem key={value} value={value}>
+                                {label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                 </div>
                 <div className={`${styles.modalField} ${styles.selectContainer}`}>
-                    <label>Position</label>
-                    <select
-                        id="position"
-                        name="position"
-                        value={(employeeData && employeeData.position) ? employeeData.position : ''}
+                    <TextField
+                        id="standard-select-currency"
+                        select
+                        label="Position"
+                        value={employeeData.position}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'position')}}
+                        variant="standard"
                     >
-                        <option value="fullstack">Fullstack</option>
-                        <option value="frontend">Frontend</option>
-                        <option value="backend">Backend</option>
-                    </select>
+                        {positions.map(({value, label}) => (
+                            <MenuItem key={value} value={value}>
+                                {label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                 </div>
                 <div className={styles.modalField}>
-                    <label className={`${emailValidationMessage ? styles.errorContainer : ""}`}>Email</label>
-                    <input
+                    <TextField
                         id="email"
-                        type="text"
-                        name="email"
+                        label="Email"
+                        variant="standard"
                         value={(employeeData && employeeData.email) ? employeeData.email : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'email')}}
                     />
@@ -142,11 +143,10 @@ const EmployeeModalContent = ({
                     }
                 </div>
                 <div className={styles.modalField}>
-                    <label className={`${phoneValidationMessage ? styles.errorContainer : ""}`}>Phone</label>
-                    <input
+                    <TextField
                         id="phone"
-                        type="text"
-                        name="phone"
+                        label="Phone"
+                        variant="standard"
                         value={(employeeData && employeeData.phone) ? employeeData.phone : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'phone')}}
                     />
@@ -159,11 +159,10 @@ const EmployeeModalContent = ({
                     }
                 </div>
                 <div className={styles.modalField}>
-                    <label className={`${telegramChatIdValidationMessage ? styles.errorContainer : ""}`}>Telegram chat id</label>
-                    <input
+                    <TextField
                         id="telegram_chat_id"
-                        type="text"
-                        name="telegram_chat_id"
+                        label="Telegram chat id"
+                        variant="standard"
                         value={(employeeData && employeeData.telegram_chat_id) ? employeeData.telegram_chat_id : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'telegram_chat_id')}}
                     />
@@ -176,11 +175,10 @@ const EmployeeModalContent = ({
                     }
                 </div>
                 <div className={styles.modalField}>
-                    <label>Description</label>
-                    <input
+                    <TextField
                         id="description"
-                        type="text"
-                        name="description"
+                        label="Description"
+                        variant="standard"
                         value={(employeeData && employeeData.description) ? employeeData.description : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'description')}}
                     />
@@ -191,6 +189,7 @@ const EmployeeModalContent = ({
                         handleSelectedOptions={handleSelectedOptions}
                         selectedOptions={(employeeData && employeeData.projects) ? employeeData.projects : []}
                         optionKey={'company_name'}
+                        label={'Select projects'}
                     />
                 </div>
             </div>

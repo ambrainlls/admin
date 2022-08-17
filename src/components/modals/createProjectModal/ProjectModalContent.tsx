@@ -1,15 +1,15 @@
-import React, {ChangeEvent, useEffect} from 'react';
+import React from 'react';
 import { CreateProjectTypes, ProjectTypes } from '../../../redux/types';
 import MultiSelect from '../../ui/multiSelect/MultiSelect';
 import styles from './ProjectModalComponent.module.css';
-import project from "../../../pages/Project/Project";
+import { TextField } from "@mui/material";
 
 interface EmployeeModalContentProps {
     handleClose: () => void;
     handleSave: () => void;
     employeesOptions: any[];
     projectData?: ProjectTypes | CreateProjectTypes;
-    handleChangeProjectData: (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => void
+    handleChangeProjectData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => void
     handleSelectedOptions: (selectedOptionsIds: string[]) => void;
 }
 
@@ -29,13 +29,12 @@ const ProjectModalContent = ({
             </div>
             <div className={styles.fieldsToFill}>
                 <div className={styles.modalField}>
-                    <input
+                    <TextField
                         id="name"
-                        type="text"
-                        name="name"
+                        label="Name"
+                        variant="standard"
                         value={(projectData && projectData.company_name) ? projectData.company_name : ''}
                         onChange={(evt) => {handleChangeProjectData(evt, 'company_name')}}
-                        placeholder="Name"
                     />
                 </div>
                 <div className={styles.modalFieldMultiSelect}>
@@ -44,6 +43,7 @@ const ProjectModalContent = ({
                         handleSelectedOptions={handleSelectedOptions}
                         selectedOptions={(projectData && projectData.employees) ? projectData.employees : []}
                         optionKey={'name'}
+                        label={'Select employees'}
                     />
                 </div>
             </div>

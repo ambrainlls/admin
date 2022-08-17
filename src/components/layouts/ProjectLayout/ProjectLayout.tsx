@@ -170,7 +170,7 @@ function ProjectLayout() {
         setCurrentPage(page);
     };
 
-    const handleChangeCreateProjectData = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => {
+    const handleChangeCreateProjectData = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => {
         dispatch(createProject({[key]: evt.target.value}));
     };
 
@@ -178,7 +178,7 @@ function ProjectLayout() {
         dispatch(createProject({employee_ids: selectedOptionsIds}));
     };
 
-    const handleChangeUpdateProjectData = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => {
+    const handleChangeUpdateProjectData = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => {
         const updatedProject = {
             ...editableProject,
             [key]: evt.target.value
