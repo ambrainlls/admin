@@ -1,26 +1,34 @@
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { RootState } from '../../../redux';
-import { GitUserHistoriesType } from '../../../redux/types';
-import { setGitUserHistories } from '../../../redux/slice/gitMetricSlice';
-import { GitMetricApi } from '../../../api/GitMetricApi';
-import FilterComponent from '../../ui/filterComponent/FilterComponent';
-import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
+import { setGitUserHistory } from '../../../redux/slice/gitMetricSlice';
 import { formatNumber } from '../../../helpers/helpers';
-import styles from './gitMetricLayout.module.css';
+import { RootState } from '../../../redux';
+import { GitMetricApi } from '../../../api/GitMetricApi';
+import { GitUserHistoriesType } from '../../../redux/types';
+import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
+import styles from './individualGitMetricLayout.module.css';
 
-function GitMetricLayout () {
+function IndividualGitMetricLayout () {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const gitUserHistories = useSelector((state: RootState) => state.gitMetricReducer.gitUserHistories);
+    const { userId } = useParams();
+
+    const gitUserHistory = useSelector((state: RootState) => state.gitMetricReducer.gitUserHistory);
 
     const columns = [
+        {
+            name: 'User ID',
+            cell: (row: GitUserHistoriesType) => {
+                return (
+                    <div>{row.user_id}</div>
+                )
+            }
+        },
         {
             name: 'Username',
             cell: (row: GitUserHistoriesType) => {
                 return (
-                    <div onClick={() => {handleUsernameClick(Number(row.user_id))}}>{row.user_name}</div>
+                    <div>{row.user_name}</div>
                 )
             }
         },
@@ -59,10 +67,10 @@ function GitMetricLayout () {
     ];
 
     useEffect(() => {
-        GitMetricApi.getGitMetrics()
+        GitMetricApi.getGitMetricById(Number(userId))
             .then(res => {
-                const { data } = res;
-                dispatch(setGitUserHistories(data));
+                const data = res.data[0];
+                dispatch(setGitUserHistory(data));
             })
             .catch(err => {
                 if (err) {
@@ -71,17 +79,13 @@ function GitMetricLayout () {
             });
     }, []);
 
-    const handleUsernameClick = (userId: number) => {
-        navigate(`/git-metric/${userId}`, {state: userId});
-    };
-
     return (
-        <div className={styles.gitMetricContainer}>
-            <div className={styles.filterWrapper}>
-                <FilterComponent/>
-            </div>
-            <DashboardDataTable columns={columns} data={gitUserHistories} />
+        <div>
+            <DashboardDataTable
+                columns={columns}
+                data={[gitUserHistory]}
+            />
         </div>
     )
 }
-export default GitMetricLayout;
+export default IndividualGitMetricLayout;

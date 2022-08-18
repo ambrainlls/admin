@@ -83,5 +83,6 @@ export interface GitUserHistoriesType {
     changed: string;
     deletion: string;
     project_name: string;
+    user_id?: string;
     user_name: string;
 }

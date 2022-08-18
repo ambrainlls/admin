@@ -1,5 +1,6 @@
 import {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../../redux';
 import { JiraUserHistoriesType } from '../../../redux/types';
 import { setJiraUserHistories } from '../../../redux/slice/jiraMetricSlice';
@@ -11,6 +12,7 @@ import styles from './jiraMetricLayout.module.css';
 
 function JiraMetricLayout () {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const jiraUserHistories = useSelector((state: RootState) => state.jiraMetricReducer.jiraUserHistories);
 
     const columns = [
@@ -18,7 +20,7 @@ function JiraMetricLayout () {
             name: 'Username',
             cell: (row: JiraUserHistoriesType) => {
                 return (
-                    <div>{row.username}</div>
+                    <div onClick={() => {handleUsernameClick(Number(row.id))}}>{row.username}</div>
                 )
             }
         },
@@ -38,7 +40,8 @@ function JiraMetricLayout () {
                 )
             }
         },
-    ]
+    ];
+
     useEffect(() => {
         JiraMetricApi.getJiraMetrics()
             .then(res => {
@@ -51,6 +54,11 @@ function JiraMetricLayout () {
                 }
             });
     }, []);
+
+    const handleUsernameClick = (userId: number) => {
+        navigate(`/jira-metric/${userId}`, {state: userId});
+    };
+
     return (
         <div className={styles.jiraMetricContainer}>
             <div className={styles.filterWrapper}>

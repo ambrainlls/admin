@@ -8,6 +8,8 @@ import Resume from './pages/resume/Resume';
 import Layout from './pages/Layout';
 import Project from './pages/Project/Project';
 import Metric from './pages/metric/Metric';
+import GitMetric from './pages/gitMetric/GitMetric';
+import JiraMetric from './pages/jiraMetric/JiraMetric';
 
 function AppRoutes () {
     return (
@@ -21,6 +23,8 @@ function AppRoutes () {
                     <Route path='resume' element={<Resume />} />
                     <Route path='project' element={<Project />}/>
                     <Route path='metric' element={<Metric />}/>
+                    <Route path='git-metric/:userId' element={<GitMetric />}/>
+                    <Route path='jira-metric/:id' element={<JiraMetric />}/>
                     <Route path='not-found' element={<NotFound />} />
                     <Route path="*" element={<Navigate to="/not-found" />} />
                 </Route>

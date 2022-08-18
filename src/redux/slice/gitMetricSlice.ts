@@ -5,10 +5,14 @@ const gitMetricSlice = createSlice({
     name: 'gitMetricSlice',
     initialState: {
         gitUserHistories: [] as GitUserHistoriesType[],
+        gitUserHistory: {} as GitUserHistoriesType,
     },
     reducers: {
         setGitUserHistories(state, action: PayloadAction<GitUserHistoriesType[]>) {
             state.gitUserHistories = action.payload;
+        },
+        setGitUserHistory(state, action: PayloadAction<GitUserHistoriesType>) {
+            state.gitUserHistory = action.payload;
         },
     }
 });
@@ -16,4 +20,5 @@ const gitMetricSlice = createSlice({
 export default gitMetricSlice.reducer;
 export const {
     setGitUserHistories,
+    setGitUserHistory,
 } = gitMetricSlice.actions;
