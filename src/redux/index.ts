@@ -7,6 +7,9 @@ import contactUsSlice from './slice/contactUsSlice';
 import resumeSlice from './slice/resumeSlice';
 import feedbackSlice from './slice/feedbackSlice';
 import projectSlice from "./slice/projectSlice";
+import jiraMetricSlice from "./slice/jiraMetricSlice";
+import gitMetricSlice from "./slice/gitMetricSlice";
+import metricSlice from "./slice/metricSlice";
 
 enableMapSet();
 
@@ -16,7 +19,10 @@ const rootReducer = combineReducers({
     contactUsReducer: contactUsSlice,
     resumeReducer: resumeSlice,
     feedbackReducer: feedbackSlice,
-    projectReducer: projectSlice
+    projectReducer: projectSlice,
+    jiraMetricReducer: jiraMetricSlice,
+    gitMetricReducer: gitMetricSlice,
+    metricReducer: metricSlice,
 });
 
 export const store = configureStore({
