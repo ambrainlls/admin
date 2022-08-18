@@ -3,3 +3,7 @@ export const validateEmail = (email: string) => {
 
     return re.test(String(email).toLowerCase());
 };
+
+export const formatNumber = (number: any) => {
+    return (number + "").split("").reverse().join("").replace(/(\d{3})/g, "$1 ").split("").reverse().join("").replace(/^ /, "");
+};
