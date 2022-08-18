@@ -21,7 +21,7 @@ function AppRoutes () {
                     <Route path='employees' element={<Employees />} />
                     <Route path='feedback' element={<Feedback />} />
                     <Route path='resume' element={<Resume />} />
-                    <Route path='project' element={<Project />}/>
+                    <Route path='projects' element={<Project />}/>
                     <Route path='metric' element={<Metric />}/>
                     <Route path='git-metric/:userId' element={<GitMetric />}/>
                     <Route path='jira-metric/:id' element={<JiraMetric />}/>
