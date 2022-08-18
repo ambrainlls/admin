@@ -1,124 +1,111 @@
-import React, { useRef, useState, useEffect } from 'react';
-import arrowUp from '../../../assets/images/arrowUpIcon.svg';
-import arrowDown from '../../../assets/images/arrowDownIcon.svg';
-import deleteIcon from '../../../assets/images/delete.svg';
-import styles from './multiSelect.module.css';
+import * as React from 'react';
+import { Theme, useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {Checkbox, ListItemText} from "@mui/material";
+import {useEffect} from "react";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+};
+
+function getStyles(name: string, personName: readonly string[], theme: Theme) {
+    return {
+        fontWeight:
+            personName.indexOf(name) === -1
+                ? theme.typography.fontWeightRegular
+                : theme.typography.fontWeightMedium,
+    };
+}
 
 interface MultiSelectProps {
     options: any[];
     handleSelectedOptions: (selectedOptionIds: string[]) => void;
     selectedOptions: any[];
     optionKey: string;
+    label: string;
 }
-
-function MultiSelect({ options, handleSelectedOptions, selectedOptions, optionKey }: MultiSelectProps) {
-    const multiSelectRef = useRef() as React.RefObject<HTMLDivElement>;
-
-    const [showOptions, setShowOptions] = useState(false);
-    const [selectedParams, setSelectedParams] = useState<any[]>( selectedOptions);
+const  MultiSelect = ({
+    options,
+    handleSelectedOptions,
+    selectedOptions,
+    optionKey,
+    label
+    }: MultiSelectProps) => {
+    const theme = useTheme();
+    const [personName, setPersonName] = React.useState<string[]>([]);
 
     useEffect(() => {
-        function handleClickOutside(event: any) {
-            if (multiSelectRef.current && !multiSelectRef.current.contains(event.target)) {
-                setShowOptions(false);
-            }
-        }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [multiSelectRef]);
+        setPersonName(selectedOptions);
+    }, []);
 
-    const toggleOptions = () => {
-        setShowOptions(!showOptions);
-    };
+    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+        const {
+            target: { value },
+        } = event;
 
-    const isChecked = (item: any) => {
-        const checkedItem = selectedParams.find(el => el.id === item.id);
+        const selectedOptionIds: string[] = [];
 
-        return !!checkedItem;
-    };
-
-    const handleOptionClick = (option: any) => {
-        const foundOption = selectedParams.find((elem) => elem.id === option.id);
-        let filteredSelectedParams = [ ...selectedParams ];
-
-        if (foundOption) {
-            filteredSelectedParams = selectedParams.filter((item) => {
-                return option.id !== item.id;
+        if (typeof value !== 'string') {
+            value.forEach(val => {
+                for(const option of options) {
+                    if (val === option[optionKey]) {
+                        selectedOptionIds.push(option.id);
+                        break;
+                    }
+                }
             });
-        } else {
-            filteredSelectedParams.push(option)
         }
 
-        setSelectedParams(filteredSelectedParams);
-
-        const selectedOptionIds = filteredSelectedParams.map(item => item.id);
         handleSelectedOptions(selectedOptionIds);
+
+        setPersonName(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
     };
 
     return (
-        <div className={styles.multiSelectContainer} ref={multiSelectRef}>
-            <div className={styles.multiSelectContent}>
-                <div className={styles.selectedParamsContainer} data-test={'selectedOptions'}>
-                    {
-                        selectedParams.map(option => {
-                            if (isChecked(option)) {
-                                return (
-                                     <div key={option.id + option[optionKey]} className={styles.selectedOption}>
-                                         <span className={styles.selectedOptionTitle}>{option[optionKey]}</span>
-                                         <img src={deleteIcon} alt={deleteIcon}
-                                              className={styles.removeSelectedOptionIcon}
-                                              onClick={()=>handleOptionClick(option)}
-                                         />
-                                     </div>
-                                )
-                            }
-                        })
-                    }
-                </div>
-                <div className={styles.multiSelectIcon}>
-                    {
-                        showOptions ? (
-                            <img src={arrowUp} alt={arrowUp}
-                                 onClick={toggleOptions}
-                                 data-test={'selectArrow'}
-                            />
-                        ) : (
-                            <img src={arrowDown} alt={arrowDown}
-                                 onClick={toggleOptions}
-                                 data-test={'selectArrow'}
-                            />
-                        )
-                    }
-                </div>
-            </div>
-            {
-                showOptions && (
-                    <div className={styles.optionsContainer} data-test={'optionsContainer'}>
-                        {
-                            options.map((option) => {
-                                const { id } = option;
-                                return (
-                                    <div key={id}
-                                         onClick={()=>handleOptionClick(option)}
-                                         className={`${styles.options} ${isChecked(option) ? styles.active : ""}` }
-                                    >
-                                        <label htmlFor={id}>{option[optionKey]}</label>
-                                        <input type="checkbox"
-                                               onChange={() =>{}}
-                                               id={id}
-                                               checked={isChecked(option)}
-                                        />
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
-                )
-            }
+        <div>
+            <FormControl sx={{ width: '100%' }}>
+                <InputLabel id="demo-multiple-checkbox-label">{label}</InputLabel>
+                <Select
+                    labelId="demo-multiple-checkbox-label"
+                    id="demo-multiple-checkbox"
+                    multiple
+                    value={personName}
+                    onChange={handleChange}
+                    input={<OutlinedInput label={label} />}
+                    renderValue={(selected) => selected.join(', ')}
+                    MenuProps={MenuProps}
+                >
+                    {options.map((option) => (
+                        <MenuItem
+                            key={option.id}
+                            value={option[optionKey]}
+                            style={getStyles(option[optionKey], personName, theme)}
+                        >
+                            <Checkbox checked={personName.indexOf(option[optionKey]) > -1} />
+                            <ListItemText primary={option[optionKey]} />
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
         </div>
-    )
+    );
 }
+
 export default MultiSelect;
+
+
 

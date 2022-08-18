@@ -21,15 +21,19 @@
     color: #000000;
 }
 
+.fieldsToFill {
+    border-bottom: 1px dashed grey;
+    margin-bottom: 60px;
+}
+
 .modalField {
     margin-bottom: 48px;
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid #999999;
 }
 
 .modalFieldMultiSelect {
-    margin-bottom: 80px;
+    margin-bottom: 60px;
 }
 
 .modalField select {
@@ -70,24 +74,22 @@
     line-height: 19px;
     text-align: center;
     cursor: pointer;
-}
-
-.closeBtn {
-    background: gray;
-    margin-right: 24px;
     color: #000000;
 }
 
+.closeBtn {
+    background: #b4b4b4;
+    margin-right: 24px;
+}
+
 .saveBtn {
-    background: #047CBC;
-    color: #FFFFFF;
+    background: #30c4ff;
 }
 
 .dateContainer, .selectContainer {
     display: flex;
     flex-direction: column;
     margin-bottom: 48px;
-    border-bottom: 1px solid #999999;
 }
 
 label {
