@@ -23,7 +23,7 @@ export class ProjectsApi {
             data,
             {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',
                 }
             }
         );
