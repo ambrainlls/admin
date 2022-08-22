@@ -1,7 +1,9 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux';
-import { setContactsData } from '../../../redux/slice/contactUsSlice';
+import {
+    setContactsData,
+} from '../../../redux/slice/contactUsSlice';
 import { ContactUsTypes } from '../../../redux/types';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
@@ -18,9 +20,7 @@ function ContactUsLayout() {
             name: 'Name',
             cell: (row: ContactUsTypes) => {
                 return (
-                    <div>
-                        <div>{row.name}</div>
-                    </div>
+                    <div>{row.name}</div>
                 )
             }
         },
@@ -59,6 +59,11 @@ function ContactUsLayout() {
             const data = res.data ? res.data : [];
             dispatch(setContactsData(data));
         })
+        .catch(err => {
+            if (err) {
+                throw err;
+            }
+        });
     },[]);
 
     const handlePageChange = (evt: ChangeEvent<unknown>, page: number) => {
