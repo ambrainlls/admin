@@ -1,5 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { RootState } from '../../../redux';
 import {
     deleteEmployee,
@@ -22,12 +24,16 @@ import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIc
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
 import createRowIcon from '../../../assets/images/createRowIcon.svg';
 import styles from './employeesLayout.module.css';
+import {setSearchParams} from "../../../redux/slice/SearchParamsSlice";
 
 function EmployeesLayout() {
     const dispatch = useDispatch();
+    const history = createBrowserHistory();
+    const location = useLocation();
     const employeesData = useSelector((state: RootState) => state.employeesReducer.employeesData);
     const createEmployeeData = useSelector((state: RootState) => state.employeesReducer.createEmployeeData);
     const selectedEmployeeId = useSelector((state: RootState) => state.employeesReducer.selectedEmployeeId);
+    const searchParams = useSelector((state: RootState) => state.searchParamsReducer.searchParams);
 
     const requiredMessage = 'The field is required !';
 
@@ -201,6 +207,22 @@ function EmployeesLayout() {
             }
         });
     },[]);
+
+    useEffect(() => {
+        EmployeesApi.getEmployeesBySearch(searchParams)
+            .then(res => {
+                const { data } = res;
+                if (searchParams) {
+                    history.replace(location.pathname + `/search?q=${searchParams}`);
+                }
+                dispatch(setEmployeesData(data));
+            })
+            .catch(err => {
+                if (err) {
+                    throw err;
+                }
+            });
+    }, [searchParams]);
 
     useEffect(() => {
         setNameValidationMessage('');

@@ -11,6 +11,12 @@ export class EmployeesApi {
         );
     };
 
+    static async getEmployeesBySearch(query: string) {
+        return axios.get(
+            `${url}/employees/search?q=${query}`,
+        )
+    }
+
     static async updateEmployee(data: CreateEmployeesDataTypes) {
         return axios.put(
             `${url}/employees/${data.id}`,
