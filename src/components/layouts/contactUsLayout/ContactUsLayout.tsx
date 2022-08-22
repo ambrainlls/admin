@@ -59,6 +59,11 @@ function ContactUsLayout() {
             const data = res.data ? res.data : [];
             dispatch(setContactsData(data));
         })
+        .catch(err => {
+            if (err) {
+                throw err;
+            }
+        });
     },[]);
 
     const handlePageChange = (evt: ChangeEvent<unknown>, page: number) => {
