@@ -1,0 +1,12 @@
+.btnsWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.btnsWrapper img {
+    cursor: pointer;
+}
+
+.deleteRowIcon {
+    margin-right: 24px;
+}

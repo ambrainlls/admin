@@ -51,6 +51,11 @@ function LeftDrawer () {
             icon: MetricTabIcon,
             title: 'Metric',
             route: '/metric',
+        },
+        {
+            icon: MetricTabIcon,
+            title: 'Jobs',
+            route: '/jobs'
         }
     ];
 

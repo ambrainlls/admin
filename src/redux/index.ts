@@ -6,10 +6,11 @@ import employeesSlice from './slice/employeesSlice';
 import contactUsSlice from './slice/contactUsSlice';
 import resumeSlice from './slice/resumeSlice';
 import feedbackSlice from './slice/feedbackSlice';
-import projectSlice from "./slice/projectSlice";
-import jiraMetricSlice from "./slice/jiraMetricSlice";
-import gitMetricSlice from "./slice/gitMetricSlice";
-import metricSlice from "./slice/metricSlice";
+import projectSlice from './slice/projectSlice';
+import jiraMetricSlice from './slice/jiraMetricSlice';
+import gitMetricSlice from './slice/gitMetricSlice';
+import metricSlice from './slice/metricSlice';
+import jobsSlice from './slice/jobsSlice';
 
 enableMapSet();
 
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     jiraMetricReducer: jiraMetricSlice,
     gitMetricReducer: gitMetricSlice,
     metricReducer: metricSlice,
+    jobsReducer: jobsSlice,
 });
 
 export const store = configureStore({
