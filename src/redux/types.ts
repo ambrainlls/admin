@@ -11,6 +11,7 @@ export interface EmployeesDataTypes {
     phone: string;
     projects: any[];
     project_ids?: any[];
+    pivot?:any;
     telegram_chat_id: string;
 }
 
@@ -27,6 +28,7 @@ export interface CreateEmployeesDataTypes {
     phone: string;
     project_ids: any[];
     projects?: any[];
+    pivot?:any;
     telegram_chat_id: string;
 }
 
@@ -90,3 +92,34 @@ export interface hhResumeSpeciality {
 }
 
 
+
+export interface ProjectTypes {
+    id: string;
+    company_name: string;
+    employees: any[],
+    employee_ids?: any[]
+}
+
+export interface CreateProjectTypes {
+    id: string;
+    company_name: string;
+    employee_ids: any[];
+    employees?: any[]
+}
+
+export interface JiraUserHistoriesType {
+    account_id: string;
+    code_review: string;
+    id: string;
+    rejected: string;
+    username: string;
+}
+
+export interface GitUserHistoriesType {
+    addition: string;
+    changed: string;
+    deletion: string;
+    project_name: string;
+    user_id: string;
+    user_name: string;
+}

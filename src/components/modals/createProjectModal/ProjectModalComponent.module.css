@@ -11,19 +11,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .modalComponentTitle p {
     font-weight: 700;
     font-size: 20px;
     line-height: 24px;
+    margin: 0;
     color: #000000;
-}
-
-.fieldsToFill {
-    border-bottom: 1px dashed grey;
-    margin-bottom: 60px;
 }
 
 .modalField {
@@ -33,29 +29,12 @@
 }
 
 .modalFieldMultiSelect {
-    margin-bottom: 60px;
+    margin-bottom: 50px;
 }
 
-.modalField select {
-    width: 100%;
-    border: none;
-    background: #FFF;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.modalField select:focus {
-    outline: none;
-}
-
-.modalField input, .dateContainer input {
-    width: 416px;
-    outline: none;
-    border: none;
-    font-weight: 400;
-    line-height: 17px;
-    color: #000000;
-    font-size: 16px;
+.fieldsToFill {
+    border-bottom: 1px dashed grey;
+    margin-bottom: 50px;
 }
 
 .buttonsContent {
@@ -65,7 +44,7 @@
 }
 
 .buttonsContent button {
-    width: 98px;
+    width: 106px;
     height: 40px;
     border-radius: 4px;
     border: none;
@@ -86,13 +65,7 @@
     background: #30c4ff;
 }
 
-.dateContainer, .selectContainer {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 48px;
-}
-
-label {
+.dateContainer label, .selectContainer label {
     margin-bottom: 10px;
     font-size: 14px;
     line-height: 17px;
@@ -103,12 +76,3 @@ label {
     width: 100% !important;
 }
 
-.errorMessage {
-    color: red;
-    padding: 10px 0;
-    font-size: 14px;
-}
-
-.errorContainer {
-    color: red;
-}

@@ -180,8 +180,7 @@ function EmployeesLayout() {
     useEffect(() => {
         EmployeesApi.getAllEmployees()
         .then(res => {
-            const { data } = res.data;
-            dispatch(setEmployeesData(data));
+            const data = res.data;
             dispatch(setEmployeesData(data));
         })
         .catch(err => {
@@ -360,7 +359,7 @@ function EmployeesLayout() {
         setCurrentPage(page);
     };
 
-    const handleChangeCreateEmployeData = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => {
+    const handleChangeCreateEmployeData = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>, key: string) => {
         dispatch(createEmployee({[key]: evt.target.value}));
     };
 
@@ -368,7 +367,7 @@ function EmployeesLayout() {
         dispatch(createEmployee({project_ids: selectedOptionsIds}));
     };
 
-    const handleChangeUpdateEmployeData = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => {
+    const handleChangeUpdateEmployeData = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>, key: string) => {
         const updatedEmployee = {
             ...editableEmployee,
             [key]: evt.target.value

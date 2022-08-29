@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import React from 'react';
 import { Modal, Box } from '@mui/material';
 import { CreateEmployeesDataTypes, EmployeesDataTypes } from '../../../redux/types';
 import EmployeeModalContent from './EmployeeModalContent';
@@ -10,7 +10,8 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 464,
-    height: 700,
+    maxHeight: '80vh',
+    minHeight: 350,
     overflowY: 'auto',
     boxShadow: 24,
     pt: 2,
@@ -23,7 +24,7 @@ export interface EmployeeModalComponentProps {
     handleSave: () => void;
     projectOptions: any[];
     employeeData: EmployeesDataTypes | CreateEmployeesDataTypes;
-    handleChangeEmployeData: (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, key: string) => void
+    handleChangeEmployeData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>, key: string) => void
     handleSelectedOptions: (selectedOptionsIds: string[]) => void;
     nameValidationMessage: string;
     surnameValidationMessage: string;

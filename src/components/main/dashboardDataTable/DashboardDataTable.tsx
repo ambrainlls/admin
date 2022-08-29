@@ -5,9 +5,10 @@ import styles from './dashboardDataTable.module.css';
 interface DashboardDataTableProps {
     columns: TableColumn<any>[];
     data: any[];
+    handleRowClick?: () => void;
 }
 
-function DashboardDataTable ({columns, data}: DashboardDataTableProps) {
+function DashboardDataTable ({columns, data, handleRowClick}: DashboardDataTableProps) {
 
     return (
         <div className={styles.dataTableContainer}>
@@ -17,6 +18,7 @@ function DashboardDataTable ({columns, data}: DashboardDataTableProps) {
                 data={data}
                 defaultSortFieldId={'name'}
                 striped
+                onRowClicked={handleRowClick}
             />
         </div>
     )
