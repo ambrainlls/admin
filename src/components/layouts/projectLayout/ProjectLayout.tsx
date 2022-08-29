@@ -207,7 +207,9 @@ function ProjectLayout() {
     return (
         <div className={styles.developersContainer}>
             <div className={styles.filterWrapper}>
-                <FilterComponent />
+                <FilterComponent
+                    handleSearch={() => {}}
+                />
                 <img src={createRowIcon} alt={'createRowIcon'}
                      className={styles.createRowIcon}
                      onClick={() => setShowModal(!showModal)}

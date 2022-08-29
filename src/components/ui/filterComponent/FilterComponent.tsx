@@ -1,34 +1,32 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setSearchParams } from '../../../redux/slice/SearchParamsSlice';
 import searchIcon from '../../../assets/images/searchIcon.svg';
 import styles from './filterComponent.module.css';
 
-function FilterComponent () {
-    const dispatch = useDispatch();
+interface FilterComponentProps {
+    handleSearch: (evt: ChangeEvent<HTMLInputElement>) => void;
+}
+
+function FilterComponent ({ handleSearch }: FilterComponentProps) {
     const inputRef = useRef() as React.RefObject<HTMLDivElement>;
     const [filterValue, setFilterValue] = useState('');
 
     const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
         setFilterValue(evt.target.value);
-        if (evt.target.value === '') {
-            dispatch(setSearchParams(' '));
-        } else {
-            dispatch(setSearchParams(evt.target.value));
-        }
-    }
+        handleSearch(evt);
+    };
 
     return (
         <div className={styles.filterComponentWrapper} ref={inputRef}>
-            <img src={searchIcon} alt={'searchIcon'}/>
+            <img src={searchIcon} alt={'searchIcon'} />
             <input
                 id="search"
                 type="text"
                 placeholder=""
                 value={filterValue}
-                onChange={(evt) => {handleChange(evt)}}
+                onChange={handleChange}
             />
         </div>
     )
 }
+
 export default FilterComponent;

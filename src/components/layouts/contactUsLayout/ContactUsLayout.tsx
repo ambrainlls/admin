@@ -68,7 +68,9 @@ function ContactUsLayout() {
     return (
         <div className={styles.contactUsContainer}>
             <div className={styles.filterWrapper}>
-                <FilterComponent />
+                <FilterComponent
+                    handleSearch={() => {}}
+                />
             </div>
             <DashboardDataTable
                 columns={columns}
