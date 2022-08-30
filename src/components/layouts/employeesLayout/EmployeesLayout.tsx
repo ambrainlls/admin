@@ -397,11 +397,11 @@ function EmployeesLayout() {
     return (
         <div className={styles.developersContainer}>
             <div className={styles.filterWrapper}>
-                <FilterComponent />
-                <img src={createRowIcon} alt={'createRowIcon'}
-                     className={styles.createRowIcon}
-                     onClick={() => setShowModal(!showModal)}
-                />
+                <FilterComponent/>
+                <div className={styles.createEmployeeWrapper} onClick={() => {setShowModal(!showModal)}}>
+                    <span>Create</span>
+                    <img src={createRowIcon} alt={'createRowIcon'}/>
+                </div>
             </div>
             <DashboardDataTable
                 columns={columns}
