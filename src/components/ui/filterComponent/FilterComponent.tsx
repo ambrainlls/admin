@@ -1,17 +1,23 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import searchIcon from '../../../assets/images/searchIcon.svg';
 import styles from './filterComponent.module.css';
 
-function FilterComponent () {
+interface FilterComponentProps {
+    handleSearch: (evt: ChangeEvent<HTMLInputElement>) => void;
+}
+
+function FilterComponent ({ handleSearch }: FilterComponentProps) {
+    const inputRef = useRef() as React.RefObject<HTMLDivElement>;
     const [filterValue, setFilterValue] = useState('');
 
     const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
-        setFilterValue(evt.target.value)
-    }
+        setFilterValue(evt.target.value);
+        handleSearch(evt);
+    };
 
     return (
-        <div className={styles.filterComponentWrapper}>
-            <img src={searchIcon} alt={'searchIcon'}/>
+        <div className={styles.filterComponentWrapper} ref={inputRef}>
+            <img src={searchIcon} alt={'searchIcon'} />
             <input
                 id="search"
                 type="text"
@@ -22,4 +28,5 @@ function FilterComponent () {
         </div>
     )
 }
+
 export default FilterComponent;

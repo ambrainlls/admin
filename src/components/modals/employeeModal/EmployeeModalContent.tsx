@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { MenuItem, TextField } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { resetEmployeDataInModal } from '../../../redux/slice/employeesSlice';
+import { roles } from '../../../helpers/helpers';
+import { positions } from '../../../helpers/helpers';
 import MultiSelect from '../../ui/multiSelect/MultiSelect';
 import { EmployeeModalComponentProps } from './EmployeeModalComponent';
 import styles from './employeeModalComponent.module.css';
-import { MenuItem, TextField } from "@mui/material";
-import { roles } from "../../../helpers/helpers";
-import { positions } from "../../../helpers/helpers";
 
 const EmployeeModalContent = ({
     handleClose,
@@ -21,6 +23,14 @@ const EmployeeModalContent = ({
     phoneValidationMessage,
     telegramChatIdValidationMessage,
 }: EmployeeModalComponentProps) => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        return () => {
+            dispatch(resetEmployeDataInModal());
+        };
+    },[]);
+
     return (
         <>
             <div className={styles.modalComponentTitle}>
@@ -85,7 +95,6 @@ const EmployeeModalContent = ({
                         value={(employeeData && employeeData.start_date) ? employeeData.start_date : ''}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'start_date')}}
                     />
-
                     {
                         startDateValidationMessage && (
                             <span className={styles.errorMessage}>
@@ -187,7 +196,7 @@ const EmployeeModalContent = ({
                     <MultiSelect
                         options={projectOptions}
                         handleSelectedOptions={handleSelectedOptions}
-                        selectedOptions={(employeeData && employeeData.projects) ? employeeData.projects : []}
+                        defaultSelectedOptions={(employeeData && employeeData.projects) ? employeeData.projects : []}
                         optionKey={'company_name'}
                         label={'Select projects'}
                     />
@@ -209,4 +218,4 @@ const EmployeeModalContent = ({
     )
 }
 
-export default EmployeeModalContent
+export default EmployeeModalContent;

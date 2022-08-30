@@ -62,7 +62,9 @@ function JiraMetricLayout () {
     return (
         <div className={styles.jiraMetricContainer}>
             <div className={styles.filterWrapper}>
-                <FilterComponent/>
+                <FilterComponent
+                    handleSearch={() => {}}
+                />
             </div>
             <DashboardDataTable columns={columns} data={jiraUserHistories} />
         </div>
