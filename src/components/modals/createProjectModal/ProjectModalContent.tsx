@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { TextField } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { resetProjectDataInModal } from '../../../redux/slice/projectSlice';
 import { CreateProjectTypes, ProjectTypes } from '../../../redux/types';
 import MultiSelect from '../../ui/multiSelect/MultiSelect';
 import styles from './ProjectModalComponent.module.css';
-import { TextField } from "@mui/material";
 
 interface EmployeeModalContentProps {
     handleClose: () => void;
@@ -21,6 +23,13 @@ const ProjectModalContent = ({
     handleChangeProjectData,
     handleSelectedOptions,
 }: EmployeeModalContentProps) => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        return () => {
+            dispatch(resetProjectDataInModal());
+        };
+    },[]);
 
     return (
         <>
@@ -41,7 +50,7 @@ const ProjectModalContent = ({
                     <MultiSelect
                         options={employeesOptions}
                         handleSelectedOptions={handleSelectedOptions}
-                        selectedOptions={(projectData && projectData.employees) ? projectData.employees : []}
+                        defaultSelectedOptions={(projectData && projectData.employees) ? projectData.employees : []}
                         optionKey={'name'}
                         label={'Select employees'}
                     />
@@ -63,4 +72,4 @@ const ProjectModalContent = ({
     )
 }
 
-export default ProjectModalContent
+export default ProjectModalContent;

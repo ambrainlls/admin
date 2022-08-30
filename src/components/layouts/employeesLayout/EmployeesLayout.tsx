@@ -10,7 +10,7 @@ import {
     resetEmployeDataInModal,
     addNewEmployee,
 } from '../../../redux/slice/employeesSlice';
-import { CreateEmployeesDataTypes, EmployeesDataTypes } from '../../../redux/types';
+import { CreateEmployeesDataTypes, EmployeesDataTypes, ProjectTypes } from '../../../redux/types';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
@@ -155,8 +155,9 @@ function EmployeesLayout() {
     const [emailValidationMessage, setEmailValidationMessage] = useState('');
     const [phoneValidationMessage, setPhoneValidationMessage] = useState('');
     const [telegramChatIdValidationMessage, setTelegramChatIdValidationMessage] = useState('');
-    const [allProjects, setAllProjects] = useState([]);
-    const [pageCount, setPageCount] = useState(3);
+    const [allProjects, setAllProjects] = useState<ProjectTypes[]>([]);
+    const [pageCount, setPageCount] = useState(1);
+    const [searchValue, setSearchValue] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [showModal, setShowModal] = useState(false);
     const [editableEmployee, setEditableEmployee] = useState<any>(
@@ -178,16 +179,7 @@ function EmployeesLayout() {
     );
 
     useEffect(() => {
-        EmployeesApi.getAllEmployees()
-        .then(res => {
-            const data = res.data;
-            dispatch(setEmployeesData(data));
-        })
-        .catch(err => {
-            if (err) {
-                throw err;
-            }
-        });
+        getEmployees();
 
         ProjectsApi.getAllProjects()
         .then(res => {
@@ -210,6 +202,30 @@ function EmployeesLayout() {
         setPhoneValidationMessage('');
         setTelegramChatIdValidationMessage('');
     }, [showModal, selectedEmployeeId]);
+
+    const getEmployees = (value?: string) => {
+        EmployeesApi.getAllEmployees(value)
+        .then(res => {
+            const { data } = res.data;
+            const { current_page, last_page } = res.data.meta;
+            setCurrentPage(current_page);
+            setPageCount(last_page);
+            dispatch(setEmployeesData(data));
+        })
+        .catch(err => {
+            if (err) {
+                throw err;
+            }
+        });
+    };
+
+    const handleSearchEmployee = (evt: ChangeEvent<HTMLInputElement>) => {
+        const { value } = evt.target;
+
+        setSearchValue(value);
+        setCurrentPage(1);
+        getEmployees(`?q=${value}`);
+    };
 
     const handleValidationErrors = (employeeData: EmployeesDataTypes | CreateEmployeesDataTypes) => {
         if (!employeeData.name) {
@@ -283,14 +299,13 @@ function EmployeesLayout() {
             setTelegramChatIdValidationMessage('');
         }
 
-        if (employeeData.telegram_chat_id.length !== 9) {
+        if (employeeData.telegram_chat_id.toString().length !== 9) {
             setTelegramChatIdValidationMessage('The length of telegram chat id must be 9 !');
 
             return;
         } else {
             setTelegramChatIdValidationMessage('');
         }
-
 
         return true;
     };
@@ -300,7 +315,7 @@ function EmployeesLayout() {
 
         const foundIndex = employeesData.findIndex((el) => el.id === rowId);
 
-        setEditableEmployee(employeesData[foundIndex])
+        setEditableEmployee(employeesData[foundIndex]);
     };
 
     const handleSaveChanges = () => {
@@ -341,7 +356,6 @@ function EmployeesLayout() {
             return
         }
 
-
         EmployeesApi.createEmployee(createEmployeeData)
         .then(res => {
             const newEmployee = res.data;
@@ -357,6 +371,8 @@ function EmployeesLayout() {
 
     const handlePageChange = (evt: ChangeEvent<unknown>, page: number) => {
         setCurrentPage(page);
+
+        getEmployees(`?q=${searchValue}&page=${page}`);
     };
 
     const handleChangeCreateEmployeData = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>, key: string) => {
@@ -379,7 +395,8 @@ function EmployeesLayout() {
     const handleSelectedOptionsForUpdateEmployee = (selectedOptionsIds: string[]) => {
         const updatedEmployee = {
             ...editableEmployee,
-            project_ids: selectedOptionsIds
+            project_ids: selectedOptionsIds,
+            projects: allProjects.filter(item => selectedOptionsIds.includes(item.id)),
         };
 
         setEditableEmployee(updatedEmployee);
@@ -397,11 +414,15 @@ function EmployeesLayout() {
     return (
         <div className={styles.developersContainer}>
             <div className={styles.filterWrapper}>
-                <FilterComponent />
-                <img src={createRowIcon} alt={'createRowIcon'}
-                     className={styles.createRowIcon}
-                     onClick={() => setShowModal(!showModal)}
+                <FilterComponent
+                    handleSearch={handleSearchEmployee}
                 />
+                <div className={styles.createEmployeeWrapper}
+                     onClick={() => {setShowModal(!showModal)}}
+                >
+                    <span>Create</span>
+                    <img src={createRowIcon} alt={'createRowIcon'}/>
+                </div>
             </div>
             <DashboardDataTable
                 columns={columns}

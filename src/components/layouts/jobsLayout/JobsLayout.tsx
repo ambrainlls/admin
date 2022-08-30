@@ -287,7 +287,9 @@ function JobsLayout () {
     return (
         <div>
             <div className={styles.filterWrapper}>
-                <FilterComponent/>
+                <FilterComponent
+                    handleSearch={() => {}}
+                />
                 <div className={styles.createJobWrapper} onClick={() => {setShowModal(!showModal)}}>
                     <span>Create</span>
                     <img src={createJobIcon} alt={'createJobIcon'}/>

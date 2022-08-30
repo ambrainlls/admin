@@ -224,7 +224,9 @@ function ResumeLayout() {
     return (
         <div className={styles.resumeContainer}>
             <div className={styles.filterWrapper}>
-                <FilterComponent />
+                <FilterComponent
+                    handleSearch={() => {}}
+                />
             </div>
             <DashboardDataTable
                 columns={columns}

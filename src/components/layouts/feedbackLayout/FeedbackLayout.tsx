@@ -221,7 +221,9 @@ function FeedbackLayout() {
     return (
         <div className={styles.feedbackContainer}>
             <div className={styles.filterWrapper}>
-                <FilterComponent />
+                <FilterComponent
+                    handleSearch={() => {}}
+                />
             </div>
             <DashboardDataTable
                 columns={columns}
