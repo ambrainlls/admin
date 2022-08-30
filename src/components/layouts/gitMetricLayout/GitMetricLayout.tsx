@@ -78,7 +78,9 @@ function GitMetricLayout () {
     return (
         <div className={styles.gitMetricContainer}>
             <div className={styles.filterWrapper}>
-                <FilterComponent/>
+                <FilterComponent
+                    handleSearch={() => {}}
+                />
             </div>
             <DashboardDataTable columns={columns} data={gitUserHistories} />
         </div>
