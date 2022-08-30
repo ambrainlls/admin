@@ -20,7 +20,7 @@ const useStyles = makeStyles({
         background: "#FFE375",
         borderRadius: "5px",
         "& .MuiOutlinedInput-input": {
-            color: "#FFE375"
+            color: "#000000"
         },
         "& .MuiInputLabel-root": {
             color: "#000000"
@@ -29,7 +29,7 @@ const useStyles = makeStyles({
             borderColor: "#FFFFFF"
         },
         "&:hover .MuiOutlinedInput-input": {
-            color: "#FFE375"
+            color: "#000000"
         },
         "&:hover .MuiInputLabel-root": {
             color: "#000000"
@@ -38,7 +38,7 @@ const useStyles = makeStyles({
             borderColor: "#FFFFFF"
         },
         "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-            color: "#FFE375"
+            color: "#000000"
         },
         "& .MuiInputLabel-root.Mui-focused": {
             color: "#000000"
