@@ -18,15 +18,6 @@ const MenuProps = {
     },
 };
 
-function getStyles(name: string, personName: readonly string[], theme: Theme) {
-    return {
-        fontWeight:
-            personName.indexOf(name) === -1
-                ? theme.typography.fontWeightRegular
-                : theme.typography.fontWeightMedium,
-    };
-}
-
 interface MultiSelectProps {
     options: any[];
     handleSelectedOptions: (selectedOptionIds: string[]) => void;
@@ -85,6 +76,16 @@ const  MultiSelect = ({
         return selectedOptionIds.has(option.id);
     };
 
+    const getStyles = (option: any, personName: readonly string[], theme: Theme) => {
+        return {
+            fontWeight:
+                personName.indexOf(option[optionKey]) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+            background: selectedOptionIds.has(option.id) ? 'AliceBlue' : ''
+        };
+    };
+
     return (
         <div>
             <FormControl sx={{ width: '100%' }}>
@@ -103,8 +104,8 @@ const  MultiSelect = ({
                     {options.map((option) => (
                         <MenuItem
                             key={option.id}
-                            value={option[optionKey]}
-                            style={getStyles(option[optionKey], personName, theme)}
+                            value={option}
+                            style={getStyles(option, personName, theme)}
                             onClick={(evt) => handleOptionClick(option)}
                         >
                             <Checkbox checked={isChecked(option)} />

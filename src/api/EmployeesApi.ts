@@ -20,7 +20,12 @@ export class EmployeesApi {
     static async updateEmployee(data: CreateEmployeesDataTypes) {
         return axios.put(
             `${url}/employees/${data.id}`,
-            data
+            data,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
         );
     };
 
