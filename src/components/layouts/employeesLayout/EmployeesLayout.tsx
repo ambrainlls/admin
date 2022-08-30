@@ -10,7 +10,7 @@ import {
     resetEmployeDataInModal,
     addNewEmployee,
 } from '../../../redux/slice/employeesSlice';
-import {CreateEmployeesDataTypes, EmployeesDataTypes} from '../../../redux/types';
+import { CreateEmployeesDataTypes, EmployeesDataTypes } from '../../../redux/types';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
