@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     deleteJob,
@@ -11,6 +11,7 @@ import { RootState } from '../../../redux';
 import { CreateJobDataType, JobsDataType } from '../../../redux/types';
 import { JobsApi } from '../../../api/JobsApi';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
+import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import JobModalComponent from '../../modals/createJobModal/JobModalComponent';
 import { convertBase64 } from '../../../helpers/helpers';
@@ -104,15 +105,19 @@ function JobsLayout () {
         }
     ];
 
+    const jobs = useSelector((state: RootState) => state.jobsReducer.jobsData);
+    const createJobData = useSelector((state: RootState) => state.jobsReducer.createJobData);
+    const selectedJobId = useSelector((state: RootState) => state.jobsReducer.selectedJobId);
+
     const [descriptionValidationMessage, setDescriptionValidationMessage] = useState('');
+    const [pageCount, setPageCount] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchValue, setSearchValue] = useState('');
     const [imageValidationMessage, setImageValidationMessage] = useState('');
     const [locationValidationMessage, setLocationValidationMessage] = useState('');
     const [positionValidationMessage, setPositionValidationMessage] = useState('');
     const [statusValidationMessage, setStatusValidationMessage] = useState('');
     const [titleValidationMessage, setTitleValidationMessage] = useState('');
-    const jobs = useSelector((state: RootState) => state.jobsReducer.jobsData);
-    const createJobData = useSelector((state: RootState) => state.jobsReducer.createJobData);
-    const selectedJobId = useSelector((state: RootState) => state.jobsReducer.selectedJobId);
     const [editableJob, setEditableJob] = useState<JobsDataType>(
         {
             id: '',
@@ -135,17 +140,26 @@ function JobsLayout () {
     }, [showModal, selectedJobId]);
 
     useEffect(() => {
-        JobsApi.getJobs()
-            .then(res => {
-                const { data } = res;
-                dispatch(setJobsData(data));
-            })
-            .catch(err => {
-                if (err) {
-                    throw err;
-                }
-            });
+        getJobs();
     }, []);
+
+    const getJobs = (value?: string) => {
+        JobsApi.getJobs(value)
+        .then(res => {
+            const { data } = res.data;
+            const { current_page, last_page } = res.data.meta;
+
+            setCurrentPage(current_page);
+            setPageCount(last_page);
+
+            dispatch(setJobsData(data));
+        })
+        .catch(err => {
+            if (err) {
+                throw err;
+            }
+        });
+    };
 
     const handleCloseCreateJobModal = () => {
         setShowModal(false);
@@ -177,7 +191,7 @@ function JobsLayout () {
 
         const foundIndex = jobs.findIndex((el) => el.id === rowId);
 
-        setEditableJob(jobs[foundIndex])
+        setEditableJob(jobs[foundIndex]);
     };
 
     const handleCloseUpdateJobModal = () => {
@@ -244,14 +258,14 @@ function JobsLayout () {
         }
 
         JobsApi.updateJob(editableJob)
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err => {
-                if (err) {
-                    throw err;
-                }
-            });
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => {
+            if (err) {
+                throw err;
+            }
+        });
     };
 
     const handleCreateJob = () => {
@@ -262,43 +276,64 @@ function JobsLayout () {
         }
 
         JobsApi.createJob(createJobData)
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err => {
-                if (err) {
-                    throw err;
-                }
-            });
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => {
+            if (err) {
+                throw err;
+            }
+        });
     };
 
     const handleDeleteJob = (jobId: string) => {
         JobsApi.deleteJob(jobId)
-            .then(res => {
-                dispatch(deleteJob(jobId))
-            })
-            .catch(err => {
-                if (err) {
-                    throw err;
-                }
-            });
+        .then(res => {
+            dispatch(deleteJob(jobId))
+        })
+        .catch(err => {
+            if (err) {
+                throw err;
+            }
+        });
+    };
+
+    const handleSearchJob = (evt: ChangeEvent<HTMLInputElement>) => {
+        const { value } = evt.target;
+
+        setSearchValue(value);
+        setCurrentPage(1);
+        getJobs(`?q=${value}`);
+    };
+
+    const handlePageChange = (evt: ChangeEvent<unknown>, page: number) => {
+        setCurrentPage(page);
+
+        getJobs(`?q=${searchValue}&page=${page}`);
     };
 
     return (
         <div>
             <div className={styles.filterWrapper}>
                 <FilterComponent
-                    handleSearch={() => {}}
+                    handleSearch={handleSearchJob}
                 />
                 <div className={styles.createJobWrapper} onClick={() => {setShowModal(!showModal)}}>
                     <span>Create</span>
-                    <img src={createJobIcon} alt={'createJobIcon'}/>
+                    <img src={createJobIcon} alt={'createJobIcon'} />
                 </div>
             </div>
             <DashboardDataTable
                 columns={columns}
                 data={jobs}
             />
+            <div className={styles.paginationContainer}>
+                <DashboardPagination
+                    currentPage={currentPage}
+                    pageCount={pageCount}
+                    handlePageChange={handlePageChange}
+                />
+            </div>
             {
                 showModal && (
                     <JobModalComponent

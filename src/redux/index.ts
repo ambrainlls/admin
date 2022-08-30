@@ -10,7 +10,6 @@ import projectSlice from './slice/projectSlice';
 import jiraMetricSlice from './slice/jiraMetricSlice';
 import gitMetricSlice from './slice/gitMetricSlice';
 import metricSlice from './slice/metricSlice';
-import searchParamsSlice from './slice/SearchParamsSlice';
 import jobsSlice from './slice/jobsSlice';
 
 enableMapSet();
@@ -25,7 +24,6 @@ const rootReducer = combineReducers({
     jiraMetricReducer: jiraMetricSlice,
     gitMetricReducer: gitMetricSlice,
     metricReducer: metricSlice,
-    searchParamsReducer: searchParamsSlice,
     jobsReducer: jobsSlice,
 });
 
