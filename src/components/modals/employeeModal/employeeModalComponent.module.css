@@ -49,7 +49,7 @@
 }
 
 .modalField input, .dateContainer input {
-    width: 416px;
+    width: 100%;
     outline: none;
     border: none;
     font-weight: 400;

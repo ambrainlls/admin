@@ -9,11 +9,11 @@ export class EmployeesApi {
         if (query) {
             return axios.get(
                 `${url}/employees${query}`,
-            )
+            );
         } else {
             return axios.get(
                 `${url}/employees`,
-            )
+            );
         }
     };
 

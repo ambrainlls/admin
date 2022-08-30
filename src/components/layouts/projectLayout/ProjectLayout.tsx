@@ -32,7 +32,7 @@ function ProjectLayout() {
     const [pageCount, setPageCount] = useState(3);
     const [currentPage, setCurrentPage] = useState(1);
     const [showModal, setShowModal] = useState(false);
-    const [allEmployees, setAllEmployees] = useState([]);
+    const [allEmployees, setAllEmployees] = useState<EmployeesDataTypes[]>([]);
     const [editableProject, setEditableProject] = useState<any>(
         {
             id: '',
@@ -61,9 +61,7 @@ function ProjectLayout() {
                                 row.employees.map(({name, surname, id} : number | any) => (
                                     <div key={id}>{`${name} ${surname}`}</div>
                                 ))
-                            ) :
-                                'There is no employees for this project'
-
+                            ) : 'There is no employees for this project'
                         }
                     </div>
                 )
@@ -94,41 +92,40 @@ function ProjectLayout() {
     useEffect(() => {
         getAllProjects();
         EmployeesApi.getAllEmployees()
-            .then(res => {
-                const data = res.data;
-                setAllEmployees(data);
-            })
-            .catch(err => {
-                if (err){
-                    throw err;
-                }
-            });
+        .then(res => {
+            const { data } = res.data;
+            setAllEmployees(data);
+        })
+        .catch(err => {
+            if (err){
+                throw err;
+            }
+        });
     }, []);
 
     const getAllProjects = () => {
         ProjectsApi.getAllProjects()
-            .then(res => {
-                const data = res.data;
-
-                dispatch(setProjectsData(data));
-            })
-            .catch(err => {
-                if (err){
-                    throw err;
-                }
-            });
+        .then(res => {
+            const data = res.data;
+            dispatch(setProjectsData(data));
+        })
+        .catch(err => {
+            if (err){
+                throw err;
+            }
+        });
     };
 
     const handleDeleteProject = (projectId: string) => {
-      ProjectsApi.deleteProject(projectId)
-          .then(res => {
-              dispatch(deleteProject(projectId));
-          })
-          .catch(err => {
-              if (err) {
-                  throw err;
-              }
-          })
+        ProjectsApi.deleteProject(projectId)
+        .then(res => {
+             dispatch(deleteProject(projectId));
+         })
+        .catch(err => {
+            if (err) {
+                throw err;
+            }
+        });
     };
 
     const handleRowEdit = (rowId: string) => {
@@ -141,15 +138,15 @@ function ProjectLayout() {
 
     const handleSaveChanges = () => {
         ProjectsApi.updateProject(editableProject)
-            .then(res => {
-                const updatedParam = res.data;
-                dispatch(saveUpdatedProjectData(updatedParam));
-            })
-            .catch(err => {
-                if (err) {
-                    throw err;
-                }
-            });
+        .then(res => {
+            const updatedParam = res.data;
+            dispatch(saveUpdatedProjectData(updatedParam));
+        })
+        .catch(err => {
+            if (err) {
+                throw err;
+            }
+        });
     };
 
     const handleCreateProject = () => {
@@ -189,8 +186,10 @@ function ProjectLayout() {
     const handleSelectedOptionsForUpdateProject = (selectedOptionsIds: string[]) => {
         const updatedProject = {
             ...editableProject,
-            employee_ids: selectedOptionsIds
-        };
+            employee_ids: selectedOptionsIds,
+            employees: allEmployees.filter(item => selectedOptionsIds.includes(item.id)),
+
+    };
 
         setEditableProject(updatedProject);
     };

@@ -1,12 +1,11 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Theme, useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import {Checkbox, ListItemText} from "@mui/material";
-import {useEffect} from "react";
+import Select from '@mui/material/Select';
+import { Checkbox, ListItemText } from '@mui/material';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -31,60 +30,72 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
 interface MultiSelectProps {
     options: any[];
     handleSelectedOptions: (selectedOptionIds: string[]) => void;
-    selectedOptions: any[];
+    defaultSelectedOptions: any[];
     optionKey: string;
     label: string;
 }
 const  MultiSelect = ({
     options,
     handleSelectedOptions,
-    selectedOptions,
+    defaultSelectedOptions,
     optionKey,
     label
     }: MultiSelectProps) => {
     const theme = useTheme();
-    const [personName, setPersonName] = React.useState<string[]>([]);
+    const [personName, setPersonName] = useState<string[]>([]);
+    const [selectedOptionIds, setSelectedOptionIds] = useState<Set<string>>(new Set());
 
     useEffect(() => {
-        setPersonName(selectedOptions);
+        const newSelectedOptions = defaultSelectedOptions.map(item => item[optionKey]);
+        setPersonName(newSelectedOptions);
+        const ids = defaultSelectedOptions.map(item => item.id);
+        const selectedOptionIds = new Set(ids);
+
+        setSelectedOptionIds(selectedOptionIds);
     }, []);
 
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-        const {
-            target: { value },
-        } = event;
+    useEffect(() => {
+        const newPersonName: string[] = [];
+        options.forEach(item => {
+            if (selectedOptionIds.has(item.id)) {
+                newPersonName.push(item[optionKey]);
+            }
+        });
 
-        const selectedOptionIds: string[] = [];
+        setPersonName(newPersonName);
+    }, [selectedOptionIds.size]);
 
-        if (typeof value !== 'string') {
-            value.forEach(val => {
-                for(const option of options) {
-                    if (val === option[optionKey]) {
-                        selectedOptionIds.push(option.id);
-                        break;
-                    }
-                }
-            });
+    const handleOptionClick = (option: any) => {
+        if (selectedOptionIds.has(option.id)) {
+            const newSelectedOptionIds = new Set(selectedOptionIds);
+            newSelectedOptionIds.delete(option.id);
+
+            setSelectedOptionIds(newSelectedOptionIds);
+            handleSelectedOptions(Array.from(newSelectedOptionIds));
+        } else {
+            const newSelectedOptionIds = new Set(selectedOptionIds);
+            newSelectedOptionIds.add(option.id);
+
+            setSelectedOptionIds(newSelectedOptionIds);
+            handleSelectedOptions(Array.from(newSelectedOptionIds));
         }
+    };
 
-        handleSelectedOptions(selectedOptionIds);
-
-        setPersonName(
-            // On autofill we get a stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-        );
+    const isChecked = (option: any) => {
+        return selectedOptionIds.has(option.id);
     };
 
     return (
         <div>
             <FormControl sx={{ width: '100%' }}>
-                <InputLabel id="demo-multiple-checkbox-label">{label}</InputLabel>
+                <InputLabel id="demo-multiple-checkbox-label">
+                    {label}
+                </InputLabel>
                 <Select
                     labelId="demo-multiple-checkbox-label"
                     id="demo-multiple-checkbox"
                     multiple
                     value={personName}
-                    onChange={handleChange}
                     input={<OutlinedInput label={label} />}
                     renderValue={(selected) => selected.join(', ')}
                     MenuProps={MenuProps}
@@ -94,8 +105,9 @@ const  MultiSelect = ({
                             key={option.id}
                             value={option[optionKey]}
                             style={getStyles(option[optionKey], personName, theme)}
+                            onClick={(evt) => handleOptionClick(option)}
                         >
-                            <Checkbox checked={personName.indexOf(option[optionKey]) > -1} />
+                            <Checkbox checked={isChecked(option)} />
                             <ListItemText primary={option[optionKey]} />
                         </MenuItem>
                     ))}
