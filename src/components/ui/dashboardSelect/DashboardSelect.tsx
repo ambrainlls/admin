@@ -16,36 +16,38 @@ interface DashboardSelectProps {
 
 const useStyles = makeStyles({
     root: {
-        width: 200,
+        width: 140,
+        background: "#FFE375",
+        borderRadius: "5px",
         "& .MuiOutlinedInput-input": {
-            color: "#1D9BF0"
+            color: "#FFE375"
         },
         "& .MuiInputLabel-root": {
-            color: "#1D9BF0"
+            color: "#000000"
         },
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#1D9BF0"
+            borderColor: "#FFFFFF"
         },
         "&:hover .MuiOutlinedInput-input": {
-            color: "#1D9BF0"
+            color: "#FFE375"
         },
         "&:hover .MuiInputLabel-root": {
-            color: "#1D9BF0"
+            color: "#000000"
         },
         "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#1D9BF0"
+            borderColor: "#FFFFFF"
         },
         "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-            color: "#1D9BF0"
+            color: "#FFE375"
         },
         "& .MuiInputLabel-root.Mui-focused": {
-            color: "#1D9BF0"
+            color: "#000000"
         },
         "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#1D9BF0"
+            borderColor: "#FFFFFF"
         },
         "& .MuiSelect-icon": {
-            color: "#1D9BF0"
+            color: "#000000"
         }
     }
 })

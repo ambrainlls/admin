@@ -209,10 +209,14 @@ function ProjectLayout() {
                 <FilterComponent
                     handleSearch={() => {}}
                 />
-                <img src={createRowIcon} alt={'createRowIcon'}
-                     className={styles.createRowIcon}
-                     onClick={() => setShowModal(!showModal)}
-                />
+                <div className={styles.createProjectWrapper}
+                     onClick={() => {setShowModal(!showModal)}}
+                >
+                    <span>Create</span>
+                    <img src={createRowIcon} alt={'createRowIcon'}
+                         className={styles.createRowIcon}
+                    />
+                </div>
             </div>
             <DashboardDataTable
                 columns={columns}

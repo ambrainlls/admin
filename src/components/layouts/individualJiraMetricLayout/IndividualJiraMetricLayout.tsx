@@ -61,7 +61,7 @@ function IndividualJiraMetricLayout () {
     useEffect(() => {
         JiraMetricApi.getJiraMetricById(Number(id))
             .then(res => {
-                const data = res.data[0];
+                const data = res.data;
                 dispatch(setJiraUserHistory(data));
             })
             .catch(err => {
