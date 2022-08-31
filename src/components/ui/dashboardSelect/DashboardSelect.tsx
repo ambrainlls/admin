@@ -3,10 +3,11 @@ import { useDispatch } from 'react-redux';
 import {
     makeStyles,
     MenuItem,
-    TextField
 } from '@material-ui/core';
+import { setMetricType } from '../../../redux/slice/metricSlice';
+import { Select } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
 import styles from './dashboardSelect.module.css';
-import {setMetricType} from "../../../redux/slice/metricSlice";
 
 interface DashboardSelectProps {
     label: string;
@@ -14,51 +15,25 @@ interface DashboardSelectProps {
     disable: boolean;
 }
 
-const useStyles = makeStyles({
-    root: {
-        width: 140,
-        background: "#FFE375",
+const useStyles = makeStyles(theme => ({
+    quantityRoot: {
         borderRadius: "5px",
-        "& .MuiOutlinedInput-input": {
-            color: "#000000"
+        "& .MuiOutlinedInput-notchedOutline": {
+            border: "none"
         },
-        "& .MuiInputLabel-root": {
-            color: "#000000"
+        "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+            border: "none",
         },
-        "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#FFFFFF"
-        },
-        "&:hover .MuiOutlinedInput-input": {
-            color: "#000000"
-        },
-        "&:hover .MuiInputLabel-root": {
-            color: "#000000"
-        },
-        "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#FFFFFF"
-        },
-        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
-            color: "#000000"
-        },
-        "& .MuiInputLabel-root.Mui-focused": {
-            color: "#000000"
-        },
-        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#FFFFFF"
-        },
-        "& .MuiSelect-icon": {
-            color: "#000000"
-        }
-    }
-})
+    },
+}));
 
 function DashboardSelect ({ label, options, disable }: DashboardSelectProps) {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState('Git metric');
 
-    const handleChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (evt: any) => {
         const { value } = evt.target;
         setValue(value);
         dispatch(setMetricType(value));
@@ -66,23 +41,29 @@ function DashboardSelect ({ label, options, disable }: DashboardSelectProps) {
 
     return (
         <>
-            <TextField
-                className={classes.root}
-                value={value}
-                onChange={(evt) => {handleChange(evt)}}
-                variant="outlined"
-                label={label}
-                select
-                disabled={disable}
-            >
-                {
-                    options.map((option, idx) => {
-                        return (
-                            <MenuItem value={option} key={idx}>{option}</MenuItem>
-                        )
-                    })
-                }
-            </TextField>
+            <FormControl sx={{minWidth: 140, background: "#FFE375", border: "none"}} classes={{
+                root: classes.quantityRoot
+            }}>
+                <Select
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
+                    value={value}
+                    label={label}
+                    onChange={(evt) => handleChange(evt)}
+                    inputProps={{
+                        name: "gpuChildQuantity",
+                        id: "gpuChildQuantity"
+                    }}
+                >
+                    {
+                        options.map((option, idx) => {
+                            return (
+                                <MenuItem value={option} key={idx}>{option}</MenuItem>
+                            )
+                        })
+                    }
+                </Select>
+            </FormControl>
         </>
     )
 }
