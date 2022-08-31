@@ -1,0 +1,53 @@
+.filterWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    align-items: center;
+}
+
+.createJobWrapper {
+    width: 130px;
+    height: 48px;
+    background: #FDFFAA;
+    box-shadow: 4px 4px 4px rgba(153, 153, 153, 0.25);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.createJobWrapper img {
+    margin-left: 16px;
+}
+
+.createJobWrapper span {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+}
+
+.btnsWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.btnsWrapper img {
+    cursor: pointer;
+}
+
+.deleteRowIcon {
+    margin-right: 24px;
+}
+
+.disabledDeleteIcon {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.paginationContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}

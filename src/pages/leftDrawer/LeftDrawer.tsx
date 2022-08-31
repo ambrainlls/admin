@@ -10,6 +10,7 @@ import ResumeIcon from '../../assets/images/ResumeTabIcon.svg';
 import FeedbackIcon from '../../assets/images/FeedbackTabIcon.svg';
 import ProjectsTabIcon from '../../assets/images/ProjectsTabIcon.svg';
 import MetricTabIcon from '../../assets/images/MetricTabIcon.svg';
+import JobsTabIcon from '../../assets/images/JobsTabIcon.svg';
 import styles from './leftDrawer.module.css';
 
 interface NavigationTabsTypes {
@@ -51,6 +52,11 @@ function LeftDrawer () {
             icon: MetricTabIcon,
             title: 'Metric',
             route: '/metric',
+        },
+        {
+            icon: JobsTabIcon,
+            title: 'Jobs',
+            route: '/jobs'
         }
     ];
 

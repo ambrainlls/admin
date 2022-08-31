@@ -86,3 +86,23 @@ export interface GitUserHistoriesType {
     user_id: string;
     user_name: string;
 }
+
+export interface JobsDataType {
+    id: string;
+    description: string;
+    image: File | null;
+    location: string;
+    position: string;
+    status: string;
+    title: string;
+}
+
+export interface CreateJobDataType {
+    id: string;
+    description: string;
+    image: File | null;
+    location: string;
+    position: string;
+    status: string;
+    title: string;
+}
