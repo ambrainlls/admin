@@ -10,7 +10,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ```bash
   npm install
 ```
-4. Make a copy of the `env.example` file in the root folder, remove `.sample` extension from the file: `.env.sample -> .env`
+4. Make a copy of the `env.example` file in the root folder, remove `.example` extension from the file: `.env.example -> .env`
 3. Set values for all environment variables in `.env` depending on your system and configurations. See [here](#adding-custom-environment-variables) for more on environment variables.
 
 ## Running in development mode
