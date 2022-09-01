@@ -196,7 +196,7 @@ const EmployeeModalContent = ({
                     <MultiSelect
                         options={projectOptions}
                         handleSelectedOptions={handleSelectedOptions}
-                        defaultSelectedOptions={(employeeData && employeeData.projects) ? employeeData.projects : []}
+                        selectedOptions={(employeeData && employeeData.projects) ? employeeData.projects : []}
                         optionKey={'company_name'}
                         label={'Select projects'}
                     />

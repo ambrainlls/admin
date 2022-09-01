@@ -325,7 +325,12 @@ function EmployeesLayout() {
             return
         }
 
-        EmployeesApi.updateEmployee(editableEmployee)
+        const updatedData = {
+            ...editableEmployee,
+            project_ids: editableEmployee.projects.map((el: any) => el.id),
+        };
+
+        EmployeesApi.updateEmployee(updatedData)
         .then(res => {
             const updatedParam = res.data;
             dispatch(saveUpdatedEmployeeData(updatedParam));
@@ -392,13 +397,18 @@ function EmployeesLayout() {
         setEditableEmployee(updatedEmployee);
     };
 
-    const handleSelectedOptionsForUpdateEmployee = (selectedOptionsIds: string[]) => {
-        const updatedEmployee = {
-            ...editableEmployee,
-            project_ids: selectedOptionsIds,
-            projects: allProjects.filter(item => selectedOptionsIds.includes(item.id)),
-        };
+    const handleSelectedOptionsForUpdateEmployee = (selectedOption: any) => {
+        const updatedEmployee = {...editableEmployee};
+        const foundIndex = updatedEmployee.projects.findIndex((el: any)=> el.id === selectedOption.id);
 
+        const newProjects = [...updatedEmployee.projects];
+        if(foundIndex !== -1) {
+            newProjects.splice(foundIndex, 1);
+        } else {
+            newProjects.push(selectedOption);
+        }
+
+        updatedEmployee.projects = newProjects;
         setEditableEmployee(updatedEmployee);
     };
 
@@ -421,7 +431,7 @@ function EmployeesLayout() {
                      onClick={() => {setShowModal(!showModal)}}
                 >
                     <span>Create</span>
-                    <img src={createRowIcon} alt={'createRowIcon'}/>
+                    <img src={createRowIcon} alt={'createRowIcon'} />
                 </div>
             </div>
             <DashboardDataTable

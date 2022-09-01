@@ -32,6 +32,7 @@ const employeesSlice = createSlice({
             email: '',
             phone: '',
             project_ids: [],
+            projects: [],
             telegram_chat_id: '',
         } as CreateEmployeesDataTypes,
     },
@@ -90,6 +91,7 @@ const employeesSlice = createSlice({
                 email: '',
                 phone: '',
                 project_ids: [],
+                projects: [],
                 telegram_chat_id: '',
             }
         },

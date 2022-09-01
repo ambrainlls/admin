@@ -20,15 +20,15 @@ const MenuProps = {
 
 interface MultiSelectProps {
     options: any[];
-    handleSelectedOptions: (selectedOptionIds: string[]) => void;
-    defaultSelectedOptions: any[];
+    handleSelectedOptions: (selectedOptions: any) => void;
+    selectedOptions: any[];
     optionKey: string;
     label: string;
 }
 const  MultiSelect = ({
     options,
     handleSelectedOptions,
-    defaultSelectedOptions,
+    selectedOptions,
     optionKey,
     label
     }: MultiSelectProps) => {
@@ -37,13 +37,14 @@ const  MultiSelect = ({
     const [selectedOptionIds, setSelectedOptionIds] = useState<Set<string>>(new Set());
 
     useEffect(() => {
-        const newSelectedOptions = defaultSelectedOptions.map(item => item[optionKey]);
+        const newSelectedOptions = selectedOptions.map(item => item[optionKey]);
+
         setPersonName(newSelectedOptions);
-        const ids = defaultSelectedOptions.map(item => item.id);
+        const ids = selectedOptions.map(item => item.id);
         const selectedOptionIds = new Set(ids);
 
         setSelectedOptionIds(selectedOptionIds);
-    }, []);
+    }, [selectedOptions]);
 
     useEffect(() => {
         const newPersonName: string[] = [];
@@ -55,22 +56,6 @@ const  MultiSelect = ({
 
         setPersonName(newPersonName);
     }, [selectedOptionIds.size]);
-
-    const handleOptionClick = (option: any) => {
-        if (selectedOptionIds.has(option.id)) {
-            const newSelectedOptionIds = new Set(selectedOptionIds);
-            newSelectedOptionIds.delete(option.id);
-
-            setSelectedOptionIds(newSelectedOptionIds);
-            handleSelectedOptions(Array.from(newSelectedOptionIds));
-        } else {
-            const newSelectedOptionIds = new Set(selectedOptionIds);
-            newSelectedOptionIds.add(option.id);
-
-            setSelectedOptionIds(newSelectedOptionIds);
-            handleSelectedOptions(Array.from(newSelectedOptionIds));
-        }
-    };
 
     const isChecked = (option: any) => {
         return selectedOptionIds.has(option.id);
@@ -106,7 +91,7 @@ const  MultiSelect = ({
                             key={option.id}
                             value={option}
                             style={getStyles(option, personName, theme)}
-                            onClick={(evt) => handleOptionClick(option)}
+                            onClick={(evt) => handleSelectedOptions(option)}
                         >
                             <Checkbox checked={isChecked(option)} />
                             <ListItemText primary={option[optionKey]} />

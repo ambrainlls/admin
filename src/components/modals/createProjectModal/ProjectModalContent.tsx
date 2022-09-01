@@ -12,7 +12,7 @@ interface EmployeeModalContentProps {
     employeesOptions: any[];
     projectData?: ProjectTypes | CreateProjectTypes;
     handleChangeProjectData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => void
-    handleSelectedOptions: (selectedOptionsIds: string[]) => void;
+    handleSelectedOptions: (selectedOption: any) => void;
 }
 
 const ProjectModalContent = ({
@@ -50,7 +50,7 @@ const ProjectModalContent = ({
                     <MultiSelect
                         options={employeesOptions}
                         handleSelectedOptions={handleSelectedOptions}
-                        defaultSelectedOptions={(projectData && projectData.employees) ? projectData.employees : []}
+                        selectedOptions={(projectData && projectData.employees) ? projectData.employees : []}
                         optionKey={'name'}
                         label={'Select employees'}
                     />

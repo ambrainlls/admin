@@ -137,7 +137,12 @@ function ProjectLayout() {
     };
 
     const handleSaveChanges = () => {
-        ProjectsApi.updateProject(editableProject)
+        const updatedData = {
+            ...editableProject,
+            employee_ids: editableProject.employees.map((el: any) => el.id),
+        };
+
+        ProjectsApi.updateProject(updatedData)
         .then(res => {
             const updatedParam = res.data;
             dispatch(saveUpdatedProjectData(updatedParam));
@@ -183,15 +188,30 @@ function ProjectLayout() {
         setEditableProject(updatedProject);
     };
 
-    const handleSelectedOptionsForUpdateProject = (selectedOptionsIds: string[]) => {
-        const updatedProject = {
-            ...editableProject,
-            employee_ids: selectedOptionsIds,
-            employees: allEmployees.filter(item => selectedOptionsIds.includes(item.id)),
+    // const handleSelectedOptionsForUpdateProject = (selectedOptionsIds: string[]) => {
+    //     const updatedProject = {
+    //         ...editableProject,
+    //         employee_ids: selectedOptionsIds,
+    //         employees: allEmployees.filter(item => selectedOptionsIds.includes(item.id)),
+    //
+    // };
+    //
+    //     setEditableProject(updatedProject);
+    // };
 
-    };
+    const handleSelectedOptionsForUpdateProject = (selectedOption: any) => {
+        const updatedProjects = {...editableProject};
+        const foundIndex = updatedProjects.employees.findIndex((el: any)=> el.id === selectedOption.id);
 
-        setEditableProject(updatedProject);
+        const newEmployees = [...updatedProjects.employees];
+        if(foundIndex !== -1) {
+            newEmployees.splice(foundIndex, 1);
+        } else {
+            newEmployees.push(selectedOption);
+        }
+
+        updatedProjects.employees = newEmployees;
+        setEditableProject(updatedProjects);
     };
 
     const handleCloseCreateProjectModal = () => {
