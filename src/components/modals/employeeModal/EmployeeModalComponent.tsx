@@ -25,7 +25,7 @@ export interface EmployeeModalComponentProps {
     projectOptions: any[];
     employeeData: EmployeesDataTypes | CreateEmployeesDataTypes;
     handleChangeEmployeData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>, key: string) => void
-    handleSelectedOptions: (selectedOptionsIds: string[]) => void;
+    handleSelectedOptions: (selectedOption: any) => void;
     nameValidationMessage: string;
     surnameValidationMessage: string;
     birthdayValidationMessage: string;
