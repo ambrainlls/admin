@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Box } from '@mui/material';
-import { CreateEmployeesDataTypes, EmployeesDataTypes } from '../../../redux/types';
+import { EmployeesDataTypes } from '../../../redux/types';
 import EmployeeModalContent from './EmployeeModalContent';
 import styles from './employeeModalComponent.module.css';
 
@@ -23,7 +23,7 @@ export interface EmployeeModalComponentProps {
     handleClose: () => void;
     handleSave: () => void;
     projectOptions: any[];
-    employeeData: EmployeesDataTypes | CreateEmployeesDataTypes;
+    employeeData: EmployeesDataTypes;
     handleChangeEmployeData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>, key: string) => void
     handleSelectedOptions: (selectedOption: any) => void;
     nameValidationMessage: string;

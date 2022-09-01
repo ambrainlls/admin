@@ -12,6 +12,7 @@ import {
     saveUpdatedProjectData,
     setProjectsData,
     setSelectedProjectId,
+    updateCreatedProjectEmployees,
 } from '../../../redux/slice/projectSlice';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
@@ -38,7 +39,6 @@ function ProjectLayout() {
             id: '',
             name: '',
             employees: [],
-            employee_ids: []
         }
     );
 
@@ -155,17 +155,22 @@ function ProjectLayout() {
     };
 
     const handleCreateProject = () => {
-        ProjectsApi.createProject(createProjectData)
-            .then(res => {
-                const { data } = res;
-                dispatch(addProject(data));
-                setShowModal(false);
-            })
-            .catch(err => {
-                if (err) {
-                    throw err;
-                }
-            });
+        const createdData = {
+            ...createProjectData,
+            employee_ids: createProjectData.employees.map((el: any) => el.id),
+        };
+
+        ProjectsApi.createProject(createdData)
+        .then(res => {
+            const { data } = res;
+            dispatch(addProject(data));
+            setShowModal(false);
+        })
+        .catch(err => {
+            if (err) {
+                throw err;
+            }
+        });
     };
 
     const handlePageChange = (evt: ChangeEvent<unknown>, page: number) => {
@@ -176,8 +181,8 @@ function ProjectLayout() {
         dispatch(createProject({[key]: evt.target.value}));
     };
 
-    const handleSelectedOptionsForCreateProject = (selectedOptionsIds: string[]) => {
-        dispatch(createProject({employee_ids: selectedOptionsIds}));
+    const handleSelectedOptionsForCreateProject = (selectedOption: any) => {
+        dispatch(updateCreatedProjectEmployees(selectedOption));
     };
 
     const handleChangeUpdateProjectData = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => {
@@ -187,17 +192,6 @@ function ProjectLayout() {
         };
         setEditableProject(updatedProject);
     };
-
-    // const handleSelectedOptionsForUpdateProject = (selectedOptionsIds: string[]) => {
-    //     const updatedProject = {
-    //         ...editableProject,
-    //         employee_ids: selectedOptionsIds,
-    //         employees: allEmployees.filter(item => selectedOptionsIds.includes(item.id)),
-    //
-    // };
-    //
-    //     setEditableProject(updatedProject);
-    // };
 
     const handleSelectedOptionsForUpdateProject = (selectedOption: any) => {
         const updatedProjects = {...editableProject};

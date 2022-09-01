@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CreateEmployeesDataTypes } from '../redux/types';
+import { EmployeesDataTypes } from '../redux/types';
 
 const url = process.env.REACT_APP_API_URL;
 
@@ -17,7 +17,7 @@ export class EmployeesApi {
         }
     };
 
-    static async updateEmployee(data: CreateEmployeesDataTypes) {
+    static async updateEmployee(data: EmployeesDataTypes) {
         return axios.put(
             `${url}/employees/${data.id}`,
             data,
@@ -29,7 +29,7 @@ export class EmployeesApi {
         );
     };
 
-    static async createEmployee(data: CreateEmployeesDataTypes) {
+    static async createEmployee(data: EmployeesDataTypes) {
         return axios.post(
             `${url}/employees`,
                 data,

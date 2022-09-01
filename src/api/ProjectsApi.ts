@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CreateProjectTypes } from "../redux/types";
+import { ProjectTypes } from '../redux/types';
 
 const url = process.env.REACT_APP_API_URL;
 
@@ -10,14 +10,14 @@ export class ProjectsApi {
         );
     };
 
-    static async updateProject(data: CreateProjectTypes) {
+    static async updateProject(data: ProjectTypes) {
         return axios.put(
             `${url}/projects/${data.id}`,
             data
         );
     };
 
-    static async createProject(data: CreateProjectTypes) {
+    static async createProject(data: ProjectTypes) {
         return axios.post(
             `${url}/projects`,
             data,

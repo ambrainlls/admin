@@ -1,8 +1,6 @@
 import { Modal, Box } from '@mui/material';
 import ProjectModalContent from './ProjectModalContent';
-import {
-    CreateProjectTypes,
-    ProjectTypes} from '../../../redux/types';
+import { ProjectTypes } from '../../../redux/types';
 import React from 'react';
 import styles from './ProjectModalComponent.module.css';
 
@@ -25,7 +23,7 @@ interface ProjectModalComponentProps {
     handleClose: () => void;
     handleSave: () => void;
     employeesOptions: any[];
-    projectData?: ProjectTypes | CreateProjectTypes;
+    projectData?: ProjectTypes;
     handleChangeProjectData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => void
     handleSelectedOptions: (selectedOption: any) => void;
 }

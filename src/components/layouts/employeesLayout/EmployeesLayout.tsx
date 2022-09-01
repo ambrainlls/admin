@@ -9,8 +9,9 @@ import {
     createEmployee,
     resetEmployeDataInModal,
     addNewEmployee,
+    updateCreatedEmployeeProjects,
 } from '../../../redux/slice/employeesSlice';
-import { CreateEmployeesDataTypes, EmployeesDataTypes, ProjectTypes } from '../../../redux/types';
+import { EmployeesDataTypes, ProjectTypes } from '../../../redux/types';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
@@ -173,7 +174,6 @@ function EmployeesLayout() {
             email: '',
             phone: '',
             project:[],
-            project_ids: [],
             telegram_chat_id: '',
         }
     );
@@ -227,7 +227,7 @@ function EmployeesLayout() {
         getEmployees(`?q=${value}`);
     };
 
-    const handleValidationErrors = (employeeData: EmployeesDataTypes | CreateEmployeesDataTypes) => {
+    const handleValidationErrors = (employeeData: EmployeesDataTypes) => {
         if (!employeeData.name) {
             setNameValidationMessage(requiredMessage);
 
@@ -361,7 +361,12 @@ function EmployeesLayout() {
             return
         }
 
-        EmployeesApi.createEmployee(createEmployeeData)
+        const createdData = {
+            ...createEmployeeData,
+            project_ids: createEmployeeData.projects.map((el: any) => el.id),
+        };
+
+        EmployeesApi.createEmployee(createdData)
         .then(res => {
             const newEmployee = res.data;
             dispatch(addNewEmployee(newEmployee));
@@ -384,8 +389,8 @@ function EmployeesLayout() {
         dispatch(createEmployee({[key]: evt.target.value}));
     };
 
-    const handleSelectedOptionsForCreateEmployee = (selectedOptionsIds: string[]) => {
-        dispatch(createEmployee({project_ids: selectedOptionsIds}));
+    const handleSelectedOptionsForCreateEmployee = (selectedOption: any) => {
+        dispatch(updateCreatedEmployeeProjects(selectedOption));
     };
 
     const handleChangeUpdateEmployeData = (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>, key: string) => {

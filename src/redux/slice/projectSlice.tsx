@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CreateProjectTypes, ProjectTypes } from "../types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ProjectTypes } from '../types';
 
 const projectSlice = createSlice({
     name: 'projectSlice',
@@ -14,8 +14,8 @@ const projectSlice = createSlice({
         createProjectData: {
             id: '',
             company_name: '',
-            employee_ids: []
-        } as CreateProjectTypes
+            employees: [],
+        } as ProjectTypes
     },
     reducers: {
         setProjectsData(state, action: PayloadAction<ProjectTypes[]>) {
@@ -23,15 +23,6 @@ const projectSlice = createSlice({
         },
         setSelectedProjectId(state, action: PayloadAction<string>) {
             state.selectedProjectId = action.payload;
-        },
-        updateProjectData(state, action: PayloadAction<any>) {
-            const foundIndex = state.projectsData.findIndex((el)=> el.id === action.payload.id);
-
-            if(foundIndex === -1){
-                return;
-            }
-
-            Object.assign(state.projectsData[foundIndex], action.payload.updatedParams);
         },
         saveUpdatedProjectData(state, action: PayloadAction<ProjectTypes>) {
             state.selectedProjectId = '';
@@ -56,11 +47,25 @@ const projectSlice = createSlice({
         createProject(state, action: PayloadAction<any>) {
             Object.assign(state.createProjectData, action.payload);
         },
+        updateCreatedProjectEmployees(state, action: PayloadAction<any>) {
+            const updatedData = {...state.createProjectData};
+            const foundIndex = updatedData.employees.findIndex((el: any)=> el.id === action.payload.id);
+            const newEmployees = [...updatedData.employees];
+
+            if (foundIndex !== -1) {
+                newEmployees.splice(foundIndex, 1);
+            } else {
+                newEmployees.push(action.payload);
+            }
+
+            updatedData.employees = newEmployees;
+            state.createProjectData = updatedData;
+        },
         resetProjectDataInModal(state) {
             state.createProjectData = {
                 id: '',
                 company_name: '',
-                employee_ids: [],
+                employees: [],
             }
         },
         addProject(state, action: PayloadAction<ProjectTypes>) {
@@ -73,7 +78,7 @@ export default projectSlice.reducer;
 export const {
     setProjectsData,
     setSelectedProjectId,
-    updateProjectData,
+    updateCreatedProjectEmployees,
     saveUpdatedProjectData,
     deleteProject,
     createProject,

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { CreateEmployeesDataTypes, EmployeesDataTypes } from '../types';
+import { EmployeesDataTypes } from '../types';
 
 const employeesSlice = createSlice({
     name: 'employeesSlice',
@@ -31,10 +31,9 @@ const employeesSlice = createSlice({
             position: 'fullStack',
             email: '',
             phone: '',
-            project_ids: [],
             projects: [],
             telegram_chat_id: '',
-        } as CreateEmployeesDataTypes,
+        } as EmployeesDataTypes,
     },
     reducers: {
         setEmployeesData(state, action: PayloadAction<EmployeesDataTypes[]>) {
@@ -78,6 +77,20 @@ const employeesSlice = createSlice({
         createEmployee(state, action: PayloadAction<any>) {
             Object.assign(state.createEmployeeData, action.payload);
         },
+        updateCreatedEmployeeProjects(state, action: PayloadAction<any>) {
+            const updatedData = {...state.createEmployeeData};
+            const foundIndex = updatedData.projects.findIndex((el: any)=> el.id === action.payload.id);
+            const newProjects = [...updatedData.projects];
+
+            if (foundIndex !== -1) {
+                newProjects.splice(foundIndex, 1);
+            } else {
+                newProjects.push(action.payload);
+            }
+
+            updatedData.projects = newProjects;
+            state.createEmployeeData = updatedData;
+        },
         resetEmployeDataInModal(state) {
             state.createEmployeeData = {
                 id: '',
@@ -90,7 +103,6 @@ const employeesSlice = createSlice({
                 position: 'fullStack',
                 email: '',
                 phone: '',
-                project_ids: [],
                 projects: [],
                 telegram_chat_id: '',
             }
@@ -106,5 +118,6 @@ export const {
     addNewEmployee,
     deleteEmployee,
     createEmployee,
+    updateCreatedEmployeeProjects,
     resetEmployeDataInModal,
 } = employeesSlice.actions;

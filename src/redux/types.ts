@@ -10,24 +10,6 @@ export interface EmployeesDataTypes {
     email: string;
     phone: string;
     projects: any[];
-    project_ids?: any[];
-    pivot?:any;
-    telegram_chat_id: string;
-}
-
-export interface CreateEmployeesDataTypes {
-    id: string;
-    name: string;
-    surname: string;
-    birthday: string;
-    description: string;
-    start_date: string;
-    role: string;
-    position: string;
-    email: string;
-    phone: string;
-    project_ids: any[];
-    projects?: any[];
     pivot?:any;
     telegram_chat_id: string;
 }
@@ -61,13 +43,6 @@ export interface ProjectTypes {
     company_name: string;
     employees: any[],
     employee_ids?: any[]
-}
-
-export interface CreateProjectTypes {
-    id: string;
-    company_name: string;
-    employee_ids: any[];
-    employees?: any[]
 }
 
 export interface JiraUserHistoriesType {
