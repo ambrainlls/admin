@@ -70,9 +70,11 @@ export interface JobsDataType {
     position: string;
     status: string;
     title: string;
+    work_time: string;
 }
 
 export interface CreateJobDataType {
+    work_time: string;
     id: string;
     description: string;
     image: File | null;

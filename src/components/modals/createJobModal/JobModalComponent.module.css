@@ -97,3 +97,19 @@
     padding: 10px 0;
     font-size: 14px;
 }
+
+.imageContainer {
+    width: 200px;
+    display: flex;
+}
+
+.imageContainer img {
+    width: 100%;
+}
+
+.deleteImageContainer img {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    padding: 2px;
+}

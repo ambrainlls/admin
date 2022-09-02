@@ -5,7 +5,8 @@ import {
     resetJobDataInModal,
     setCreateJobDataInModal,
     setJobsData,
-    setSelectedJobId
+    setSelectedJobId,
+    saveUpdatedJobData
 } from '../../../redux/slice/jobsSlice';
 import { RootState } from '../../../redux';
 import { CreateJobDataType, JobsDataType } from '../../../redux/types';
@@ -19,6 +20,7 @@ import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIc
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
 import createJobIcon from '../../../assets/images/createRowIcon.svg';
 import styles from './jobsLayout.module.css';
+import {saveUpdatedEmployeeData} from "../../../redux/slice/employeesSlice";
 
 function JobsLayout () {
     const dispatch = useDispatch();
@@ -127,6 +129,7 @@ function JobsLayout () {
             position: '',
             status: '',
             title: '',
+            work_time: '',
         }
     );
 
@@ -176,14 +179,13 @@ function JobsLayout () {
             [key]: evt.target.value
         };
 
+        console.log(key) // fixme m
+
         setEditableJob(updatedJob);
     };
 
-    const handleChangeJobImage = async (evt: React.ChangeEvent<HTMLInputElement>, key: string) => {
-        if (evt && evt.target && evt.target.files && evt.target.files[0]) {
-            const convertedImage = await convertBase64(evt.target.files[0]);
-            dispatch(setCreateJobDataInModal({[key]: convertedImage}));
-        }
+    const handleChangeJobImage = async (img: string, key: string) => {
+        dispatch(setCreateJobDataInModal({[key]: img}));
     };
 
     const handleRowEdit = (rowId: string) => {
@@ -259,7 +261,8 @@ function JobsLayout () {
 
         JobsApi.updateJob(editableJob)
         .then(res => {
-            console.log(res);
+            const updatedParam = res.data;
+            dispatch(saveUpdatedJobData(updatedParam));
         })
         .catch(err => {
             if (err) {

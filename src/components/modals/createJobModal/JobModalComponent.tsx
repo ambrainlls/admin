@@ -19,11 +19,11 @@ const style = {
     px: 3,
 };
 
-interface JobModalComponentProps {
+export interface JobModalComponentProps {
     handleClose: () => void;
     handleSave: () => void;
     handleChangeJobData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => void;
-    handleChangeJobImage: (evt: React.ChangeEvent<HTMLInputElement>, key: string) => void;
+    handleChangeJobImage: (image: string, key: string) => void;
     jobData: CreateJobDataType;
     descriptionValidationMessage: string;
     imageValidationMessage: string;

@@ -13,6 +13,7 @@ const jobsSlice = createSlice({
             position: '',
             status: '',
             title: '',
+            work_time: '',
         } as CreateJobDataType,
         selectedJobId: '',
     },
@@ -29,6 +30,7 @@ const jobsSlice = createSlice({
                 position: '',
                 status: '',
                 title: '',
+                work_time: '',
             }
         },
         setCreateJobDataInModal(state, action: PayloadAction<any>) {
