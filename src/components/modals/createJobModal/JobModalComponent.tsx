@@ -1,7 +1,7 @@
-import { Modal, Box } from '@mui/material';
-import JobModalContent from './JobModalContent';
 import React from 'react';
-import { CreateJobDataType } from '../../../redux/types';
+import { Modal, Box } from '@mui/material';
+import { JobsDataType } from '../../../redux/types';
+import JobModalContent from './JobModalContent';
 import styles from './JobModalComponent.module.css';
 
 const style = {
@@ -19,13 +19,17 @@ const style = {
     px: 3,
 };
 
-interface JobModalComponentProps {
+export interface JobModalComponentProps {
     handleClose: () => void;
     handleSave: () => void;
     handleChangeJobData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => void;
-    handleChangeJobImage: (evt: React.ChangeEvent<HTMLInputElement>, key: string) => void;
-    jobData: CreateJobDataType;
+    handleChangeJobRequirements: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, id: string) => void;
+    handleDeleteJobRequirements: (evt: React.MouseEvent<HTMLImageElement>, id: string) => void;
+    handleChangeJobImage: (image: string, key: string) => void;
+    addRequirements: () => void;
+    jobData: JobsDataType;
     descriptionValidationMessage: string;
+    workTimeValidationMessage: string;
     imageValidationMessage: string;
     locationValidationMessage: string;
     positionValidationMessage: string;
@@ -37,9 +41,13 @@ function JobModalComponent({
     handleClose,
     handleSave,
     handleChangeJobData,
+    handleChangeJobRequirements,
+    handleDeleteJobRequirements,
     handleChangeJobImage,
+    addRequirements,
     jobData,
     descriptionValidationMessage,
+    workTimeValidationMessage,
     imageValidationMessage,
     locationValidationMessage,
     positionValidationMessage,
@@ -58,10 +66,14 @@ function JobModalComponent({
                     handleClose={handleClose}
                     handleSave={handleSave}
                     handleChangeJobData={handleChangeJobData}
+                    handleDeleteJobRequirements={handleDeleteJobRequirements}
                     handleChangeJobImage={handleChangeJobImage}
+                    handleChangeJobRequirements={handleChangeJobRequirements}
+                    addRequirements={addRequirements}
                     jobData={jobData}
                     descriptionValidationMessage={descriptionValidationMessage}
                     imageValidationMessage={imageValidationMessage}
+                    workTimeValidationMessage={workTimeValidationMessage}
                     locationValidationMessage={locationValidationMessage}
                     positionValidationMessage={positionValidationMessage}
                     statusValidationMessage={statusValidationMessage}

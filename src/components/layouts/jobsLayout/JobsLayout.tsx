@@ -1,24 +1,28 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     deleteJob,
     resetJobDataInModal,
     setCreateJobDataInModal,
     setJobsData,
-    setSelectedJobId
+    setSelectedJobId,
+    saveUpdatedJobData,
+    addNewRequirement,
+    updateJobRequirement,
+    deleteJobRequirement,
 } from '../../../redux/slice/jobsSlice';
 import { RootState } from '../../../redux';
-import { CreateJobDataType, JobsDataType } from '../../../redux/types';
+import {JobsDataType, Requirements} from '../../../redux/types';
 import { JobsApi } from '../../../api/JobsApi';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import JobModalComponent from '../../modals/createJobModal/JobModalComponent';
-import { convertBase64 } from '../../../helpers/helpers';
 import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIcon.svg';
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
 import createJobIcon from '../../../assets/images/createRowIcon.svg';
 import styles from './jobsLayout.module.css';
+import {uniqueId} from "lodash";
 
 function JobsLayout () {
     const dispatch = useDispatch();
@@ -27,18 +31,10 @@ function JobsLayout () {
 
     const columns = [
         {
-            name: 'ID',
+            name: 'Title',
             cell: (row: JobsDataType) => {
                 return (
-                    <div>{row.id}</div>
-                )
-            }
-        },
-        {
-            name: 'Description',
-            cell: (row: JobsDataType) => {
-                return (
-                    <div className={styles.descriptionContainer}>{row.description}</div>
+                    <div>{row.title}</div>
                 )
             }
         },
@@ -46,8 +42,7 @@ function JobsLayout () {
             name: 'Image',
             cell: (row: JobsDataType) => {
                 return (
-                    // <img src={row.image} alt={row.image} />
-                    <div>{''}</div>
+                    <img src={`${row.image}`} alt={row.image} />
                 )
             }
         },
@@ -56,6 +51,14 @@ function JobsLayout () {
             cell: (row: JobsDataType) => {
                 return (
                     <div>{row.location}</div>
+                )
+            }
+        },
+        {
+            name: 'Work time',
+            cell: (row: JobsDataType) => {
+                return (
+                    <div>{row.work_time}</div>
                 )
             }
         },
@@ -76,10 +79,10 @@ function JobsLayout () {
             }
         },
         {
-            name: 'Title',
+            name: 'Description',
             cell: (row: JobsDataType) => {
                 return (
-                    <div>{row.title}</div>
+                    <div>{row.description}</div>
                 )
             }
         },
@@ -115,6 +118,7 @@ function JobsLayout () {
     const [searchValue, setSearchValue] = useState('');
     const [imageValidationMessage, setImageValidationMessage] = useState('');
     const [locationValidationMessage, setLocationValidationMessage] = useState('');
+    const [workTimeValidationMessage, setWorkTimeValidationMessage] = useState('');
     const [positionValidationMessage, setPositionValidationMessage] = useState('');
     const [statusValidationMessage, setStatusValidationMessage] = useState('');
     const [titleValidationMessage, setTitleValidationMessage] = useState('');
@@ -122,13 +126,19 @@ function JobsLayout () {
         {
             id: '',
             description: '',
-            image: null,
+            image: '',
             location: '',
             position: '',
             status: '',
             title: '',
+            work_time: '',
+            requirements: [],
         }
     );
+
+    useEffect(() => {
+        getJobs();
+    }, []);
 
     useEffect(() => {
         setDescriptionValidationMessage('');
@@ -139,20 +149,27 @@ function JobsLayout () {
         setTitleValidationMessage('');
     }, [showModal, selectedJobId]);
 
-    useEffect(() => {
-        getJobs();
-    }, []);
-
     const getJobs = (value?: string) => {
         JobsApi.getJobs(value)
         .then(res => {
             const { data } = res.data;
             const { current_page, last_page } = res.data.meta;
 
+            const jobs = data.map((el: any) => {
+                el.requirements = JSON.parse(el.requirements).map((item: any) => {
+                    return {
+                        id: uniqueId(),
+                        name: item
+                    };
+                });
+
+                return el;
+            });
+
             setCurrentPage(current_page);
             setPageCount(last_page);
 
-            dispatch(setJobsData(data));
+            dispatch(setJobsData(jobs));
         })
         .catch(err => {
             if (err) {
@@ -179,11 +196,83 @@ function JobsLayout () {
         setEditableJob(updatedJob);
     };
 
-    const handleChangeJobImage = async (evt: React.ChangeEvent<HTMLInputElement>, key: string) => {
-        if (evt && evt.target && evt.target.files && evt.target.files[0]) {
-            const convertedImage = await convertBase64(evt.target.files[0]);
-            dispatch(setCreateJobDataInModal({[key]: convertedImage}));
+    const handleCreateJobImage = async (img: string, key: string) => {
+        dispatch(setCreateJobDataInModal({[key]: img}));
+    };
+
+    const handleChangeJobImage = async (img: string, key: string) => {
+        const updatedJob = {
+            ...editableJob,
+            [key]: img,
+        };
+
+        setEditableJob(updatedJob);
+    };
+
+    const addRequirementsToUpdateJob = () => {
+        const updatedJob = {...editableJob};
+
+        if (!updatedJob.requirements) {
+            updatedJob.requirements = [];
         }
+
+        updatedJob.requirements = [
+            ...updatedJob.requirements,
+            {
+                id: `_${uniqueId()}`,
+                name: ''
+            }
+        ];
+
+        setEditableJob(updatedJob);
+    };
+
+    const handleChangeUpdateJobRequirements = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, id: string) => {
+        const updatedJob = {...editableJob};
+        const foundIndex = updatedJob.requirements.findIndex((item: Requirements) => item.id === id);
+
+        if (foundIndex === -1) {
+            return;
+        }
+
+        updatedJob.requirements = [...updatedJob.requirements];
+
+        updatedJob.requirements[foundIndex] = {
+            ...updatedJob.requirements[foundIndex],
+            name: evt.target.value
+        };
+
+        setEditableJob(updatedJob);
+    };
+
+    const handleDeleteUpdateJobRequirements = (evt: React.MouseEvent<HTMLImageElement>, id: string) => {
+        const updatedJob = {...editableJob};
+        const foundIndex = updatedJob.requirements.findIndex((item: Requirements) => item.id === id);
+
+        if (foundIndex === -1) {
+            return;
+        }
+
+        updatedJob.requirements = [...updatedJob.requirements];
+
+        updatedJob.requirements.splice(foundIndex, 1);
+
+        setEditableJob(updatedJob);
+    };
+
+    const addRequirementsToCreateJob = () => {
+        dispatch(addNewRequirement());
+    };
+
+    const handleChangeCreateJobRequirements = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, id: string) => {
+        dispatch(updateJobRequirement({
+            id,
+            name: evt.target.value
+        }));
+    };
+
+    const handleDeleteCreateJobRequirements = (evt: React.MouseEvent<HTMLImageElement>, id: string) => {
+        dispatch(deleteJobRequirement(id));
     };
 
     const handleRowEdit = (rowId: string) => {
@@ -198,13 +287,13 @@ function JobsLayout () {
         dispatch(setSelectedJobId(''));
     };
 
-    const handleValidationErrors = (jobsData: JobsDataType | CreateJobDataType) => {
-        if (!jobsData.description) {
-            setDescriptionValidationMessage(requiredMessage);
+    const handleValidationErrors = (jobsData: JobsDataType) => {
+        if (!jobsData.title) {
+            setTitleValidationMessage(requiredMessage);
 
             return;
         } else {
-            setDescriptionValidationMessage('');
+            setTitleValidationMessage('');
         }
 
         if (!jobsData.image) {
@@ -223,6 +312,14 @@ function JobsLayout () {
             setLocationValidationMessage('');
         }
 
+        if (!jobsData.work_time) {
+            setWorkTimeValidationMessage(requiredMessage);
+
+            return;
+        } else {
+            setWorkTimeValidationMessage('');
+        }
+
         if (!jobsData.position) {
             setPositionValidationMessage(requiredMessage);
 
@@ -239,12 +336,12 @@ function JobsLayout () {
             setStatusValidationMessage('');
         }
 
-        if (!jobsData.title) {
-            setTitleValidationMessage(requiredMessage);
+        if (!jobsData.description) {
+            setDescriptionValidationMessage(requiredMessage);
 
             return;
         } else {
-            setTitleValidationMessage('');
+            setDescriptionValidationMessage('');
         }
 
         return true;
@@ -257,9 +354,19 @@ function JobsLayout () {
             return;
         }
 
-        JobsApi.updateJob(editableJob)
+        const requirements = editableJob.requirements.map(item => item.name);
+
+        const updatedData = {
+            ...editableJob,
+            requirements: JSON.stringify(requirements),
+        }
+
+        JobsApi.updateJob(updatedData)
         .then(res => {
-            console.log(res);
+            const updatedParam = {...res.data};
+
+            updatedParam.requirements = JSON.parse(updatedParam.requirements);
+            dispatch(saveUpdatedJobData(updatedParam));
         })
         .catch(err => {
             if (err) {
@@ -275,7 +382,14 @@ function JobsLayout () {
             return;
         }
 
-        JobsApi.createJob(createJobData)
+        const requirements = createJobData.requirements.map(item => item.name);
+
+        const createdData = {
+            ...createJobData,
+            requirements: JSON.stringify(requirements),
+        };
+
+        JobsApi.createJob(createdData)
         .then(res => {
             console.log(res);
         })
@@ -340,10 +454,14 @@ function JobsLayout () {
                         handleClose={handleCloseCreateJobModal}
                         handleSave={handleCreateJob}
                         handleChangeJobData={handleChangeCreateJobData}
-                        handleChangeJobImage={handleChangeJobImage}
+                        handleDeleteJobRequirements={handleDeleteCreateJobRequirements}
+                        handleChangeJobImage={handleCreateJobImage}
+                        handleChangeJobRequirements={handleChangeCreateJobRequirements}
+                        addRequirements={addRequirementsToCreateJob}
                         jobData={createJobData}
                         descriptionValidationMessage={descriptionValidationMessage}
                         imageValidationMessage={imageValidationMessage}
+                        workTimeValidationMessage={workTimeValidationMessage}
                         locationValidationMessage={locationValidationMessage}
                         positionValidationMessage={positionValidationMessage}
                         statusValidationMessage={statusValidationMessage}
@@ -358,8 +476,12 @@ function JobsLayout () {
                         handleSave={handleSaveChanges}
                         handleChangeJobData={handleChangeUpdateJobData}
                         handleChangeJobImage={handleChangeJobImage}
+                        handleChangeJobRequirements={handleChangeUpdateJobRequirements}
+                        handleDeleteJobRequirements={handleDeleteUpdateJobRequirements}
+                        addRequirements={addRequirementsToUpdateJob}
                         jobData={editableJob}
                         descriptionValidationMessage={descriptionValidationMessage}
+                        workTimeValidationMessage={workTimeValidationMessage}
                         imageValidationMessage={imageValidationMessage}
                         locationValidationMessage={locationValidationMessage}
                         positionValidationMessage={positionValidationMessage}

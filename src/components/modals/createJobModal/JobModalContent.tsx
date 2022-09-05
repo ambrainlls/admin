@@ -1,59 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MenuItem, TextField } from '@mui/material';
 import { positions } from '../../../helpers/helpers';
-import { CreateJobDataType } from '../../../redux/types';
+import { JobModalComponentProps } from './JobModalComponent';
+import ImageUploader from '../../ui/imageUploader/ImageUploader';
+import deleteIcon from '../../../assets/images/delete.svg';
 import styles from './JobModalComponent.module.css';
-
-interface JobModalContentProps {
-    handleClose: () => void;
-    handleSave: () => void;
-    handleChangeJobData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => void;
-    handleChangeJobImage: (evt: React.ChangeEvent<HTMLInputElement>, key: string) => void;
-    jobData: CreateJobDataType;
-    descriptionValidationMessage: string;
-    imageValidationMessage: string;
-    locationValidationMessage: string;
-    positionValidationMessage: string;
-    statusValidationMessage: string;
-    titleValidationMessage: string;
-}
 
 const JobModalContent = ({
     handleClose,
     handleSave,
     handleChangeJobData,
     handleChangeJobImage,
+    handleChangeJobRequirements,
+    handleDeleteJobRequirements,
+    addRequirements,
     jobData,
     descriptionValidationMessage,
     imageValidationMessage,
     locationValidationMessage,
     positionValidationMessage,
     statusValidationMessage,
+    workTimeValidationMessage,
     titleValidationMessage,
-}: JobModalContentProps) => {
-
-    const [descriptionValue, setDescriptionValue] = useState('');
-    const [ file, setFile ] = useState<File | null>(null);
-    const [ sendFileSuccess, setSendFileSuccess ] = useState(false);
-    const [ sendFileError, setSendFileError ] = useState(null);
-    // const buttonClasses = `${props.className} ${sendFileSuccess ? 'success' : ''}`.trim();
-
-    const handleChangeDescription = (evt: React.ChangeEvent<HTMLTextAreaElement>, key: string) => {
-        setDescriptionValue(evt.target.value);
-        handleChangeJobData(evt, 'description');
-    }
-
-    // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, key: string) => {
-    //     const file = event.target.files[0];
-    //     setFile(file);
-    //     handleChangeJobImage(event, key);
-    // };
-    //
-    const resetState = () => {
-        setFile(null);
-        setSendFileSuccess(false);
-        setSendFileError(null);
-    };
+}: JobModalComponentProps) => {
 
     const handleKeyDown = (e: any) => {
         e.target.style.height = 'inherit';
@@ -67,40 +36,46 @@ const JobModalContent = ({
             </div>
             <div className={styles.fieldsToFill}>
                 <div className={styles.modalField}>
-                    <textarea
-                        id="description"
-                        name="description"
-                        value={descriptionValue}
-                        placeholder={'Description'}
-                        onKeyDown={handleKeyDown}
-                        onChange={(evt) => {handleChangeDescription(evt, 'description')}}
+                    <TextField
+                        id="title"
+                        label="Title"
+                        variant="standard"
+                        value={(jobData && jobData.title) ? jobData.title : ''}
+                        onChange={(evt) => {handleChangeJobData(evt, 'title')}}
                     />
                     {
-                        descriptionValidationMessage && (
+                        titleValidationMessage && (
                             <span className={styles.errorMessage}>
-                                {descriptionValidationMessage}
+                                {titleValidationMessage}
                             </span>
                         )
                     }
                 </div>
                 <div className={styles.selectImageContainer}>
-                    <label
-                        htmlFor="image"
-                        onClick={resetState}
-                    >
-                        <span>Choose a picture</span>
-                    </label>
-                    <input
-                        onChange={(evt) => {handleChangeJobImage(evt, 'image')}}
-                        type="file"
-                        id="image"
-                        accept="image/*"
-                    />
                     {
-                        imageValidationMessage && (
-                            <span className={styles.errorMessage}>
-                                {imageValidationMessage}
-                            </span>
+                        jobData.image ? (
+                            <div className={styles.imageContainer}>
+                                <img src={`${jobData.image}`} alt={'job'} />
+                                <div className={`${styles.deleteImageContainer}`}
+                                     onClick={() => {handleChangeJobImage('', 'image')}}
+                                >
+                                    <img src={deleteIcon} alt={deleteIcon} />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className={styles.imageUploaderContainer}>
+                                <label htmlFor="image">
+                                    <span>Choose a picture</span>
+                                </label>
+                                <ImageUploader handleFileChange={(evt) => {handleChangeJobImage(evt, 'image')}} />
+                                {
+                                    imageValidationMessage && (
+                                        <span className={styles.errorMessage}>
+                                            {imageValidationMessage}
+                                        </span>
+                                    )
+                                }
+                            </div>
                         )
                     }
                 </div>
@@ -116,6 +91,22 @@ const JobModalContent = ({
                         locationValidationMessage && (
                             <span className={styles.errorMessage}>
                                 {locationValidationMessage}
+                            </span>
+                        )
+                    }
+                </div>
+                <div className={styles.modalField}>
+                    <TextField
+                        id="work_time"
+                        label="Work time"
+                        variant="standard"
+                        value={(jobData && jobData.work_time) ? jobData.work_time : ''}
+                        onChange={(evt) => {handleChangeJobData(evt, 'work_time')}}
+                    />
+                    {
+                        workTimeValidationMessage && (
+                            <span className={styles.errorMessage}>
+                                {workTimeValidationMessage}
                             </span>
                         )
                     }
@@ -160,17 +151,41 @@ const JobModalContent = ({
                     }
                 </div>
                 <div className={styles.modalField}>
-                    <TextField
-                        id="title"
-                        label="Title"
-                        variant="standard"
-                        value={(jobData && jobData.title) ? jobData.title : ''}
-                        onChange={(evt) => {handleChangeJobData(evt, 'title')}}
+                    {
+                        jobData.requirements && (
+                            jobData.requirements.map((item,i )=> (
+                                <div className={styles.requirementsItem} key={i}>
+                                    <TextField
+                                        id="requirements"
+                                        name="requirements"
+                                        variant="outlined"
+                                        value={item.name}
+                                        onChange={evt =>handleChangeJobRequirements(evt, item.id)}
+                                    />
+                                    <img src={deleteIcon} alt={deleteIcon}
+                                        onClick={(evt) => handleDeleteJobRequirements(evt, item.id)}
+                                    />
+                                </div>
+                            ))
+                        )
+                    }
+                    <span className={styles.addRequirements} onClick={addRequirements}>
+                        Add requirements
+                    </span>
+                </div>
+                <div className={styles.modalField}>
+                    <textarea
+                        id="description"
+                        name="description"
+                        value={jobData.description}
+                        placeholder={'Description'}
+                        onKeyDown={handleKeyDown}
+                        onChange={(evt) => {handleChangeJobData(evt, 'description')}}
                     />
                     {
-                        titleValidationMessage && (
+                        descriptionValidationMessage && (
                             <span className={styles.errorMessage}>
-                                {titleValidationMessage}
+                                {descriptionValidationMessage}
                             </span>
                         )
                     }

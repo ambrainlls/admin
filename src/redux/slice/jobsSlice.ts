@@ -1,5 +1,6 @@
+import { uniqueId } from 'lodash';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CreateJobDataType, JobsDataType } from '../types';
+import { JobsDataType, Requirements }  from '../types';
 
 const jobsSlice = createSlice({
     name: 'jobsSlice',
@@ -8,12 +9,14 @@ const jobsSlice = createSlice({
         createJobData: {
             id: '',
             description: '',
-            image: null,
+            image: '',
             location: '',
             position: '',
             status: '',
             title: '',
-        } as CreateJobDataType,
+            work_time: '',
+            requirements: [],
+        } as JobsDataType,
         selectedJobId: '',
     },
     reducers: {
@@ -24,11 +27,13 @@ const jobsSlice = createSlice({
             state.createJobData = {
                 id: '',
                 description: '',
-                image: null,
+                image: '',
                 location: '',
                 position: '',
                 status: '',
                 title: '',
+                work_time: '',
+                requirements: []
             }
         },
         setCreateJobDataInModal(state, action: PayloadAction<any>) {
@@ -48,6 +53,34 @@ const jobsSlice = createSlice({
         },
         addNewJob(state, action: PayloadAction<JobsDataType>) {
             state.jobsData.unshift(action.payload);
+        },
+        addNewRequirement(state) {
+            state.createJobData.requirements.push(
+                {
+                    id: uniqueId(),
+                    name: ''
+                }
+            );
+        },
+        updateJobRequirement(state, action: PayloadAction<Requirements>) {
+            const { payload } = action;
+            const foundIndex = state.createJobData.requirements.findIndex((item: Requirements) => item.id === payload.id);
+
+            if (foundIndex === -1) {
+                return;
+            }
+
+            state.createJobData.requirements[foundIndex] = payload;
+        },
+        deleteJobRequirement(state, action: PayloadAction<string>) {
+            const { payload } = action;
+            const foundIndex = state.createJobData.requirements.findIndex((item: Requirements) => item.id === payload);
+
+            if (foundIndex === -1) {
+                return;
+            }
+
+            state.createJobData.requirements.splice(foundIndex, 1);
         },
         saveUpdatedJobData(state, action: PayloadAction<JobsDataType>) {
             state.selectedJobId = '';
@@ -72,4 +105,7 @@ export const {
     deleteJob,
     addNewJob,
     saveUpdatedJobData,
+    addNewRequirement,
+    updateJobRequirement,
+    deleteJobRequirement,
 } = jobsSlice.actions;
