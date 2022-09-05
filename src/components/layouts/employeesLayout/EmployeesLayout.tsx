@@ -426,6 +426,19 @@ function EmployeesLayout() {
         dispatch(setSelectedEmployeeId(''));
     };
 
+    const handleCreateEmployeeImage = async (img: string, key: string) => {
+        dispatch(createEmployee({[key]: img}));
+    };
+
+    const handleUpdateEmployeeImage = async (img: string, key: string) => {
+        const updatedEmployee = {
+            ...editableEmployee,
+            [key]: img,
+        };
+
+        setEditableEmployee(updatedEmployee);
+    };
+
     return (
         <div className={styles.developersContainer}>
             <div className={styles.filterWrapper}>
@@ -457,6 +470,7 @@ function EmployeesLayout() {
                         handleSave={handleCreateEmployee}
                         projectOptions={allProjects}
                         employeeData={createEmployeeData}
+                        handleChangeEmployeeImage={handleCreateEmployeeImage}
                         handleChangeEmployeData={handleChangeCreateEmployeData}
                         handleSelectedOptions={handleSelectedOptionsForCreateEmployee}
                         nameValidationMessage={nameValidationMessage}
@@ -476,6 +490,7 @@ function EmployeesLayout() {
                         handleSave={handleSaveChanges}
                         projectOptions={allProjects}
                         employeeData={editableEmployee}
+                        handleChangeEmployeeImage={handleUpdateEmployeeImage}
                         handleChangeEmployeData={handleChangeUpdateEmployeData}
                         handleSelectedOptions={handleSelectedOptionsForUpdateEmployee}
                         nameValidationMessage={nameValidationMessage}

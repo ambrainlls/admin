@@ -8,6 +8,7 @@ const employeesSlice = createSlice({
         selectedEmployeeId: '',
         employeeData: {
             id: '',
+            image: '',
             name: '',
             surname: '',
             birthday: '',
@@ -22,6 +23,7 @@ const employeesSlice = createSlice({
         } as EmployeesDataTypes,
         createEmployeeData: {
             id: '',
+            image: '',
             name: '',
             surname: '',
             birthday: '',
@@ -94,6 +96,7 @@ const employeesSlice = createSlice({
         resetEmployeDataInModal(state) {
             state.createEmployeeData = {
                 id: '',
+                image: '',
                 name: '',
                 surname: '',
                 birthday: '',

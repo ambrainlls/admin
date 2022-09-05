@@ -5,7 +5,9 @@ import { resetEmployeDataInModal } from '../../../redux/slice/employeesSlice';
 import { roles } from '../../../helpers/helpers';
 import { positions } from '../../../helpers/helpers';
 import MultiSelect from '../../ui/multiSelect/MultiSelect';
+import ImageUploader from '../../ui/imageUploader/ImageUploader';
 import { EmployeeModalComponentProps } from './EmployeeModalComponent';
+import deleteIcon from '../../../assets/images/delete.svg';
 import styles from './employeeModalComponent.module.css';
 
 const EmployeeModalContent = ({
@@ -14,6 +16,7 @@ const EmployeeModalContent = ({
     projectOptions,
     employeeData,
     handleChangeEmployeData,
+    handleChangeEmployeeImage,
     handleSelectedOptions,
     nameValidationMessage,
     surnameValidationMessage,
@@ -37,6 +40,34 @@ const EmployeeModalContent = ({
                 <p>Employee</p>
             </div>
             <div className={styles.fieldsToFill}>
+                <div className={styles.selectImageContainer}>
+                    {
+                        employeeData.image ? (
+                            <div className={styles.imageContainer}>
+                                <img src={`${employeeData.image}`} alt={'job'} />
+                                <div className={`${styles.deleteImageContainer}`}
+                                     onClick={() => {handleChangeEmployeeImage('', 'image')}}
+                                >
+                                    <img src={deleteIcon} alt={deleteIcon} />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className={styles.imageUploaderContainer}>
+                                <label htmlFor="image">
+                                    <span>Choose a picture</span>
+                                </label>
+                                <ImageUploader handleFileChange={(evt) => {handleChangeEmployeeImage(evt, 'image')}} />
+                                {/*{*/}
+                                {/*    imageValidationMessage && (*/}
+                                {/*        <span className={styles.errorMessage}>*/}
+                                {/*            {imageValidationMessage}*/}
+                                {/*        </span>*/}
+                                {/*    )*/}
+                                {/*}*/}
+                            </div>
+                        )
+                    }
+                </div>
                 <div className={styles.modalField}>
                     <TextField
                         id="name"

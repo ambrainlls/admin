@@ -24,6 +24,7 @@ export interface EmployeeModalComponentProps {
     handleSave: () => void;
     projectOptions: any[];
     employeeData: EmployeesDataTypes;
+    handleChangeEmployeeImage: (image: string, key: string) => void;
     handleChangeEmployeData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>, key: string) => void
     handleSelectedOptions: (selectedOption: any) => void;
     nameValidationMessage: string;
@@ -41,6 +42,7 @@ function EmployeeModalComponent({
     projectOptions,
     employeeData,
     handleChangeEmployeData,
+    handleChangeEmployeeImage,
     handleSelectedOptions,
     nameValidationMessage,
     surnameValidationMessage,
@@ -65,6 +67,7 @@ function EmployeeModalComponent({
                     employeeData={employeeData}
                     handleSelectedOptions={handleSelectedOptions}
                     handleChangeEmployeData={handleChangeEmployeData}
+                    handleChangeEmployeeImage={handleChangeEmployeeImage}
                     nameValidationMessage={nameValidationMessage}
                     surnameValidationMessage={surnameValidationMessage}
                     birthdayValidationMessage={birthdayValidationMessage}
