@@ -38,7 +38,7 @@ function JobsLayout () {
             name: 'Description',
             cell: (row: JobsDataType) => {
                 return (
-                    <div>{row.description}</div>
+                    <div className={styles.descriptionContainer}>{row.description}</div>
                 )
             }
         },
