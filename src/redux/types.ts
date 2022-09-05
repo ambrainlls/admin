@@ -1,5 +1,6 @@
 export interface EmployeesDataTypes {
     id: string;
+    image: string;
     name: string;
     surname: string;
     birthday: string;
