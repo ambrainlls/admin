@@ -26,6 +26,7 @@ export interface JobModalComponentProps {
     handleChangeJobImage: (image: string, key: string) => void;
     jobData: CreateJobDataType;
     descriptionValidationMessage: string;
+    workTimeValidationMessage: string;
     imageValidationMessage: string;
     locationValidationMessage: string;
     positionValidationMessage: string;
@@ -40,6 +41,7 @@ function JobModalComponent({
     handleChangeJobImage,
     jobData,
     descriptionValidationMessage,
+    workTimeValidationMessage,
     imageValidationMessage,
     locationValidationMessage,
     positionValidationMessage,
@@ -62,6 +64,7 @@ function JobModalComponent({
                     jobData={jobData}
                     descriptionValidationMessage={descriptionValidationMessage}
                     imageValidationMessage={imageValidationMessage}
+                    workTimeValidationMessage={workTimeValidationMessage}
                     locationValidationMessage={locationValidationMessage}
                     positionValidationMessage={positionValidationMessage}
                     statusValidationMessage={statusValidationMessage}

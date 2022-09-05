@@ -114,6 +114,7 @@ function JobsLayout () {
     const [searchValue, setSearchValue] = useState('');
     const [imageValidationMessage, setImageValidationMessage] = useState('');
     const [locationValidationMessage, setLocationValidationMessage] = useState('');
+    const [workTimeValidationMessage, setWorkTimeValidationMessage] = useState('');
     const [positionValidationMessage, setPositionValidationMessage] = useState('');
     const [statusValidationMessage, setStatusValidationMessage] = useState('');
     const [titleValidationMessage, setTitleValidationMessage] = useState('');
@@ -205,12 +206,12 @@ function JobsLayout () {
     };
 
     const handleValidationErrors = (jobsData: JobsDataType | CreateJobDataType) => {
-        if (!jobsData.description) {
-            setDescriptionValidationMessage(requiredMessage);
+        if (!jobsData.title) {
+            setTitleValidationMessage(requiredMessage);
 
             return;
         } else {
-            setDescriptionValidationMessage('');
+            setTitleValidationMessage('');
         }
 
         if (!jobsData.image) {
@@ -229,6 +230,14 @@ function JobsLayout () {
             setLocationValidationMessage('');
         }
 
+        if (!jobsData.work_time) {
+            setWorkTimeValidationMessage(requiredMessage);
+
+            return;
+        } else {
+            setWorkTimeValidationMessage('');
+        }
+
         if (!jobsData.position) {
             setPositionValidationMessage(requiredMessage);
 
@@ -245,12 +254,12 @@ function JobsLayout () {
             setStatusValidationMessage('');
         }
 
-        if (!jobsData.title) {
-            setTitleValidationMessage(requiredMessage);
+        if (!jobsData.description) {
+            setDescriptionValidationMessage(requiredMessage);
 
             return;
         } else {
-            setTitleValidationMessage('');
+            setDescriptionValidationMessage('');
         }
 
         return true;
@@ -351,6 +360,7 @@ function JobsLayout () {
                         jobData={createJobData}
                         descriptionValidationMessage={descriptionValidationMessage}
                         imageValidationMessage={imageValidationMessage}
+                        workTimeValidationMessage={workTimeValidationMessage}
                         locationValidationMessage={locationValidationMessage}
                         positionValidationMessage={positionValidationMessage}
                         statusValidationMessage={statusValidationMessage}
@@ -367,6 +377,7 @@ function JobsLayout () {
                         handleChangeJobImage={handleChangeJobImage}
                         jobData={editableJob}
                         descriptionValidationMessage={descriptionValidationMessage}
+                        workTimeValidationMessage={workTimeValidationMessage}
                         imageValidationMessage={imageValidationMessage}
                         locationValidationMessage={locationValidationMessage}
                         positionValidationMessage={positionValidationMessage}

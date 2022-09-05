@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MenuItem, TextField } from '@mui/material';
 import { positions } from '../../../helpers/helpers';
 import { JobModalComponentProps } from './JobModalComponent';
@@ -17,23 +17,14 @@ const JobModalContent = ({
     locationValidationMessage,
     positionValidationMessage,
     statusValidationMessage,
+    workTimeValidationMessage,
     titleValidationMessage,
 }: JobModalComponentProps) => {
-
-    const [descriptionValue, setDescriptionValue] = useState('');
-
-    const handleChangeDescription = (evt: React.ChangeEvent<HTMLTextAreaElement>, key: string) => {
-        setDescriptionValue(evt.target.value);
-        handleChangeJobData(evt, 'description');
-    }
 
     const handleKeyDown = (e: any) => {
         e.target.style.height = 'inherit';
         e.target.style.height = `${e.target.scrollHeight}px`;
     };
-
-    console.log(jobData.image, 'aaaaaaaaaaaaaaaaaaa') // fixme m
-
 
     return (
         <>
@@ -103,16 +94,16 @@ const JobModalContent = ({
                 </div>
                 <div className={styles.modalField}>
                     <TextField
-                        id="work time"
-                        label="work time"
+                        id="work_time"
+                        label="Work time"
                         variant="standard"
                         value={(jobData && jobData.work_time) ? jobData.work_time : ''}
                         onChange={(evt) => {handleChangeJobData(evt, 'work_time')}}
                     />
                     {
-                        locationValidationMessage && (
+                        workTimeValidationMessage && (
                             <span className={styles.errorMessage}>
-                                {locationValidationMessage}
+                                {workTimeValidationMessage}
                             </span>
                         )
                     }
@@ -160,10 +151,10 @@ const JobModalContent = ({
                     <textarea
                         id="description"
                         name="description"
-                        value={descriptionValue}
+                        value={jobData.description}
                         placeholder={'Description'}
                         onKeyDown={handleKeyDown}
-                        onChange={(evt) => {handleChangeDescription(evt, 'description')}}
+                        onChange={(evt) => {handleChangeJobData(evt, 'description')}}
                     />
                     {
                         descriptionValidationMessage && (
