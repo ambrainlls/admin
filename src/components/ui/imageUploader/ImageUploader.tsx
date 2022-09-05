@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
+import { convertBase64 } from '../../../helpers/helpers';
 import addImageIcon from '../../../assets/images/BlackCross.svg';
 import styles from './imageUploader.module.css';
-import {convertBase64} from "../../../helpers/helpers";
 
 interface ImageUploaderProps {
   handleFileChange: (file: any) => void;

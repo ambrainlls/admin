@@ -65,7 +65,7 @@ export interface GitUserHistoriesType {
 export interface JobsDataType {
     id: string;
     description: string;
-    image: File | null;
+    image: '';
     location: string;
     position: string;
     status: string;
@@ -77,7 +77,7 @@ export interface CreateJobDataType {
     work_time: string;
     id: string;
     description: string;
-    image: File | null;
+    image: '';
     location: string;
     position: string;
     status: string;

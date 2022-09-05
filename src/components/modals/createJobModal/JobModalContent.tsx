@@ -21,32 +21,19 @@ const JobModalContent = ({
 }: JobModalComponentProps) => {
 
     const [descriptionValue, setDescriptionValue] = useState('');
-    const [ file, setFile ] = useState<File | null>(null);
-    const [ sendFileSuccess, setSendFileSuccess ] = useState(false);
-    const [ sendFileError, setSendFileError ] = useState(null);
-    // const buttonClasses = `${props.className} ${sendFileSuccess ? 'success' : ''}`.trim();
 
     const handleChangeDescription = (evt: React.ChangeEvent<HTMLTextAreaElement>, key: string) => {
         setDescriptionValue(evt.target.value);
         handleChangeJobData(evt, 'description');
     }
 
-    // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, key: string) => {
-    //     const file = event.target.files[0];
-    //     setFile(file);
-    //     handleChangeJobImage(event, key);
-    // };
-    //
-    const resetState = () => {
-        setFile(null);
-        setSendFileSuccess(false);
-        setSendFileError(null);
-    };
-
     const handleKeyDown = (e: any) => {
         e.target.style.height = 'inherit';
         e.target.style.height = `${e.target.scrollHeight}px`;
     };
+
+    console.log(jobData.image, 'aaaaaaaaaaaaaaaaaaa') // fixme m
+
 
     return (
         <>
@@ -83,10 +70,7 @@ const JobModalContent = ({
                             </div>
                         ) : (
                             <div className={styles.imageUploaderContainer}>
-                                <label
-                                    htmlFor="image"
-                                    onClick={resetState}
-                                >
+                                <label htmlFor="image">
                                     <span>Choose a picture</span>
                                 </label>
                                 <ImageUploader handleFileChange={(evt) => {handleChangeJobImage(evt, 'image')}} />

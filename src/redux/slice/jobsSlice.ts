@@ -8,7 +8,7 @@ const jobsSlice = createSlice({
         createJobData: {
             id: '',
             description: '',
-            image: null,
+            image: '',
             location: '',
             position: '',
             status: '',
@@ -25,7 +25,7 @@ const jobsSlice = createSlice({
             state.createJobData = {
                 id: '',
                 description: '',
-                image: null,
+                image: '',
                 location: '',
                 position: '',
                 status: '',

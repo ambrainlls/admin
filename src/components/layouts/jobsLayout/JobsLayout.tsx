@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     deleteJob,
@@ -15,12 +15,10 @@ import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
 import JobModalComponent from '../../modals/createJobModal/JobModalComponent';
-import { convertBase64 } from '../../../helpers/helpers';
 import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIcon.svg';
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
 import createJobIcon from '../../../assets/images/createRowIcon.svg';
 import styles from './jobsLayout.module.css';
-import {saveUpdatedEmployeeData} from "../../../redux/slice/employeesSlice";
 
 function JobsLayout () {
     const dispatch = useDispatch();
@@ -48,8 +46,7 @@ function JobsLayout () {
             name: 'Image',
             cell: (row: JobsDataType) => {
                 return (
-                    // <img src={row.image} alt={row.image} />
-                    <div>{''}</div>
+                    <img src={`${row.image}`} alt={row.image} />
                 )
             }
         },
@@ -124,7 +121,7 @@ function JobsLayout () {
         {
             id: '',
             description: '',
-            image: null,
+            image: '',
             location: '',
             position: '',
             status: '',
@@ -179,13 +176,20 @@ function JobsLayout () {
             [key]: evt.target.value
         };
 
-        console.log(key) // fixme m
-
         setEditableJob(updatedJob);
     };
 
-    const handleChangeJobImage = async (img: string, key: string) => {
+    const handleCreateJobImage = async (img: string, key: string) => {
         dispatch(setCreateJobDataInModal({[key]: img}));
+    };
+
+    const handleChangeJobImage = async (img: string, key: string) => {
+        const updatedJob = {
+            ...editableJob,
+            [key]: img,
+        };
+
+        setEditableJob(updatedJob);
     };
 
     const handleRowEdit = (rowId: string) => {
@@ -343,7 +347,7 @@ function JobsLayout () {
                         handleClose={handleCloseCreateJobModal}
                         handleSave={handleCreateJob}
                         handleChangeJobData={handleChangeCreateJobData}
-                        handleChangeJobImage={handleChangeJobImage}
+                        handleChangeJobImage={handleCreateJobImage}
                         jobData={createJobData}
                         descriptionValidationMessage={descriptionValidationMessage}
                         imageValidationMessage={imageValidationMessage}
