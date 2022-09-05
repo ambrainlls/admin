@@ -235,6 +235,8 @@ function JobsLayout () {
             return;
         }
 
+        updatedJob.requirements = [...updatedJob.requirements];
+
         updatedJob.requirements[foundIndex] = {
             ...updatedJob.requirements[foundIndex],
             name: evt.target.value
@@ -250,6 +252,8 @@ function JobsLayout () {
         if (foundIndex === -1) {
             return;
         }
+
+        updatedJob.requirements = [...updatedJob.requirements];
 
         updatedJob.requirements.splice(foundIndex, 1);
 
@@ -383,7 +387,7 @@ function JobsLayout () {
         const createdData = {
             ...createJobData,
             requirements: JSON.stringify(requirements),
-        }
+        };
 
         JobsApi.createJob(createdData)
         .then(res => {

@@ -30,7 +30,6 @@ export class JobsApi {
     };
 
     static async updateJob(data: JobsType) {
-        console.log(data) // fixme m
         return axios.put(
             `${url}/jobs/${data.id}`,
             data
