@@ -51,3 +51,10 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.descriptionContainer {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 160px;
+    white-space: nowrap;
+}
