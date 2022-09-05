@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CreateJobDataType, JobsDataType } from '../types';
+import { JobsDataType } from '../types';
 
 const jobsSlice = createSlice({
     name: 'jobsSlice',
@@ -14,7 +14,7 @@ const jobsSlice = createSlice({
             status: '',
             title: '',
             work_time: '',
-        } as CreateJobDataType,
+        } as JobsDataType,
         selectedJobId: '',
     },
     reducers: {

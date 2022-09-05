@@ -1,7 +1,7 @@
-import { Modal, Box } from '@mui/material';
-import JobModalContent from './JobModalContent';
 import React from 'react';
-import { CreateJobDataType } from '../../../redux/types';
+import { Modal, Box } from '@mui/material';
+import { JobsDataType } from '../../../redux/types';
+import JobModalContent from './JobModalContent';
 import styles from './JobModalComponent.module.css';
 
 const style = {
@@ -24,7 +24,7 @@ export interface JobModalComponentProps {
     handleSave: () => void;
     handleChangeJobData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => void;
     handleChangeJobImage: (image: string, key: string) => void;
-    jobData: CreateJobDataType;
+    jobData: JobsDataType;
     descriptionValidationMessage: string;
     workTimeValidationMessage: string;
     imageValidationMessage: string;

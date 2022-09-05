@@ -72,14 +72,3 @@ export interface JobsDataType {
     title: string;
     work_time: string;
 }
-
-export interface CreateJobDataType {
-    work_time: string;
-    id: string;
-    description: string;
-    image: '';
-    location: string;
-    position: string;
-    status: string;
-    title: string;
-}

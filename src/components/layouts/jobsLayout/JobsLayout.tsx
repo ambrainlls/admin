@@ -9,7 +9,7 @@ import {
     saveUpdatedJobData
 } from '../../../redux/slice/jobsSlice';
 import { RootState } from '../../../redux';
-import { CreateJobDataType, JobsDataType } from '../../../redux/types';
+import { JobsDataType } from '../../../redux/types';
 import { JobsApi } from '../../../api/JobsApi';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
@@ -205,7 +205,7 @@ function JobsLayout () {
         dispatch(setSelectedJobId(''));
     };
 
-    const handleValidationErrors = (jobsData: JobsDataType | CreateJobDataType) => {
+    const handleValidationErrors = (jobsData: JobsDataType) => {
         if (!jobsData.title) {
             setTitleValidationMessage(requiredMessage);
 
