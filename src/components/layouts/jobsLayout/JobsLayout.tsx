@@ -155,10 +155,21 @@ function JobsLayout () {
             const { data } = res.data;
             const { current_page, last_page } = res.data.meta;
 
+            const jobs = data.map((el: any) => {
+                el.requirements = JSON.parse(el.requirements).map((item: any) => {
+                    return {
+                        id: uniqueId(),
+                        name: item
+                    };
+                });
+
+                return el;
+            });
+
             setCurrentPage(current_page);
             setPageCount(last_page);
 
-            dispatch(setJobsData(data));
+            dispatch(setJobsData(jobs));
         })
         .catch(err => {
             if (err) {
@@ -205,10 +216,13 @@ function JobsLayout () {
             updatedJob.requirements = [];
         }
 
-        updatedJob.requirements.push({
-            id: `_${uniqueId()}`,
-            name: ''
-        })
+        updatedJob.requirements = [
+            ...updatedJob.requirements,
+            {
+                id: `_${uniqueId()}`,
+                name: ''
+            }
+        ];
 
         setEditableJob(updatedJob);
     };
@@ -339,13 +353,15 @@ function JobsLayout () {
         const requirements = editableJob.requirements.map(item => item.name);
 
         const updatedData = {
-            ...createJobData,
+            ...editableJob,
             requirements: JSON.stringify(requirements),
         }
 
         JobsApi.updateJob(updatedData)
         .then(res => {
-            const updatedParam = res.data;
+            const updatedParam = {...res.data};
+
+            updatedParam.requirements = JSON.parse(updatedParam.requirements);
             dispatch(saveUpdatedJobData(updatedParam));
         })
         .catch(err => {
