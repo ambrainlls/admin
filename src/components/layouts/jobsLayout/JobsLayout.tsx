@@ -6,10 +6,13 @@ import {
     setCreateJobDataInModal,
     setJobsData,
     setSelectedJobId,
-    saveUpdatedJobData
+    saveUpdatedJobData,
+    addNewRequirement,
+    updateJobRequirement,
+    deleteJobRequirement,
 } from '../../../redux/slice/jobsSlice';
 import { RootState } from '../../../redux';
-import { JobsDataType } from '../../../redux/types';
+import {JobsDataType, Requirements} from '../../../redux/types';
 import { JobsApi } from '../../../api/JobsApi';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
@@ -19,6 +22,7 @@ import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIc
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
 import createJobIcon from '../../../assets/images/createRowIcon.svg';
 import styles from './jobsLayout.module.css';
+import {uniqueId} from "lodash";
 
 function JobsLayout () {
     const dispatch = useDispatch();
@@ -27,18 +31,10 @@ function JobsLayout () {
 
     const columns = [
         {
-            name: 'ID',
+            name: 'Title',
             cell: (row: JobsDataType) => {
                 return (
-                    <div>{row.id}</div>
-                )
-            }
-        },
-        {
-            name: 'Description',
-            cell: (row: JobsDataType) => {
-                return (
-                    <div>{row.description}</div>
+                    <div>{row.title}</div>
                 )
             }
         },
@@ -59,6 +55,14 @@ function JobsLayout () {
             }
         },
         {
+            name: 'Work time',
+            cell: (row: JobsDataType) => {
+                return (
+                    <div>{row.work_time}</div>
+                )
+            }
+        },
+        {
             name: 'Position',
             cell: (row: JobsDataType) => {
                 return (
@@ -75,10 +79,10 @@ function JobsLayout () {
             }
         },
         {
-            name: 'Title',
+            name: 'Description',
             cell: (row: JobsDataType) => {
                 return (
-                    <div>{row.title}</div>
+                    <div>{row.description}</div>
                 )
             }
         },
@@ -128,8 +132,13 @@ function JobsLayout () {
             status: '',
             title: '',
             work_time: '',
+            requirements: [],
         }
     );
+
+    useEffect(() => {
+        getJobs();
+    }, []);
 
     useEffect(() => {
         setDescriptionValidationMessage('');
@@ -139,10 +148,6 @@ function JobsLayout () {
         setStatusValidationMessage('');
         setTitleValidationMessage('');
     }, [showModal, selectedJobId]);
-
-    useEffect(() => {
-        getJobs();
-    }, []);
 
     const getJobs = (value?: string) => {
         JobsApi.getJobs(value)
@@ -191,6 +196,65 @@ function JobsLayout () {
         };
 
         setEditableJob(updatedJob);
+    };
+
+    const addRequirementsToUpdateJob = () => {
+        const updatedJob = {...editableJob};
+
+        if (!updatedJob.requirements) {
+            updatedJob.requirements = [];
+        }
+
+        updatedJob.requirements.push({
+            id: `_${uniqueId()}`,
+            name: ''
+        })
+
+        setEditableJob(updatedJob);
+    };
+
+    const handleChangeUpdateJobRequirements = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, id: string) => {
+        const updatedJob = {...editableJob};
+        const foundIndex = updatedJob.requirements.findIndex((item: Requirements) => item.id === id);
+
+        if (foundIndex === -1) {
+            return;
+        }
+
+        updatedJob.requirements[foundIndex] = {
+            ...updatedJob.requirements[foundIndex],
+            name: evt.target.value
+        };
+
+        setEditableJob(updatedJob);
+    };
+
+    const handleDeleteUpdateJobRequirements = (evt: React.MouseEvent<HTMLImageElement>, id: string) => {
+        const updatedJob = {...editableJob};
+        const foundIndex = updatedJob.requirements.findIndex((item: Requirements) => item.id === id);
+
+        if (foundIndex === -1) {
+            return;
+        }
+
+        updatedJob.requirements.splice(foundIndex, 1);
+
+        setEditableJob(updatedJob);
+    };
+
+    const addRequirementsToCreateJob = () => {
+        dispatch(addNewRequirement());
+    };
+
+    const handleChangeCreateJobRequirements = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, id: string) => {
+        dispatch(updateJobRequirement({
+            id,
+            name: evt.target.value
+        }));
+    };
+
+    const handleDeleteCreateJobRequirements = (evt: React.MouseEvent<HTMLImageElement>, id: string) => {
+        dispatch(deleteJobRequirement(id));
     };
 
     const handleRowEdit = (rowId: string) => {
@@ -272,7 +336,14 @@ function JobsLayout () {
             return;
         }
 
-        JobsApi.updateJob(editableJob)
+        const requirements = editableJob.requirements.map(item => item.name);
+
+        const updatedData = {
+            ...createJobData,
+            requirements: JSON.stringify(requirements),
+        }
+
+        JobsApi.updateJob(updatedData)
         .then(res => {
             const updatedParam = res.data;
             dispatch(saveUpdatedJobData(updatedParam));
@@ -291,7 +362,14 @@ function JobsLayout () {
             return;
         }
 
-        JobsApi.createJob(createJobData)
+        const requirements = createJobData.requirements.map(item => item.name);
+
+        const createdData = {
+            ...createJobData,
+            requirements: JSON.stringify(requirements),
+        }
+
+        JobsApi.createJob(createdData)
         .then(res => {
             console.log(res);
         })
@@ -356,7 +434,10 @@ function JobsLayout () {
                         handleClose={handleCloseCreateJobModal}
                         handleSave={handleCreateJob}
                         handleChangeJobData={handleChangeCreateJobData}
+                        handleDeleteJobRequirements={handleDeleteCreateJobRequirements}
                         handleChangeJobImage={handleCreateJobImage}
+                        handleChangeJobRequirements={handleChangeCreateJobRequirements}
+                        addRequirements={addRequirementsToCreateJob}
                         jobData={createJobData}
                         descriptionValidationMessage={descriptionValidationMessage}
                         imageValidationMessage={imageValidationMessage}
@@ -375,6 +456,9 @@ function JobsLayout () {
                         handleSave={handleSaveChanges}
                         handleChangeJobData={handleChangeUpdateJobData}
                         handleChangeJobImage={handleChangeJobImage}
+                        handleChangeJobRequirements={handleChangeUpdateJobRequirements}
+                        handleDeleteJobRequirements={handleDeleteUpdateJobRequirements}
+                        addRequirements={addRequirementsToUpdateJob}
                         jobData={editableJob}
                         descriptionValidationMessage={descriptionValidationMessage}
                         workTimeValidationMessage={workTimeValidationMessage}

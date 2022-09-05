@@ -23,7 +23,10 @@ export interface JobModalComponentProps {
     handleClose: () => void;
     handleSave: () => void;
     handleChangeJobData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => void;
+    handleChangeJobRequirements: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, id: string) => void;
+    handleDeleteJobRequirements: (evt: React.MouseEvent<HTMLImageElement>, id: string) => void;
     handleChangeJobImage: (image: string, key: string) => void;
+    addRequirements: () => void;
     jobData: JobsDataType;
     descriptionValidationMessage: string;
     workTimeValidationMessage: string;
@@ -38,7 +41,10 @@ function JobModalComponent({
     handleClose,
     handleSave,
     handleChangeJobData,
+    handleChangeJobRequirements,
+    handleDeleteJobRequirements,
     handleChangeJobImage,
+    addRequirements,
     jobData,
     descriptionValidationMessage,
     workTimeValidationMessage,
@@ -60,7 +66,10 @@ function JobModalComponent({
                     handleClose={handleClose}
                     handleSave={handleSave}
                     handleChangeJobData={handleChangeJobData}
+                    handleDeleteJobRequirements={handleDeleteJobRequirements}
                     handleChangeJobImage={handleChangeJobImage}
+                    handleChangeJobRequirements={handleChangeJobRequirements}
+                    addRequirements={addRequirements}
                     jobData={jobData}
                     descriptionValidationMessage={descriptionValidationMessage}
                     imageValidationMessage={imageValidationMessage}

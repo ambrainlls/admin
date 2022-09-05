@@ -113,3 +113,25 @@
     cursor: pointer;
     padding: 2px;
 }
+
+.addRequirements {
+    color: #0C8AFF;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.requirementsItem {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.requirementsItem img {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.requirementsItem input {
+    padding: 10px;
+    width: 410px;
+}

@@ -11,6 +11,9 @@ const JobModalContent = ({
     handleSave,
     handleChangeJobData,
     handleChangeJobImage,
+    handleChangeJobRequirements,
+    handleDeleteJobRequirements,
+    addRequirements,
     jobData,
     descriptionValidationMessage,
     imageValidationMessage,
@@ -146,6 +149,29 @@ const JobModalContent = ({
                             </span>
                         )
                     }
+                </div>
+                <div className={styles.modalField}>
+                    {
+                        jobData.requirements && (
+                            jobData.requirements.map((item,i )=> (
+                                <div className={styles.requirementsItem} key={i}>
+                                    <TextField
+                                        id="requirements"
+                                        name="requirements"
+                                        variant="outlined"
+                                        value={item.name}
+                                        onChange={evt =>handleChangeJobRequirements(evt, item.id)}
+                                    />
+                                    <img src={deleteIcon} alt={deleteIcon}
+                                        onClick={(evt) => handleDeleteJobRequirements(evt, item.id)}
+                                    />
+                                </div>
+                            ))
+                        )
+                    }
+                    <span className={styles.addRequirements} onClick={addRequirements}>
+                        Add requirements
+                    </span>
                 </div>
                 <div className={styles.modalField}>
                     <textarea

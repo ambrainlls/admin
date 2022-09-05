@@ -71,4 +71,22 @@ export interface JobsDataType {
     status: string;
     title: string;
     work_time: string;
+    requirements : Requirements[]
+}
+
+export interface JobsType {
+    id: string;
+    description: string;
+    image: '';
+    location: string;
+    position: string;
+    status: string;
+    title: string;
+    work_time: string;
+    requirements : string;
+}
+
+export interface Requirements {
+    id: string;
+    name: string;
 }
