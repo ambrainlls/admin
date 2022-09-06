@@ -9,7 +9,7 @@ import {
     saveUpdatedJobData,
     addNewRequirement,
     updateJobRequirement,
-    deleteJobRequirement,
+    deleteJobRequirement, addNewJob,
 } from '../../../redux/slice/jobsSlice';
 import { RootState } from '../../../redux';
 import {JobsDataType, Requirements} from '../../../redux/types';
@@ -35,14 +35,6 @@ function JobsLayout () {
             cell: (row: JobsDataType) => {
                 return (
                     <div>{row.title}</div>
-                )
-            }
-        },
-        {
-            name: 'Image',
-            cell: (row: JobsDataType) => {
-                return (
-                    <img src={`${row.image}`} alt={row.image} />
                 )
             }
         },
@@ -391,7 +383,10 @@ function JobsLayout () {
 
         JobsApi.createJob(createdData)
         .then(res => {
-            console.log(res);
+            const createdData: any = {...res.data};
+            createdData.requirements = JSON.parse(createdData.requirements);
+            dispatch(addNewJob(createdData));
+            setShowModal(false);
         })
         .catch(err => {
             if (err) {

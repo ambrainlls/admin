@@ -51,7 +51,7 @@ const jobsSlice = createSlice({
 
             state.jobsData.splice(foundIndex, 1);
         },
-        addNewJob(state, action: PayloadAction<JobsDataType>) {
+        addNewJob(state, action: PayloadAction<any>) {
             state.jobsData.unshift(action.payload);
         },
         addNewRequirement(state) {
