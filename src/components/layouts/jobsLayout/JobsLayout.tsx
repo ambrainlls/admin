@@ -75,7 +75,7 @@ function JobsLayout () {
             name: 'Requirements',
             cell: (row: JobsDataType) => {
                 return row.requirements.map(item => (
-                   <div key={item.id}>{item.name},</div>
+                   <div key={item.id} className={styles.responsveWidt}>{item.name},</div>
                 ))
             }
         },
@@ -83,7 +83,7 @@ function JobsLayout () {
             name: 'Description',
             cell: (row: JobsDataType) => {
                 return (
-                    <div>{row.description}</div>
+                    <div className={styles.responsveWidt}>{row.description}</div>
                 )
             }
         },

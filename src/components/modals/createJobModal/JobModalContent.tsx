@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { MenuItem, TextField } from '@mui/material';
 import { positions } from '../../../helpers/helpers';
+import { resetJobDataInModal } from '../../../redux/slice/jobsSlice';
 import { JobModalComponentProps } from './JobModalComponent';
 import ImageUploader from '../../ui/imageUploader/ImageUploader';
 import deleteIcon from '../../../assets/images/delete.svg';
@@ -23,11 +25,18 @@ const JobModalContent = ({
     workTimeValidationMessage,
     titleValidationMessage,
 }: JobModalComponentProps) => {
+    const dispatch = useDispatch();
 
     const handleKeyDown = (e: any) => {
         e.target.style.height = 'inherit';
         e.target.style.height = `${e.target.scrollHeight}px`;
     };
+
+    useEffect(() => {
+        return () => {
+            dispatch(resetJobDataInModal());
+        };
+    },[]);
 
     return (
         <>
