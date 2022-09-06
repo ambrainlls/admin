@@ -3,7 +3,7 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import styles from './dashboardDataTable.module.css';
 
 interface DashboardDataTableProps {
-    columns: TableColumn<any>[];
+    columns: any[];
     data: any[];
     handleRowClick?: () => void;
 }

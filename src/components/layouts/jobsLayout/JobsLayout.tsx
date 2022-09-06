@@ -1,19 +1,21 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {ChangeEvent, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {uniqueId} from 'lodash';
 import {
+    addNewJob,
+    addNewRequirement,
     deleteJob,
+    deleteJobRequirement,
     resetJobDataInModal,
+    saveUpdatedJobData,
     setCreateJobDataInModal,
     setJobsData,
     setSelectedJobId,
-    saveUpdatedJobData,
-    addNewRequirement,
     updateJobRequirement,
-    deleteJobRequirement, addNewJob,
 } from '../../../redux/slice/jobsSlice';
-import { RootState } from '../../../redux';
+import {RootState} from '../../../redux';
 import {JobsDataType, Requirements} from '../../../redux/types';
-import { JobsApi } from '../../../api/JobsApi';
+import {JobsApi} from '../../../api/JobsApi';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
@@ -22,7 +24,6 @@ import deleteRowIcon from '../../../assets/images/dashboardDataTable/deleteRowIc
 import editRowIcon from '../../../assets/images/dashboardDataTable/editRowIcon.svg';
 import createJobIcon from '../../../assets/images/createRowIcon.svg';
 import styles from './jobsLayout.module.css';
-import {uniqueId} from "lodash";
 
 function JobsLayout () {
     const dispatch = useDispatch();
@@ -68,6 +69,14 @@ function JobsLayout () {
                 return (
                     <div>{row.status}</div>
                 )
+            }
+        },
+        {
+            name: 'Requirements',
+            cell: (row: JobsDataType) => {
+                return row.requirements.map(item => (
+                   <div key={item.id}>{item.name},</div>
+                ))
             }
         },
         {
@@ -358,6 +367,14 @@ function JobsLayout () {
             const updatedParam = {...res.data};
 
             updatedParam.requirements = JSON.parse(updatedParam.requirements);
+
+            updatedParam.requirements = updatedParam.requirements.map((item: string) => {
+                return {
+                    id: `_${uniqueId()}`,
+                    name: item
+                }
+            });
+
             dispatch(saveUpdatedJobData(updatedParam));
         })
         .catch(err => {
@@ -384,7 +401,16 @@ function JobsLayout () {
         JobsApi.createJob(createdData)
         .then(res => {
             const createdData: any = {...res.data};
-            createdData.requirements = JSON.parse(createdData.requirements);
+
+            createdData.requirements = JSON.parse(res.data.requirements);
+
+            createdData.requirements = createdData.requirements.map((item: string) => {
+                return {
+                    id: `_${uniqueId()}`,
+                    name: item
+                }
+            });
+
             dispatch(addNewJob(createdData));
             setShowModal(false);
         })
