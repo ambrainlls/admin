@@ -23,6 +23,7 @@ const EmployeeModalContent = ({
     birthdayValidationMessage,
     startDateValidationMessage,
     emailValidationMessage,
+    imageValidationMessage,
     phoneValidationMessage,
     telegramChatIdValidationMessage,
 }: EmployeeModalComponentProps) => {
@@ -57,13 +58,13 @@ const EmployeeModalContent = ({
                                     <span>Choose a picture</span>
                                 </label>
                                 <ImageUploader handleFileChange={(evt) => {handleChangeEmployeeImage(evt, 'image')}} />
-                                {/*{*/}
-                                {/*    imageValidationMessage && (*/}
-                                {/*        <span className={styles.errorMessage}>*/}
-                                {/*            {imageValidationMessage}*/}
-                                {/*        </span>*/}
-                                {/*    )*/}
-                                {/*}*/}
+                                {
+                                    imageValidationMessage && (
+                                        <span className={styles.errorMessage}>
+                                            {imageValidationMessage}
+                                        </span>
+                                    )
+                                }
                             </div>
                         )
                     }

@@ -59,7 +59,7 @@
     white-space: nowrap;
 }
 
-.responsveWidt {
+.responsiveWidt {
     text-overflow: ellipsis;
     overflow: hidden;
     width: 160px;

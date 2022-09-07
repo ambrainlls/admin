@@ -53,7 +53,7 @@ function EmployeesLayout() {
             name: 'Description',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    <div>{row.description}</div>
+                    <div className={styles.responsiveWidt}>{row.description}</div>
                 )
             }
         },
@@ -117,10 +117,10 @@ function EmployeesLayout() {
             name: 'Projects',
             cell: (row: EmployeesDataTypes) => {
                 return (
-                    <div className={styles.projectsContainer}>
+                    <div className={styles.responsiveWidt}>
                         {
                             row.projects.map(item => (
-                                <div key={item.id}>{item.company_name},</div>
+                                <div key={item.id} >{item.company_name},</div>
                             ))
                         }
                     </div>
@@ -150,6 +150,7 @@ function EmployeesLayout() {
     ];
 
     const [nameValidationMessage, setNameValidationMessage] = useState('');
+    const [imageValidationMessage, setImageValidationMessage] = useState('');
     const [surnameValidationMessage, setSurnameValidationMessage] = useState('');
     const [birthdayValidationMessage, setBirthdayValidationMessage] = useState('');
     const [startDateValidationMessage, setStartDateValidationMessage] = useState('');
@@ -228,6 +229,14 @@ function EmployeesLayout() {
     };
 
     const handleValidationErrors = (employeeData: EmployeesDataTypes) => {
+        if (!employeeData.image) {
+            setImageValidationMessage('You have not selected an image');
+
+            return;
+        } else {
+            setImageValidationMessage('');
+        }
+
         if (!employeeData.name) {
             setNameValidationMessage(requiredMessage);
 
@@ -473,6 +482,7 @@ function EmployeesLayout() {
                         handleChangeEmployeeImage={handleCreateEmployeeImage}
                         handleChangeEmployeData={handleChangeCreateEmployeData}
                         handleSelectedOptions={handleSelectedOptionsForCreateEmployee}
+                        imageValidationMessage={imageValidationMessage}
                         nameValidationMessage={nameValidationMessage}
                         surnameValidationMessage={surnameValidationMessage}
                         birthdayValidationMessage={birthdayValidationMessage}
@@ -493,6 +503,7 @@ function EmployeesLayout() {
                         handleChangeEmployeeImage={handleUpdateEmployeeImage}
                         handleChangeEmployeData={handleChangeUpdateEmployeData}
                         handleSelectedOptions={handleSelectedOptionsForUpdateEmployee}
+                        imageValidationMessage={imageValidationMessage}
                         nameValidationMessage={nameValidationMessage}
                         surnameValidationMessage={surnameValidationMessage}
                         birthdayValidationMessage={birthdayValidationMessage}

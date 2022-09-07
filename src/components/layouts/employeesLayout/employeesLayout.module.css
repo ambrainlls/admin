@@ -58,11 +58,6 @@
     justify-content: flex-end;
 }
 
-.projectsContainer {
-    width: 100%;
-    display: flex;
-}
-
 .multiSelectProjectsContainer {
     width: 100%;
 }
@@ -95,4 +90,12 @@
     font-size: 18px;
     line-height: 22px;
     color: #000000;
+}
+
+.responsiveWidt {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 160px;
+    white-space: nowrap;
+    display: flex;
 }

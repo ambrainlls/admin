@@ -1,6 +1,6 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {uniqueId} from 'lodash';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { uniqueId } from 'lodash';
 import {
     addNewJob,
     addNewRequirement,
@@ -13,9 +13,9 @@ import {
     setSelectedJobId,
     updateJobRequirement,
 } from '../../../redux/slice/jobsSlice';
-import {RootState} from '../../../redux';
-import {JobsDataType, Requirements} from '../../../redux/types';
-import {JobsApi} from '../../../api/JobsApi';
+import { RootState } from '../../../redux';
+import { JobsDataType, Requirements } from '../../../redux/types';
+import { JobsApi } from '../../../api/JobsApi';
 import DashboardDataTable from '../../main/dashboardDataTable/DashboardDataTable';
 import DashboardPagination from '../../main/dashboardPagination/DashboardPagination';
 import FilterComponent from '../../ui/filterComponent/FilterComponent';
@@ -75,7 +75,7 @@ function JobsLayout () {
             name: 'Requirements',
             cell: (row: JobsDataType) => {
                 return row.requirements.map(item => (
-                   <div key={item.id} className={styles.responsveWidt}>{item.name},</div>
+                   <div key={item.id} className={styles.responsiveWidt}>{item.name},</div>
                 ))
             }
         },
@@ -83,7 +83,7 @@ function JobsLayout () {
             name: 'Description',
             cell: (row: JobsDataType) => {
                 return (
-                    <div className={styles.responsveWidt}>{row.description}</div>
+                    <div className={styles.responsiveWidt}>{row.description}</div>
                 )
             }
         },

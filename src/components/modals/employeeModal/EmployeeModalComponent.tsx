@@ -32,6 +32,7 @@ export interface EmployeeModalComponentProps {
     birthdayValidationMessage: string;
     startDateValidationMessage: string;
     emailValidationMessage: string;
+    imageValidationMessage: string;
     phoneValidationMessage: string;
     telegramChatIdValidationMessage: string;
 }
@@ -47,6 +48,7 @@ function EmployeeModalComponent({
     nameValidationMessage,
     surnameValidationMessage,
     birthdayValidationMessage,
+    imageValidationMessage,
     startDateValidationMessage,
     emailValidationMessage,
     phoneValidationMessage,
@@ -70,6 +72,7 @@ function EmployeeModalComponent({
                     handleChangeEmployeeImage={handleChangeEmployeeImage}
                     nameValidationMessage={nameValidationMessage}
                     surnameValidationMessage={surnameValidationMessage}
+                    imageValidationMessage={imageValidationMessage}
                     birthdayValidationMessage={birthdayValidationMessage}
                     startDateValidationMessage={startDateValidationMessage}
                     emailValidationMessage={emailValidationMessage}
