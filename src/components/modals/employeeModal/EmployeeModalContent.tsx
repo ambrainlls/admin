@@ -35,6 +35,11 @@ const EmployeeModalContent = ({
         };
     },[]);
 
+    const handleKeyDown = (e: any) => {
+        e.target.style.height = 'inherit';
+        e.target.style.height = `${e.target.scrollHeight}px`;
+    };
+
     return (
         <>
             <div className={styles.modalComponentTitle}>
@@ -215,12 +220,13 @@ const EmployeeModalContent = ({
                         )
                     }
                 </div>
-                <div className={styles.modalField}>
-                    <TextField
+                <div className={styles.modalFieldDescription}>
+                    <textarea
                         id="description"
-                        label="Description"
-                        variant="standard"
+                        name="description"
                         value={(employeeData && employeeData.description) ? employeeData.description : ''}
+                        placeholder={'Description'}
+                        onKeyDown={handleKeyDown}
                         onChange={(evt) => {handleChangeEmployeData(evt, 'description')}}
                     />
                 </div>
