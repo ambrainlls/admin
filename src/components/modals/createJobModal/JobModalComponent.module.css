@@ -29,7 +29,7 @@
 }
 
 .modalField textarea {
-    min-height: 40px;
+    min-height: 80px;
     border: 1px solid grey;
     border-radius: 4px;
 }

@@ -48,6 +48,10 @@
     outline: none;
 }
 
+.modalFieldDescription textarea {
+    min-height: 80px;
+}
+
 .modalField input, .dateContainer input {
     width: 100%;
     outline: none;

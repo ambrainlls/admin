@@ -25,6 +25,8 @@ import styles from './projectLayout.module.css'
 
 
 function ProjectLayout() {
+    const requiredMessage = 'The field is required !';
+
     const dispatch = useDispatch();
     const projectsData = useSelector((state: RootState) => state.projectReducer.projectsData);
     const createProjectData = useSelector((state: RootState) => state.projectReducer.createProjectData);
@@ -34,6 +36,13 @@ function ProjectLayout() {
     const [currentPage, setCurrentPage] = useState(1);
     const [showModal, setShowModal] = useState(false);
     const [allEmployees, setAllEmployees] = useState<EmployeesDataTypes[]>([]);
+    const [companyNameValidationMessage, setCompanyNameValidationMessage] = useState('');
+    const [nameValidationMessage, setNameValidationMessage] = useState('');
+    const [imageValidationMessage, setImageValidationMessage] = useState('');
+    const [baseImageValidationMessage, setBaseImageValidationMessage] = useState('');
+    const [logoValidationMessage, setLogoValidationMessage] = useState('');
+    const [descriptionValidationMessage, setDescriptionValidationMessage] = useState('');
+
     const [editableProject, setEditableProject] = useState<any>(
         {
             id: '',
@@ -44,10 +53,18 @@ function ProjectLayout() {
 
     const columns = [
         {
-            name: 'Name',
+            name: 'Company name',
             cell: (row: ProjectTypes) => {
                 return (
                     <div>{row.company_name}</div>
+                )
+            }
+        },
+        {
+            name: 'Name',
+            cell: (row: ProjectTypes) => {
+                return (
+                    <div>{row.project_name}</div>
                 )
             }
         },
@@ -64,6 +81,14 @@ function ProjectLayout() {
                             ) : 'There is no employees for this project'
                         }
                     </div>
+                )
+            }
+        },
+        {
+            name: 'Description',
+            cell: (row: ProjectTypes) => {
+                return (
+                    <div className={styles.descriptionContainer}>{row.description}</div>
                 )
             }
         },
@@ -103,6 +128,58 @@ function ProjectLayout() {
         });
     }, []);
 
+    const handleValidationErrors = (projectData: ProjectTypes) => {
+        if (!projectData.company_name) {
+            setCompanyNameValidationMessage(requiredMessage);
+
+            return;
+        } else {
+            setCompanyNameValidationMessage('');
+        }
+
+        if (!projectData.project_name) {
+            setNameValidationMessage(requiredMessage);
+
+            return;
+        } else {
+            setNameValidationMessage('');
+        }
+
+        if (!projectData.image) {
+            setImageValidationMessage('You have not selected an image');
+
+            return;
+        } else {
+            setImageValidationMessage('');
+        }
+
+        if (!projectData.base_image) {
+            setBaseImageValidationMessage('You have not selected an image');
+
+            return;
+        } else {
+            setBaseImageValidationMessage('');
+        }
+
+        if (!projectData.logo) {
+            setLogoValidationMessage('You have not selected an image');
+
+            return;
+        } else {
+            setLogoValidationMessage('');
+        }
+
+        if (!projectData.description) {
+            setDescriptionValidationMessage(requiredMessage);
+
+            return;
+        } else {
+            setDescriptionValidationMessage('');
+        }
+
+        return true;
+    };
+
     const getAllProjects = () => {
         ProjectsApi.getAllProjects()
         .then(res => {
@@ -137,6 +214,12 @@ function ProjectLayout() {
     };
 
     const handleSaveChanges = () => {
+        const hasError = !handleValidationErrors(editableProject);
+
+        if (hasError) {
+            return;
+        }
+
         const updatedData = {
             ...editableProject,
             employee_ids: editableProject.employees.map((el: any) => el.id),
@@ -155,6 +238,12 @@ function ProjectLayout() {
     };
 
     const handleCreateProject = () => {
+        const hasError = !handleValidationErrors(createProjectData);
+
+        if (hasError) {
+            return;
+        }
+
         const createdData = {
             ...createProjectData,
             employee_ids: createProjectData.employees.map((el: any) => el.id),
@@ -190,6 +279,19 @@ function ProjectLayout() {
             ...editableProject,
             [key]: evt.target.value
         };
+        setEditableProject(updatedProject);
+    };
+
+    const handleCreateProjectImage = async (img: string, key: string) => {
+        dispatch(createProject({[key]: img}));
+    };
+
+    const handleChangeProjectImage = async (img: string, key: string) => {
+        const updatedProject = {
+            ...editableProject,
+            [key]: img,
+        };
+
         setEditableProject(updatedProject);
     };
 
@@ -251,7 +353,14 @@ function ProjectLayout() {
                         employeesOptions={allEmployees}
                         projectData={createProjectData}
                         handleChangeProjectData={handleChangeCreateProjectData}
+                        handleChangeProjectImage={handleCreateProjectImage}
                         handleSelectedOptions={handleSelectedOptionsForCreateProject}
+                        companyNameValidationMessage={companyNameValidationMessage}
+                        nameValidationMessage={nameValidationMessage}
+                        imageValidationMessage={imageValidationMessage}
+                        baseImageValidationMessage={baseImageValidationMessage}
+                        logoValidationMessage={logoValidationMessage}
+                        descriptionValidationMessage={descriptionValidationMessage}
                     />
                 )
             }
@@ -262,8 +371,15 @@ function ProjectLayout() {
                         handleSave={handleSaveChanges}
                         employeesOptions={allEmployees}
                         projectData={editableProject}
+                        handleChangeProjectImage={handleChangeProjectImage}
                         handleChangeProjectData={handleChangeUpdateProjectData}
                         handleSelectedOptions={handleSelectedOptionsForUpdateProject}
+                        companyNameValidationMessage={companyNameValidationMessage}
+                        nameValidationMessage={nameValidationMessage}
+                        imageValidationMessage={imageValidationMessage}
+                        baseImageValidationMessage={baseImageValidationMessage}
+                        logoValidationMessage={logoValidationMessage}
+                        descriptionValidationMessage={descriptionValidationMessage}
                     />
                 )
             }

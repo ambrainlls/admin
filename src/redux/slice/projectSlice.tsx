@@ -9,12 +9,22 @@ const projectSlice = createSlice({
         projectData: {
             id: '',
             company_name: '',
+            project_name: '',
+            image: '',
+            base_image: '',
+            logo: '',
             employees: [],
+            description: '',
         } as ProjectTypes,
         createProjectData: {
             id: '',
             company_name: '',
+            project_name: '',
+            image: '',
+            base_image: '',
+            logo: '',
             employees: [],
+            description: '',
         } as ProjectTypes
     },
     reducers: {
@@ -65,6 +75,11 @@ const projectSlice = createSlice({
             state.createProjectData = {
                 id: '',
                 company_name: '',
+                project_name: '',
+                image: '',
+                base_image: '',
+                description: '',
+                logo: '',
                 employees: [],
             }
         },
