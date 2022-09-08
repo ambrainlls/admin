@@ -59,9 +59,10 @@
 }
 
 .employeesContainer, .descriptionContainer {
+    display: flex;
     text-overflow: ellipsis;
     overflow: hidden;
-    width: 300px;
+    width: 250px;
     white-space: nowrap;
 }
 

@@ -60,5 +60,5 @@ export const convertBase64 = (file: any) => {
         fileReader.onerror = (error) => {
             reject(error);
         }
-    })
+    });
 };

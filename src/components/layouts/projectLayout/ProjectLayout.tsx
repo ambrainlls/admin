@@ -76,7 +76,7 @@ function ProjectLayout() {
                         {
                             (row.employees && row.employees.length) ? (
                                 row.employees.map(({name, surname, id} : number | any) => (
-                                    <div key={id}>{`${name} ${surname}`}</div>
+                                    <p key={id}>{`${name} ${surname}`},</p>
                                 ))
                             ) : 'There is no employees for this project'
                         }
