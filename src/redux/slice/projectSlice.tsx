@@ -9,11 +9,19 @@ const projectSlice = createSlice({
         projectData: {
             id: '',
             company_name: '',
+            name: '',
+            image: '',
+            baseImage: '',
+            logo: '',
             employees: [],
         } as ProjectTypes,
         createProjectData: {
             id: '',
             company_name: '',
+            name: '',
+            image: '',
+            baseImage: '',
+            logo: '',
             employees: [],
         } as ProjectTypes
     },
@@ -65,6 +73,10 @@ const projectSlice = createSlice({
             state.createProjectData = {
                 id: '',
                 company_name: '',
+                name: '',
+                image: '',
+                baseImage: '',
+                logo: '',
                 employees: [],
             }
         },

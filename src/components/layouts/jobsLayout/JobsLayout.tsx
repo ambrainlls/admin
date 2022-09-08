@@ -113,7 +113,6 @@ function JobsLayout () {
     const createJobData = useSelector((state: RootState) => state.jobsReducer.createJobData);
     const selectedJobId = useSelector((state: RootState) => state.jobsReducer.selectedJobId);
 
-    const [descriptionValidationMessage, setDescriptionValidationMessage] = useState('');
     const [pageCount, setPageCount] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState('');
@@ -122,6 +121,7 @@ function JobsLayout () {
     const [workTimeValidationMessage, setWorkTimeValidationMessage] = useState('');
     const [positionValidationMessage, setPositionValidationMessage] = useState('');
     const [statusValidationMessage, setStatusValidationMessage] = useState('');
+    const [descriptionValidationMessage, setDescriptionValidationMessage] = useState('');
     const [titleValidationMessage, setTitleValidationMessage] = useState('');
     const [editableJob, setEditableJob] = useState<JobsDataType>(
         {

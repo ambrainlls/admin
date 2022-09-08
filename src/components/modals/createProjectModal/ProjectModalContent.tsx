@@ -2,18 +2,11 @@ import React, { useEffect } from 'react';
 import { TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { resetProjectDataInModal } from '../../../redux/slice/projectSlice';
-import { ProjectTypes } from '../../../redux/types';
 import MultiSelect from '../../ui/multiSelect/MultiSelect';
+import ImageUploader from '../../ui/imageUploader/ImageUploader';
+import { ProjectModalComponentProps } from './ProjectModalComponent';
+import deleteIcon from '../../../assets/images/delete.svg';
 import styles from './ProjectModalComponent.module.css';
-
-interface EmployeeModalContentProps {
-    handleClose: () => void;
-    handleSave: () => void;
-    employeesOptions: any[];
-    projectData?: ProjectTypes;
-    handleChangeProjectData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => void
-    handleSelectedOptions: (selectedOption: any) => void;
-}
 
 const ProjectModalContent = ({
     handleClose,
@@ -21,8 +14,14 @@ const ProjectModalContent = ({
     employeesOptions,
     projectData,
     handleChangeProjectData,
+    handleChangeProjectImage,
     handleSelectedOptions,
-}: EmployeeModalContentProps) => {
+    companyNameValidationMessage,
+    nameValidationMessage,
+    imageValidationMessage,
+    baseImageValidationMessage,
+    logoValidationMessage,
+}: ProjectModalComponentProps) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -39,12 +38,119 @@ const ProjectModalContent = ({
             <div className={styles.fieldsToFill}>
                 <div className={styles.modalField}>
                     <TextField
-                        id="name"
-                        label="Name"
+                        id="company_name"
+                        label="Company name"
                         variant="standard"
                         value={(projectData && projectData.company_name) ? projectData.company_name : ''}
                         onChange={(evt) => {handleChangeProjectData(evt, 'company_name')}}
                     />
+                    {
+                        companyNameValidationMessage && (
+                            <span className={styles.errorMessage}>
+                                {companyNameValidationMessage}
+                            </span>
+                        )
+                    }
+                </div>
+                <div className={styles.modalField}>
+                    <TextField
+                        id="name"
+                        label="Project name"
+                        variant="standard"
+                        value={(projectData && projectData.name) ? projectData.name : ''}
+                        onChange={(evt) => {handleChangeProjectData(evt, 'name')}}
+                    />
+                    {
+                        nameValidationMessage && (
+                            <span className={styles.errorMessage}>
+                                {nameValidationMessage}
+                            </span>
+                        )
+                    }
+                </div>
+                <div className={styles.selectImageContainer}>
+                    {
+                        (projectData && projectData.image) ? (
+                            <div className={styles.imageContainer}>
+                                <img src={`${projectData.image}`} alt={'project'} />
+                                <div className={`${styles.deleteImageContainer}`}
+                                     onClick={() => {handleChangeProjectImage('', 'image')}}
+                                >
+                                    <img src={deleteIcon} alt={deleteIcon} />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className={styles.imageUploaderContainer}>
+                                <label htmlFor="image">
+                                    <span>Choose a picture</span>
+                                </label>
+                                <ImageUploader handleFileChange={(evt) => {handleChangeProjectImage(evt, 'image')}} />
+                                {
+                                    imageValidationMessage && (
+                                        <span className={styles.errorMessage}>
+                                            {imageValidationMessage}
+                                        </span>
+                                    )
+                                }
+                            </div>
+                        )
+                    }
+                </div>
+                <div className={styles.selectImageContainer}>
+                    {
+                        (projectData && projectData.baseImage) ? (
+                            <div className={styles.imageContainer}>
+                                <img src={`${projectData.baseImage}`} alt={'projectBase'} />
+                                <div className={`${styles.deleteImageContainer}`}
+                                     onClick={() => {handleChangeProjectImage('', 'baseImage')}}
+                                >
+                                    <img src={deleteIcon} alt={deleteIcon} />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className={styles.imageUploaderContainer}>
+                                <label htmlFor="baseImage">
+                                    <span>Choose project responsive picture</span>
+                                </label>
+                                <ImageUploader handleFileChange={(evt) => {handleChangeProjectImage(evt, 'baseImage')}} />
+                                {
+                                    baseImageValidationMessage && (
+                                        <span className={styles.errorMessage}>
+                                            {baseImageValidationMessage}
+                                        </span>
+                                    )
+                                }
+                            </div>
+                        )
+                    }
+                </div>
+                <div className={styles.selectImageContainer}>
+                    {
+                        (projectData && projectData.logo) ? (
+                            <div className={styles.imageContainer}>
+                                <img src={`${projectData.logo}`} alt={'logo'} />
+                                <div className={`${styles.deleteImageContainer}`}
+                                     onClick={() => {handleChangeProjectImage('', 'logo')}}
+                                >
+                                    <img src={deleteIcon} alt={deleteIcon} />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className={styles.imageUploaderContainer}>
+                                <label htmlFor="logo">
+                                    <span>Choose project logo</span>
+                                </label>
+                                <ImageUploader handleFileChange={(evt) => {handleChangeProjectImage(evt, 'logo')}} />
+                                {
+                                    logoValidationMessage && (
+                                        <span className={styles.errorMessage}>
+                                            {logoValidationMessage}
+                                        </span>
+                                    )
+                                }
+                            </div>
+                        )
+                    }
                 </div>
                 <div className={styles.modalFieldMultiSelect}>
                     <MultiSelect

@@ -19,12 +19,18 @@ const style = {
     px: 3,
 };
 
-interface ProjectModalComponentProps {
+export interface ProjectModalComponentProps {
     handleClose: () => void;
     handleSave: () => void;
     employeesOptions: any[];
     projectData?: ProjectTypes;
-    handleChangeProjectData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => void
+    companyNameValidationMessage: string;
+    nameValidationMessage: string;
+    imageValidationMessage: string;
+    baseImageValidationMessage: string;
+    logoValidationMessage: string;
+    handleChangeProjectData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => void;
+    handleChangeProjectImage: (image: string, key: string) => void;
     handleSelectedOptions: (selectedOption: any) => void;
 }
 
@@ -34,7 +40,13 @@ function ProjectModalComponent({
     employeesOptions,
     projectData,
     handleChangeProjectData,
-    handleSelectedOptions
+    handleChangeProjectImage,
+    handleSelectedOptions,
+    companyNameValidationMessage,
+    nameValidationMessage,
+    imageValidationMessage,
+    baseImageValidationMessage,
+    logoValidationMessage,
 }: ProjectModalComponentProps) {
     return (
         <Modal
@@ -50,7 +62,13 @@ function ProjectModalComponent({
                     employeesOptions={employeesOptions}
                     projectData={projectData}
                     handleChangeProjectData={handleChangeProjectData}
+                    handleChangeProjectImage={handleChangeProjectImage}
                     handleSelectedOptions={handleSelectedOptions}
+                    companyNameValidationMessage={companyNameValidationMessage}
+                    nameValidationMessage={nameValidationMessage}
+                    imageValidationMessage={imageValidationMessage}
+                    baseImageValidationMessage={baseImageValidationMessage}
+                    logoValidationMessage={logoValidationMessage}
                 />
             </Box>
         </Modal>

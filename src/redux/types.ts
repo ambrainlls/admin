@@ -42,6 +42,10 @@ export interface FeedbackTypes {
 export interface ProjectTypes {
     id: string;
     company_name: string;
+    name: string;
+    image: string;
+    baseImage: string;
+    logo: string;
     employees: any[],
     employee_ids?: any[]
 }
