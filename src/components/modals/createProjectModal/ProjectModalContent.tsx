@@ -19,10 +19,16 @@ const ProjectModalContent = ({
     companyNameValidationMessage,
     nameValidationMessage,
     imageValidationMessage,
+    descriptionValidationMessage,
     baseImageValidationMessage,
     logoValidationMessage,
 }: ProjectModalComponentProps) => {
     const dispatch = useDispatch();
+
+    const handleKeyDown = (e: any) => {
+        e.target.style.height = 'inherit';
+        e.target.style.height = `${e.target.scrollHeight}px`;
+    };
 
     useEffect(() => {
         return () => {
@@ -57,8 +63,8 @@ const ProjectModalContent = ({
                         id="name"
                         label="Project name"
                         variant="standard"
-                        value={(projectData && projectData.name) ? projectData.name : ''}
-                        onChange={(evt) => {handleChangeProjectData(evt, 'name')}}
+                        value={(projectData && projectData.project_name) ? projectData.project_name : ''}
+                        onChange={(evt) => {handleChangeProjectData(evt, 'project_name')}}
                     />
                     {
                         nameValidationMessage && (
@@ -98,11 +104,11 @@ const ProjectModalContent = ({
                 </div>
                 <div className={styles.selectImageContainer}>
                     {
-                        (projectData && projectData.baseImage) ? (
+                        (projectData && projectData.base_image) ? (
                             <div className={styles.imageContainer}>
-                                <img src={`${projectData.baseImage}`} alt={'projectBase'} />
+                                <img src={`${projectData.base_image}`} alt={'projectBase'} />
                                 <div className={`${styles.deleteImageContainer}`}
-                                     onClick={() => {handleChangeProjectImage('', 'baseImage')}}
+                                     onClick={() => {handleChangeProjectImage('', 'base_image')}}
                                 >
                                     <img src={deleteIcon} alt={deleteIcon} />
                                 </div>
@@ -112,7 +118,7 @@ const ProjectModalContent = ({
                                 <label htmlFor="baseImage">
                                     <span>Choose project responsive picture</span>
                                 </label>
-                                <ImageUploader handleFileChange={(evt) => {handleChangeProjectImage(evt, 'baseImage')}} />
+                                <ImageUploader handleFileChange={(evt) => {handleChangeProjectImage(evt, 'base_image')}} />
                                 {
                                     baseImageValidationMessage && (
                                         <span className={styles.errorMessage}>
@@ -149,6 +155,23 @@ const ProjectModalContent = ({
                                     )
                                 }
                             </div>
+                        )
+                    }
+                </div>
+                <div className={styles.modalField}>
+                    <textarea
+                        id="description"
+                        name="description"
+                        value={projectData.description}
+                        placeholder={'Description'}
+                        onKeyDown={handleKeyDown}
+                        onChange={(evt) => {handleChangeProjectData(evt, 'description')}}
+                    />
+                    {
+                        descriptionValidationMessage && (
+                            <span className={styles.errorMessage}>
+                                {descriptionValidationMessage}
+                            </span>
                         )
                     }
                 </div>

@@ -23,11 +23,12 @@ export interface ProjectModalComponentProps {
     handleClose: () => void;
     handleSave: () => void;
     employeesOptions: any[];
-    projectData?: ProjectTypes;
+    projectData: ProjectTypes;
     companyNameValidationMessage: string;
     nameValidationMessage: string;
     imageValidationMessage: string;
     baseImageValidationMessage: string;
+    descriptionValidationMessage: string;
     logoValidationMessage: string;
     handleChangeProjectData: (evt: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, key: string) => void;
     handleChangeProjectImage: (image: string, key: string) => void;
@@ -46,6 +47,7 @@ function ProjectModalComponent({
     nameValidationMessage,
     imageValidationMessage,
     baseImageValidationMessage,
+    descriptionValidationMessage,
     logoValidationMessage,
 }: ProjectModalComponentProps) {
     return (
@@ -66,6 +68,7 @@ function ProjectModalComponent({
                     handleSelectedOptions={handleSelectedOptions}
                     companyNameValidationMessage={companyNameValidationMessage}
                     nameValidationMessage={nameValidationMessage}
+                    descriptionValidationMessage={descriptionValidationMessage}
                     imageValidationMessage={imageValidationMessage}
                     baseImageValidationMessage={baseImageValidationMessage}
                     logoValidationMessage={logoValidationMessage}

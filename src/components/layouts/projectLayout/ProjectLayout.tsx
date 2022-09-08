@@ -41,6 +41,7 @@ function ProjectLayout() {
     const [imageValidationMessage, setImageValidationMessage] = useState('');
     const [baseImageValidationMessage, setBaseImageValidationMessage] = useState('');
     const [logoValidationMessage, setLogoValidationMessage] = useState('');
+    const [descriptionValidationMessage, setDescriptionValidationMessage] = useState('');
 
     const [editableProject, setEditableProject] = useState<any>(
         {
@@ -63,7 +64,7 @@ function ProjectLayout() {
             name: 'Name',
             cell: (row: ProjectTypes) => {
                 return (
-                    <div>{row.name}</div>
+                    <div>{row.project_name}</div>
                 )
             }
         },
@@ -80,6 +81,14 @@ function ProjectLayout() {
                             ) : 'There is no employees for this project'
                         }
                     </div>
+                )
+            }
+        },
+        {
+            name: 'Description',
+            cell: (row: ProjectTypes) => {
+                return (
+                    <div className={styles.descriptionContainer}>{row.description}</div>
                 )
             }
         },
@@ -128,7 +137,7 @@ function ProjectLayout() {
             setCompanyNameValidationMessage('');
         }
 
-        if (!projectData.name) {
+        if (!projectData.project_name) {
             setNameValidationMessage(requiredMessage);
 
             return;
@@ -144,7 +153,7 @@ function ProjectLayout() {
             setImageValidationMessage('');
         }
 
-        if (!projectData.baseImage) {
+        if (!projectData.base_image) {
             setBaseImageValidationMessage('You have not selected an image');
 
             return;
@@ -158,6 +167,14 @@ function ProjectLayout() {
             return;
         } else {
             setLogoValidationMessage('');
+        }
+
+        if (!projectData.description) {
+            setDescriptionValidationMessage(requiredMessage);
+
+            return;
+        } else {
+            setDescriptionValidationMessage('');
         }
 
         return true;
@@ -343,6 +360,7 @@ function ProjectLayout() {
                         imageValidationMessage={imageValidationMessage}
                         baseImageValidationMessage={baseImageValidationMessage}
                         logoValidationMessage={logoValidationMessage}
+                        descriptionValidationMessage={descriptionValidationMessage}
                     />
                 )
             }
@@ -361,6 +379,7 @@ function ProjectLayout() {
                         imageValidationMessage={imageValidationMessage}
                         baseImageValidationMessage={baseImageValidationMessage}
                         logoValidationMessage={logoValidationMessage}
+                        descriptionValidationMessage={descriptionValidationMessage}
                     />
                 )
             }

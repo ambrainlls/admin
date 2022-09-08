@@ -58,7 +58,7 @@
     justify-content: flex-end;
 }
 
-.employeesContainer {
+.employeesContainer, .descriptionContainer {
     text-overflow: ellipsis;
     overflow: hidden;
     width: 300px;

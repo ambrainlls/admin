@@ -28,6 +28,10 @@
     flex-direction: column;
 }
 
+.modalField textarea {
+    min-height: 80px;
+}
+
 .modalFieldMultiSelect {
     margin-bottom: 50px;
 }
