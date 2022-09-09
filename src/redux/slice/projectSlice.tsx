@@ -15,6 +15,7 @@ const projectSlice = createSlice({
             logo: '',
             employees: [],
             description: '',
+            link: '',
         } as ProjectTypes,
         createProjectData: {
             id: '',
@@ -25,6 +26,7 @@ const projectSlice = createSlice({
             logo: '',
             employees: [],
             description: '',
+            link: '',
         } as ProjectTypes
     },
     reducers: {
@@ -80,12 +82,13 @@ const projectSlice = createSlice({
                 base_image: '',
                 description: '',
                 logo: '',
+                link: '',
                 employees: [],
             }
         },
         addProject(state, action: PayloadAction<ProjectTypes>) {
             state.projectsData.push(action.payload);
-        }
+        },
     }
 });
 

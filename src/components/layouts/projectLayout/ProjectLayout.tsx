@@ -85,6 +85,20 @@ function ProjectLayout() {
             }
         },
         {
+            name: 'Project url',
+            cell: (row: ProjectTypes) => {
+                return (
+                    <a href={row.link}
+                       target={"_blank"}
+                       rel="noreferrer noopener"
+                       className={styles.urlContainer}
+                    >
+                        {row.link}
+                    </a>
+                )
+            }
+        },
+        {
             name: 'Description',
             cell: (row: ProjectTypes) => {
                 return (

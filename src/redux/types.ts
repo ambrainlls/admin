@@ -48,7 +48,8 @@ export interface ProjectTypes {
     description: string;
     logo: string;
     employees: any[],
-    employee_ids?: any[]
+    employee_ids?: any[],
+    link: string,
 }
 
 export interface JiraUserHistoriesType {

@@ -159,6 +159,15 @@ const ProjectModalContent = ({
                     }
                 </div>
                 <div className={styles.modalField}>
+                    <TextField
+                        id="link"
+                        label="Project url"
+                        variant="standard"
+                        value={(projectData && projectData.link) ? projectData.link : ''}
+                        onChange={(evt) => {handleChangeProjectData(evt, 'link')}}
+                    />
+                </div>
+                <div className={styles.modalField}>
                     <textarea
                         id="description"
                         name="description"
