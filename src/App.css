@@ -25,6 +25,11 @@
 .rdt_TableCell {
     display: flex;
     justify-content: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 160px;
+    white-space: nowrap;
+    margin: 0px 10px;
 }
 
 .rdt_TableHeader {

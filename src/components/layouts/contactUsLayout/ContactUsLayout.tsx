@@ -44,7 +44,7 @@ function ContactUsLayout() {
             name: 'Message',
             cell: (row: ContactUsTypes) => {
                 return (
-                    <div>{row.message}</div>
+                    <div className={styles.messageContainer}>{row.message}</div>
                 )
             }
         },
